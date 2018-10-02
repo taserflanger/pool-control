@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import Slider from './Slider';
+import './SequenceEditor.css'
 
 class SequenceEditor extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentName: this.props.sequenceName
+        }
+    }
    
 
     GetClasses(spot, tick) {
@@ -62,7 +70,18 @@ class SequenceEditor extends Component{
         }
         return (
             <div id="sequence-editor-field">
-                <input type="text" placeHolder={this.props.sequenceName} onChange={(e) => this.props.onChangeName(e.target.value)}></input>
+                <div id="nameArea">
+                <form onSubmit= {(e) => {
+                    e.preventDefault();
+                    this.props.onChangeName(this.state.currentName);
+                    console.log(this.state.currentName);
+                }}>
+                <input id="nameEdit" type="text" placeholder={this.state.currentName}
+                    onChange={(e) => this.setState({currentName: e.target.value})}>
+                </input>
+                <input type="submit"></input>
+                </form>
+                </div>
                 {rows}
                 <Slider
                     title="Tempo"

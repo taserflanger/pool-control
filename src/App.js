@@ -111,6 +111,15 @@ class App extends Component {
         {/* Sequence editor props*/}
         <div className="row seqEditorProps">
           <div className="col">
+            <ImageToggle
+              onClick={(useless) => this.handleAddSequence}
+              title={""}
+              paths={[r+"plus.png", r+"plus.png"]}
+              align="center"
+              value={1}
+            ></ImageToggle>
+          </div>
+          <div className="col">
             <ImageToggle 
               onClick={(useless) => this.handleToggleUseSequencer()}
               title="Séquenceur"
@@ -119,13 +128,17 @@ class App extends Component {
               value={this.state.useSequencer}
             />
             </div>
-            <div className="col">
-            <div
-              className="button shadow-box"
+            <div id="noShadow" className="col">
+            <ImageToggle
               onClick={()=> {
                 this.setState({isEditingSpotSequence: true})
-            }}>Editer</div>
-          </div>
+              }}
+              title=""
+              paths={["", r+"edit.png"]}
+              align="center"
+              value={1}
+            />
+            </div>
         </div>
         <Category
           title="Broadcast"

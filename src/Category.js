@@ -142,7 +142,7 @@ class Category extends Component {
     render() {
         let aligneCenter = this.props.aligneCenter? "align-items-center" : ""
         return (
-            <div class="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
+            <div className="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
             
             <Title size="2" text={this.props.title} align={this.props.align}/>
 
