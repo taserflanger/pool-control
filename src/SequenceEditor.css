@@ -5,3 +5,13 @@
 #nameEdit {
     border-radius: 10%;
 }
+
+#sequenceSelector, #plusButton {
+  display:inline-block;
+  vertical-align: center;
+}
+
+#plusButton {
+    width: fit-content;
+    margin-left: 1rem;
+}

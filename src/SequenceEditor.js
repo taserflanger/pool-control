@@ -7,7 +7,8 @@ class SequenceEditor extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            currentName: this.props.sequenceName
+            currentName: this.props.sequenceName,
+            isEditingName: false
         }
     }
    
@@ -30,6 +31,30 @@ class SequenceEditor extends Component{
 
     handleClick(spot, tick) {
         return () => this.props.onChange(spot, tick);
+    }
+
+    getNameDisplay() {
+        if (this.state.isEditingName) {
+            return (
+                <form onSubmit= {(e) => {
+                    e.preventDefault();
+                    this.props.onChangeName(this.state.currentName);
+                    this.setState({isEditingName: false})
+                }}>
+                <input id="nameEdit" type="text" placeholder={this.props.name}
+                    onChange={(e) => {
+                        this.setState({
+                            currentName: e.target.value,
+                        });
+                        }}>
+                </input>
+                </form>
+            );
+        } else {
+            return (
+                <div className="nameEditor"onClick={() => this.setState({isEditingName: true})}>{this.props.name}</div>
+            );
+        }
     }
 
     render() {
@@ -71,16 +96,7 @@ class SequenceEditor extends Component{
         return (
             <div id="sequence-editor-field">
                 <div id="nameArea">
-                <form onSubmit= {(e) => {
-                    e.preventDefault();
-                    this.props.onChangeName(this.state.currentName);
-                    console.log(this.state.currentName);
-                }}>
-                <input id="nameEdit" type="text" placeholder={this.state.currentName}
-                    onChange={(e) => this.setState({currentName: e.target.value})}>
-                </input>
-                <input type="submit"></input>
-                </form>
+                {this.getNameDisplay()}
                 </div>
                 {rows}
                 <Slider

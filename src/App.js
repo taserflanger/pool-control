@@ -4,7 +4,7 @@ import Category from './Category';
 import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
-
+import DropdownSelector from './DropdownSelector';
 
 const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
@@ -68,6 +68,10 @@ class App extends Component {
     io.emit('toggleUseSequencer');
   }
 
+  handleNameSelectChange(index) {
+    io.emit('useSequence', index);
+  }
+
   render() {
     const r="./ressources/";
     return (
@@ -87,6 +91,7 @@ class App extends Component {
             sequences={this.state.sequences}
             tick={this.state.tick}
             tempo={this.state.tempo}
+            name={this.state.names[this.state.activeSequence]}
           />
           <span className="close" onClick={()=> {
             this.setState({isEditingSpotSequence: false});
@@ -109,30 +114,39 @@ class App extends Component {
           sizes={[3, 3, 3]}
         />
         {/* Sequence editor props*/}
+        <Title size="2" align="center" text="Séquenceur" />
         <div className="row seqEditorProps">
-          <div className="col">
-            <ImageToggle
-              onClick={(useless) => this.handleAddSequence}
-              title={""}
-              paths={[r+"plus.png", r+"plus.png"]}
-              align="center"
-              value={1}
-            ></ImageToggle>
-          </div>
-          <div className="col">
+          <div className="col-4">
             <ImageToggle 
               onClick={(useless) => this.handleToggleUseSequencer()}
-              title="Séquenceur"
-              paths={[r+"unlit.png", r+"lit.png"]}
+              title=""
+              size={2.5}
+              paths={[r+"launch.png", r+"shutdown.png"]}
+              subtitles={["Activer", "Désactiver"]}
               align="center"
               value={this.state.useSequencer}
             />
             </div>
+            <div className="col-6">
+            {/* <div id={"sequenceSelector"}>{this.state.names[this.state.activeSequence]}</div> */}
+            <DropdownSelector names={this.state.names} selected={this.state.activeSequence} />
+            <div id="plusButton">
+            <ImageToggle
+              onClick={(useless) => this.handleAddSequence}
+              title={""}
+              size={2.5}
+              paths={[r+"plus.png", r+"plus.png"]}
+              align="center"
+              value={1}
+            ></ImageToggle>
+            </div>
+          </div>
             <div id="noShadow" className="col">
             <ImageToggle
               onClick={()=> {
                 this.setState({isEditingSpotSequence: true})
               }}
+              size={2.5}
               title=""
               paths={["", r+"edit.png"]}
               align="center"
