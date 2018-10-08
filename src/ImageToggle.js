@@ -42,6 +42,9 @@ class ImageToggle extends Component {
     render() {
         let align = this.props.align || "left";
         let size = this.props.size || 3;
+        if (!this.props.path) {
+            console.log()
+        }
         let path = this.props.paths[this.props.value? 1 : 0]
         path = this.state.hover?  path.slice(0, -4) + "_hover.png" : path;
         let duration = this.state.hover? 10: 300;

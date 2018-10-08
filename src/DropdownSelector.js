@@ -27,12 +27,14 @@ class DropdownSelector extends Component{
         if (this.state.dropdown) {
             return (
                 <div className="selector">
-                    <div className="selected" onClick={this.setState({dropdown: !this.state.dropdown})}>{this.props.names[this.props.selected]}</div>
+                    <div className="selected" onClick={
+                        () => this.setState({dropdown: !this.state.dropdown})}>{this.props.names[this.props.selected]
+                    }</div>
                     {this.getDropDownElements()}
                 </div>
             );
         } else {
-            return <p>{this.props.names[this.props.selected]}</p>
+            return <div className="selector">{this.props.names[this.props.selected]}</div>
         }
     }
 }

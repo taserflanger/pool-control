@@ -12,11 +12,12 @@ let globals = {
         is_on: 1,
         freq: 10
     },
-    Filtre: 1,
+    Filtre: 0,
     Broadcast: {
         water_temp: 20,
         air_temp: 25,
         ph: 7,
+        orp: 5
     },
     useSequencer: false
 }
@@ -91,7 +92,7 @@ io.on('connection', (client) => {
     })
     setInterval(()=> {
         globals.Broadcast.water_temp += Math.round(Math.random()*2 - 1, 4);
-        globals.Broadcast.air_temp += Math.round(Math.random()*2 - 1, 4);
+        globals.Broadcast.air_temp += (Math.round(Math.random()*2 - 1, 4));
         io.emit("update_Broadcast", "water_temp", globals.Broadcast.water_temp);
         io.emit("update_Broadcast", "air_temp", globals.Broadcast.air_temp);
     }, 1000);
@@ -100,7 +101,7 @@ io.on('connection', (client) => {
 function handleVariableChange(variable, client) {
     //write with gpio
     if (variable=="north_light") {
-
+        
     } else if (variable == "south_light") {
         
     }  else if (variable == "southeast_light") {

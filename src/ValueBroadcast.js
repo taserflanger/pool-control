@@ -4,7 +4,7 @@ class ValueBroadcast extends Component {
     render() {
         return (
             <div className="valueBroadcast">
-                <h3>{this.props.value}<span style={{fontSize: "60%"}}>{this.props.suffix}</span></h3>
+                <h3>{this.props.value}<span>{this.props.suffix}</span></h3>
             </div>
         );
     }

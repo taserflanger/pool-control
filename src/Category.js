@@ -57,17 +57,18 @@ class Category extends Component {
         io.emit('setValue', this.props.title, variable, value);
     }
 
-    getCategoryContent() {
+    getCategoryContent(begin, end) {
         let result = [];
         let singleType = this.props.types.length === 1
         let type = singleType? this.props.types[0] : null;
         let isToggleGroup = this.props.isToggleGroup | false;
-        for (var i=0; i<this.props.names.length; i++) {
+        for (var i=begin; i<end; i++) {
             let colName = (this.props.aligns[i]==="center")? "col" : "col-4";
             if (this.props.types[i]==="ImageToggle" || type==="ImageToggle") {
                 if (isToggleGroup) {
                     result.push(
-                    <div key={i}className={colName}>
+                        <div key={i}className={colName}>
+                        <Title size={1} align="center" text={this.props.titles[i]} />
                         <ImageToggle 
                         onClick={(key)=>this.handleImageToggleGroup(key)}
                         name={this.props.names[i]}
@@ -100,7 +101,8 @@ class Category extends Component {
                     );
             } if (this.props.types[i]==="ValueBroadcast" || type==="ValueBroadcast") {
                 result.push(
-                    <div key={i} className="col">
+                    <div key={i} className={`col-3`}>
+                        <Title size={1} align="center" text={this.props.titles[i]} />
                         <ValueBroadcast
                             value={this.state.values[i]}
                             suffix={this.props.boradcastSuffixes[i]}
@@ -119,40 +121,33 @@ class Category extends Component {
                 name={this.props.names[i]}
                 align={this.props.align} 
                 title={this.props.titles[i]}
-                min="10" max="40"
+                min="10" max="30"
                 suffix={<a>m<sup>3</sup>/h</a>}
             />
         </div>;
     }
 
-    getAlternativeTitle() {
-        let result=[]
-        if (this.props.isToggleGroup || this.props.isBroadcast) {
-            for (var i=0; i<this.props.names.length; i++) {
-                result.push (
-                    <div key={i} className="col">
-                        <Title size={1} align="center" text={this.props.titles[i]} />
-                    </div>
-                );
-            }
+    getRows() {
+        let result = []
+        let alignedCenter = this.props.aligneCenter? "align-items-center" : ""
+        for (var i=0; i<Math.floor(this.props.names.length, 4); i++) {
+            result.push(
+                <div className={`row justif-content-around ${alignedCenter}`}>
+                    { this.getCategoryContent(i*4, i*4+4) }
+                </div>
+            );
         }
-        return result;
+        return result
     }
 
     render() {
-        let aligneCenter = this.props.aligneCenter? "align-items-center" : ""
         return (
             <div className="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
             
             <Title size="2" text={this.props.title} align={this.props.align}/>
 
             <div className="container">
-                <div className="row justify-content-around">
-                    { this.getAlternativeTitle() }
-                </div>
-                <div className={`row justif-content-around ${aligneCenter}`}>
-                    { this.getCategoryContent() }
-                </div>
+                { this.getRows() }
             </div>
             </div>
         );
