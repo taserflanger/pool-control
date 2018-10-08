@@ -105,7 +105,7 @@ class App extends Component {
         <Title size="4" text="Interface Piscine"/>
         <Category
           title="Spots"
-          types={["ImageToggle"]}
+          types={["ImageToggle", "ImageToggle", "ImageToggle"]}
           names={["north_light", "southeast_light", "south_light"]}
           titles={["Nord", "Sud-Est", "Sud"]}
           initialValues={[0, 0, 0]}
@@ -132,18 +132,22 @@ class App extends Component {
             />
             </div>
             <div className="col-6">
-            {/* <div id={"sequenceSelector"}>{this.state.names[this.state.activeSequence]}</div> */}
-            <DropdownSelector names={this.state.names} selected={this.state.activeSequence} />
-            <div id="plusButton">
-            <ImageToggle
-              onClick={(useless) => this.handleAddSequence}
-              title={""}
-              size={2.5}
-              paths={[r+"plus.png", r+"plus.png"]}
-              align="center"
-              value={1}
-            ></ImageToggle>
+            <div className="row">
+              <div className="col">
+                <DropdownSelector names={["hello", "abc"]} selected={this.state.activeSequence} />
+              </div>
+              <div id="plusButton col">
+              <ImageToggle
+                onClick={(useless) => this.handleAddSequence}
+                title={""}
+                size={2.5}
+                paths={[r+"plus.png", r+"plus.png"]}
+                align="center"
+                value={1}
+              ></ImageToggle>
+              </div>
             </div>
+            {/* <div id={"sequenceSelector"}>{this.state.names[this.state.activeSequence]}</div> */}
           </div>
             <div id="noShadow" className="col">
             <ImageToggle
@@ -160,14 +164,14 @@ class App extends Component {
         </div>
         <Category
           title="Broadcast"
-          types={["ValueBroadcast", "ValueBroadcast", "ValueBroadcast"]}
-          titles={["Température Air", "Température Eau", "pH"]}
-          names={["air_temp", "water_temp", "ph"]}
-          initialValues = {[25, 20, 7]}
-          aligns={["center", "center", "center"]}
-          sizes={[3, 3, 3]}
+          types={["ValueBroadcast", "ValueBroadcast", "ValueBroadcast", "ValueBroadcast"]}
+          titles={["Air", "Eau", "pH", "ORP"]}
+          names={["air_temp", "water_temp", "ph", "orp"]}
+          initialValues = {[25, 20, 7, 0]}
+          aligns={["center", "center", "center", "center"]}
+          sizes={[3, 3, 3, 3]}
           isBroadcast={true}
-          boradcastSuffixes={[" °C", " °C", ""]}
+          boradcastSuffixes={[" °C", " °C", "", ""]}
         />
         <Category
           title="Moteur" 
@@ -187,8 +191,8 @@ class App extends Component {
         <Category
           title="Filtre"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
-          names = {["backwash", "normal", "recirculation"]}
-          titles={["Lavage Filtre", "Filtration", "Recirculation"]}
+          names = {["normal", "backwash", "recirculation"]}
+          titles={["Filtration", "Lavage", "Recirculation"]}
           initialValues={1}
           paths={[
             [r+"unlit.png", r+"lit.png"],
