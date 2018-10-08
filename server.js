@@ -110,7 +110,9 @@ function handleVariableChange(variable, client) {
     }  else if (variable == "freq") {
 
     } else if (variable == "Filtre") {
-        
+        console.log('lol');
+        io.emit('updateChangeFilterMode', true);
+        setTimeout(()=> io.emit('updateChangeFilterMode', false), 3000)
     } else {
         console.log("Unkown variable");
     }

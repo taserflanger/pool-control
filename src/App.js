@@ -27,11 +27,15 @@ class App extends Component {
       ],
       tick: 0,
       activeSequence: 0,
-      names: ["default"]
+      names: ["default"],
+      isChangingFilterMode: 0
     }
   }
 
   componentDidMount() {
+    io.on('updateChangeFilterMode', newVal => {
+      this.setState({isChangingFilterMode: newVal});
+    });
     io.on('tempoUpdate', tempo => {
       this.setState({
         tempo: tempo
@@ -178,6 +182,7 @@ class App extends Component {
           paths={[[r+"launch.png", r+"shutdown.png"]]}
           aligns={["center", "center"]}
           sizes={[3]}
+          disabled={this.state.isChangingFilterMode}
         />
         <Category
           title="Filtre"

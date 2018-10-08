@@ -113,9 +113,15 @@ class Category extends Component {
     }
 
     getSlider(i) {
-        return <div key={i} className="col-8">
+        let cl_name= this.props.disabled? "col-8 disabled" : "col-8";
+        return <div key={i} className= {cl_name}>
             <Slider
-                onChange={(e) => {this.handleSliderChange(i, parseInt(e.target.value, 10))}}value={this.state.values[i]}
+                onChange={(e) => {
+                    if (this.props.disabled) {
+                        return;
+                    }
+                    this.handleSliderChange(i, parseInt(e.target.value, 10))}}value={this.state.values[i]
+                }
                 name={this.props.names[i]}
                 align={this.props.align} 
                 title={this.props.titles[i]}

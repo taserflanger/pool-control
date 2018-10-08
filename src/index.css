@@ -230,3 +230,10 @@ h2>span {
   border-radius: 0 0 12.5% 12.5%;
 }
 
+.disabled .close:focus, .close:hover{
+  cursor: default;
+}
+
+.disabled .slider::-moz-range-thumb{
+  background-color: grey;
+}
