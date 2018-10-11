@@ -138,7 +138,7 @@ class Category extends Component {
         let alignedCenter = this.props.aligneCenter? "align-items-center" : ""
         for (var i=0; i<Math.floor(this.props.names.length, 4); i++) {
             result.push(
-                <div className={`row justif-content-around ${alignedCenter}`}>
+                <div key={i} className={`row justif-content-around ${alignedCenter}`}>
                     { this.getCategoryContent(i*4, i*4+4) }
                 </div>
             );

@@ -16,7 +16,7 @@ class DropdownSelector extends Component{
     getDropDownElements() {
         let result = [];
         for (var i=0; i<this.props.names.length; i++) {
-            let c = (this.props.selected==i)? "selected" : "";
+            let c = (this.props.selected===i)? "selected" : "";
             result.push(<div className={c}>{this.props.names[i]}</div>);
         }
         return result;

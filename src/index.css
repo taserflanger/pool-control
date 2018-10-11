@@ -240,6 +240,10 @@ h2>span {
   border-radius: 0 0 12.5% 12.5%;
 }
 
+.hidden {
+  height: 0;
+}
+
 .disabled .close:focus, .close:hover{
   cursor: default;
 }

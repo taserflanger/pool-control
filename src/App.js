@@ -4,7 +4,7 @@ import Category from './Category';
 import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
-import DropdownSelector from './DropdownSelector';
+// import DropdownSelector from './DropdownSelector';
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
@@ -28,8 +28,13 @@ class App extends Component {
       tick: 0,
       activeSequence: 0,
       names: ["default"],
-      isChangingFilterMode: 0
+      isChangingFilterMode: 0,
+      seqPropsDropdown: false
     }
+  }
+
+  toggleRowSeqEditorProps() {
+    this.setState({seqPropsDropdown: !this.state.seqPropsDropdown})
   }
 
   componentDidMount() {
@@ -118,8 +123,9 @@ class App extends Component {
           sizes={[3, 3, 3]}
         />
         {/* Sequence editor props*/}
-        <Title size="2" align="center" text="Séquenceur" />
-        <div className="row seqEditorProps">
+        <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
+        <div className={`row seqEditorProps`}
+        style={{height: this.state.seqPropsDropdown? "auto" : "0", margin: this.state.seqPropsDropdown? "1rem" : ".1rem"}}>
           <div className="col-4">
             <ImageToggle 
               onClick={(useless) => this.handleToggleUseSequencer()}
@@ -131,9 +137,9 @@ class App extends Component {
               value={this.state.useSequencer}
             />
             </div>
-            <div className="col-6">
-            <div className="row">
-              <div className="col">
+            {/* <div className="col-6"> */}
+            {/* <div className="row"> */}
+              {/* <div className="col">
                 <DropdownSelector names={["hello", "abc"]} selected={this.state.activeSequence} />
               </div>
               <div id="plusButton col">
@@ -145,10 +151,10 @@ class App extends Component {
                 align="center"
                 value={1}
               ></ImageToggle>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
             {/* <div id={"sequenceSelector"}>{this.state.names[this.state.activeSequence]}</div> */}
-          </div>
+          {/* </div> */}
             <div id="noShadow" className="col">
             <ImageToggle
               onClick={()=> {
@@ -159,6 +165,7 @@ class App extends Component {
               paths={["", r+"edit.png"]}
               align="center"
               value={1}
+              name="edit"
             />
             </div>
         </div>
