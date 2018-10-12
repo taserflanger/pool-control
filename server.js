@@ -55,13 +55,16 @@ io.on('connection', (client) => {
         globals.useSequencer = !globals.useSequencer;
         if(globals.useSequencer) {
             seq.start(lightValues=> {
+                globals.Spots.north_light = lightValues[0];
+                globals.Spots.southeast_light = lightValues[1];
+                globals.Spots.south_light = lightValues[2];
                 io.emit('update_Spots', "north_light", lightValues[0]);
                 io.emit('update_Spots', "southeast_light", lightValues[1]);
                 io.emit('update_Spots', "south_light", lightValues[2]);
                 io.emit('tick', seq.tick);
-                handleVariableChange("north_light");
-                handleVariableChange("southeast_light");
-                handleVariableChange("south_light");
+                handleVariableChange("north_light", client);
+                handleVariableChange("southeast_light", client);
+                handleVariableChange("south_light", client);
             });
         } else {
             seq.stop();
