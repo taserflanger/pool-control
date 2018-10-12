@@ -59,6 +59,9 @@ io.on('connection', (client) => {
                 io.emit('update_Spots', "southeast_light", lightValues[1]);
                 io.emit('update_Spots', "south_light", lightValues[2]);
                 io.emit('tick', seq.tick);
+                handleVariableChange("north_light");
+                handleVariableChange("southeast_light");
+                handleVariableChange("south_light");
             });
         } else {
             seq.stop();
