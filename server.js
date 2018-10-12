@@ -2,7 +2,9 @@ const io = require('socket.io')();
 const SequenceController = require('./server/SequenceController');
 const seq = new SequenceController();
 const Gpio = require('onoff').Gpio;
-let LED = new Gpio(18, 'out');
+let NORTHLIGHT = new Gpio(18, 'out');
+let SOUTHEASTLIGHT = new Gpio(23, 'out');
+let SOUTHLIGHT = new Gpio(24, 'out');
 
 let globals = {
     Spots: {
@@ -103,11 +105,11 @@ io.on('connection', (client) => {
 function handleVariableChange(variable, client) {
     //write with gpio
     if (variable=="north_light") {
-        LED.writeSync(global.Spots.north_light? 1:0);
+        NORTHLIGHT.writeSync(globals.Spots.north_light? 1:0);
     } else if (variable == "south_light") {
-        
+        SOUTHLIGHT.writeSync(globals.Spots.south_light? 1:0);
     }  else if (variable == "southeast_light") {
-        
+        SOUTHEASTLIGHT.writeSync(globals.Spots.southeast_light? 1:0);        
     } else if (variable == "is_on") {
         
     }  else if (variable == "freq") {
