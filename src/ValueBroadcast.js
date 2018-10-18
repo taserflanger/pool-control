@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import './css/ValueBroadcast.css';
 
 class ValueBroadcast extends Component {
     render() {

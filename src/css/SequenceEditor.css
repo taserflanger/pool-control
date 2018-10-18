@@ -1,0 +1,30 @@
+#nameArea {
+    margin-bottom: 2rem;
+}
+
+#nameEdit {
+    border-radius: 10%;
+}
+
+#sequenceSelector, #plusButton {
+  display:inline-block;
+  vertical-align: center;
+}
+
+#plusButton {
+    width: fit-content;
+    margin-left: 1rem;
+}
+
+.active-enabled-seq {
+    background-color: #52d1dc;
+  }
+  .active-disabled-seq {
+    background-color: #888;
+  }
+  .inactive-enabled-seq {
+    background-color: #90e1e8;
+  }
+  .inactive-disabled-seq {
+    background-color: #292f36;
+  }

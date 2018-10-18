@@ -4,6 +4,9 @@ import Category from './Category';
 import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
+import './css/App.css';
+// import Jquery from 'jquery';
+
 // import DropdownSelector from './DropdownSelector';
 
 // const io = openSocket('http://localhost:8000/');
@@ -29,13 +32,17 @@ class App extends Component {
       activeSequence: 0,
       names: ["default"],
       isChangingFilterMode: 0,
-      seqPropsDropdown: false
+      seqPropsDropdown: false,
+      seqDropDownWidth: 0
     }
   }
 
-  toggleRowSeqEditorProps() {
-    this.setState({seqPropsDropdown: !this.state.seqPropsDropdown})
-  }
+  // toggleRowSeqEditorProps() {
+  //   this.setState({seqPropsDropdown: !this.state.seqPropsDropdown});
+  //   if (seqPropsDropdown) {
+  //     $('#seqEditorProps').animate({width: })
+  //   }
+  // }
 
   componentDidMount() {
     io.on('updateChangeFilterMode', newVal => {
@@ -108,6 +115,7 @@ class App extends Component {
           </div>
         </div>
         <Title size="4" text="Interface Piscine"/>
+        <div id="title-placeholder">Interface Piscine</div>
         <Category
           title="Spots"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
@@ -124,7 +132,7 @@ class App extends Component {
         />
         {/* Sequence editor props*/}
         <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
-        <div className={`row seqEditorProps`}
+        <div className={`row seqEditorProps`} id="seqEditorProps"
         style={{height: this.state.seqPropsDropdown? "auto" : "0", margin: this.state.seqPropsDropdown? "1rem" : ".1rem"}}>
           <div className="col-4">
             <ImageToggle 

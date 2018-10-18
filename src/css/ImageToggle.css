@@ -1,0 +1,23 @@
+.imageToggle {
+    cursor: pointer;
+  }
+
+.imageToggle-false>p {
+color: #52d1dc;
+}
+
+.imageToggle-true>p {
+color: red;
+}
+
+.imageToggleMargin {
+  margin-top: 2em;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.imageToggle>p,.slidecontainer>p{
+  text-align: center;
+}

@@ -4,6 +4,7 @@ import Title from './Title'
 import Slider from './Slider';
 import ValueBroadcast from './ValueBroadcast';
 import openSocket from 'socket.io-client';
+import './css/Category.css';
 
 
 // const io = openSocket('http://localhost:8000/');
