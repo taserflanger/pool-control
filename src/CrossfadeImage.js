@@ -40,12 +40,14 @@ export default class CrossfadeImage extends Component {
       <div style={{ ...defaultStyle, ...{ position: "relative" } }}>
         {topSrc &&
           <img
+            id={this.props.id}
             style={{ ...defaultStyle, ...style, ...{ position: "absolute" } }}
             src={topSrc}
             alt={alt}
           />}
         {bottomSrc &&
           <img
+            id={this.props.id}
             onMouseEnter={() => this.props.onMouseOver(true)}
             onMouseOver={() => this.props.onMouseOver(true)}
             onMouseLeave={() => this.props.onMouseOver(false)}

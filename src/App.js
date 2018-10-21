@@ -5,6 +5,7 @@ import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
 import './css/App.css';
+const r="./ressources/";
 // import DropdownSelector from './DropdownSelector';
 
 const io = openSocket('http://localhost:8000/');
@@ -15,7 +16,9 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    //initializing props from index
     this.state = {
+      //initializing all states
       isEditingSpotSequence: false,
       tempo: 60,
       useSequencer: false,
@@ -36,6 +39,7 @@ class App extends Component {
   }
 
   toggleRowSeqEditorProps() {
+    // toggle the dropdown menu for sequence editing
     this.setState({seqPropsDropdown: !this.state.seqPropsDropdown});
     // if (this.state.seqPropsDropdown) {
     //   jQuery('#seqEditorProps').animate({width: '100%'});
@@ -43,6 +47,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // setting up event listeners
     io.on('updateChangeFilterMode', newVal => {
       this.setState({isChangingFilterMode: newVal});
     });
@@ -79,17 +84,68 @@ class App extends Component {
   }
 
   handleToggleUseSequencer() {
+    // using Sequencer or not
     io.emit('toggleUseSequencer');
   }
 
-  handleNameSelectChange(index) {
-    io.emit('useSequence', index);
+  getSequencerContent() {
+    // sequencer dropdown content get
+    if (this.state.seqPropsDropdown) {
+      return(
+        <div id="seqDropDown" className={`category ${this.state.seqPropsDropdown? "open": "closed"}`}>
+    <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
+        <div className={`row seqEditorProps`} id="seqEditorProps">
+          <div className="col-4">
+            <ImageToggle 
+              onClick={(useless) => this.handleToggleUseSequencer()}
+              title=""
+              size={3}
+              paths={[r+"lit.png", r+"unlit.png"]}
+              subtitles={["Activer", "Désactiver"]}
+              align="center"
+              value={this.state.useSequencer}
+            />
+            </div>
+            <div id="noShadow" className="col">
+            <ImageToggle
+              onClick={()=> {
+                this.setState({isEditingSpotSequence: true})
+              }}
+              size={3}
+              title=""
+              paths={["", r+"edit.png"]}
+              align="center"
+              value={1}
+              name="edit"
+              id="noShadow"
+            />
+            </div>
+        </div>
+        </div>
+      );
+    } else {
+        return (
+        <div id="seqDropDown" className="row closed">
+        <div className="col">
+          <ImageToggle
+            onClick={(useless)=>this.toggleRowSeqEditorProps()}
+            size={2.5}
+            title=""
+            paths={[r+"plus.png", r+"plus.png"]} 
+            align="center"
+            value={1}
+            name="more"
+          />
+        </div>
+        </div>
+      );
+    }
   }
 
   render() {
-    const r="./ressources/";
     return (
       <div>
+        {/* modal content for sequence editing */}
         <div className="modal" style={{display: this.state.isEditingSpotSequence? "block" : "none"}}>
           <div className="modal-content" >
           <SequenceEditor
@@ -112,8 +168,7 @@ class App extends Component {
           }}>&times;</span>
           </div>
         </div>
-        <Title size="4" text="Interface Piscine"/>
-        <div id="title-placeholder">Interface Piscine</div>
+        {/* Spot category */}
         <Category
           title="Spots"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
@@ -129,52 +184,8 @@ class App extends Component {
           sizes={[3, 3, 3]}
         />
         {/* Sequence editor props*/}
-        <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
-        <div className={`row seqEditorProps`} id="seqEditorProps"
-        style={{height: this.state.seqPropsDropdown? "auto" : "0", margin: this.state.seqPropsDropdown? "1rem" : ".1rem"}}>
-          <div className="col-4">
-            <ImageToggle 
-              onClick={(useless) => this.handleToggleUseSequencer()}
-              title=""
-              size={2.5}
-              paths={[r+"launch.png", r+"shutdown.png"]}
-              subtitles={["Activer", "Désactiver"]}
-              align="center"
-              value={this.state.useSequencer}
-            />
-            </div>
-            {/* <div className="col-6"> */}
-            {/* <div className="row"> */}
-              {/* <div className="col">
-                <DropdownSelector names={["hello", "abc"]} selected={this.state.activeSequence} />
-              </div>
-              <div id="plusButton col">
-              <ImageToggle
-                onClick={(useless) => this.handleAddSequence}
-                title={""}
-                size={2.5}
-                paths={[r+"plus.png", r+"plus.png"]}
-                align="center"
-                value={1}
-              ></ImageToggle>
-              </div> */}
-            {/* </div> */}
-            {/* <div id={"sequenceSelector"}>{this.state.names[this.state.activeSequence]}</div> */}
-          {/* </div> */}
-            <div id="noShadow" className="col">
-            <ImageToggle
-              onClick={()=> {
-                this.setState({isEditingSpotSequence: true})
-              }}
-              size={2.5}
-              title=""
-              paths={["", r+"edit.png"]}
-              align="center"
-              value={1}
-              name="edit"
-            />
-            </div>
-        </div>
+            {this.getSequencerContent()}
+        {/* Broadcast category */}
         <Category
           title="Broadcast"
           types={["ValueBroadcast", "ValueBroadcast", "ValueBroadcast", "ValueBroadcast"]}

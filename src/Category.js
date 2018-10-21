@@ -14,7 +14,8 @@ const io = openSocket('http://localhost:8000/');
 class Category extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+        
         this.state = {
             values: this.props.initialValues
         }
