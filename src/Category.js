@@ -7,9 +7,9 @@ import openSocket from 'socket.io-client';
 import './css/Category.css';
 
 
-// const io = openSocket('http://localhost:8000/');
+const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.10:8000/');
+// const io = openSocket('http://192.168.0.10:8000/');
 
 class Category extends Component {
 
@@ -151,7 +151,7 @@ class Category extends Component {
         return (
             <div className="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
             
-            <Title size="2" text={this.props.title} align={this.props.align}/>
+            <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
 
             <div className="container">
                 { this.getRows() }

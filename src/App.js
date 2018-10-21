@@ -5,13 +5,11 @@ import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
 import './css/App.css';
-// import Jquery from 'jquery';
-
 // import DropdownSelector from './DropdownSelector';
 
-// const io = openSocket('http://localhost:8000/');
+const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.10:8000/');
+// const io = openSocket('http://192.168.0.10:8000/');
 
 class App extends Component {
 
@@ -37,12 +35,12 @@ class App extends Component {
     }
   }
 
-  // toggleRowSeqEditorProps() {
-  //   this.setState({seqPropsDropdown: !this.state.seqPropsDropdown});
-  //   if (seqPropsDropdown) {
-  //     $('#seqEditorProps').animate({width: })
-  //   }
-  // }
+  toggleRowSeqEditorProps() {
+    this.setState({seqPropsDropdown: !this.state.seqPropsDropdown});
+    // if (this.state.seqPropsDropdown) {
+    //   jQuery('#seqEditorProps').animate({width: '100%'});
+    // }
+  }
 
   componentDidMount() {
     io.on('updateChangeFilterMode', newVal => {

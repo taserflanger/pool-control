@@ -45,9 +45,9 @@ class SequenceController {
 
     update(cb) {
         let sequence = this.sequences[this.activeSequence];
-        this.tick = this.tick == 12? -1: this.tick;
+        this.tick = this.tick == 11? -1: this.tick;
         this.tick++;
-        console.log(this.tick);
+        // console.log(this.tick);
         this.lightValues = sequence.map((val, light) => sequence[light][this.tick]);
         cb(this.lightValues);
         if (this.isActive) {
