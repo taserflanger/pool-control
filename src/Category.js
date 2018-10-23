@@ -140,7 +140,7 @@ class Category extends Component {
         let alignedCenter = this.props.aligneCenter? "align-items-center" : ""
         for (var i=0; i<Math.floor(this.props.names.length, 4); i++) {
             result.push(
-                <div key={i} className={`row justif-content-around ${alignedCenter}`}>
+                <div key={i} className={`row justify-content-around ${alignedCenter}`}>
                     { this.getCategoryContent(i*4, i*4+4) }
                 </div>
             );
@@ -150,7 +150,15 @@ class Category extends Component {
 
     render() {
         return (
-            <div className="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
+            <div 
+            className="category"
+            id={this.props.title.toLowerCase()}
+            style={{
+                zIndex: Math.round(this.props.opacitiy*100),
+                top: this.props.position,
+                opacity: this.props.opacity,
+                transform: `rotateX(${this.props.angle}rad)`
+            }}>
             
             <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
 

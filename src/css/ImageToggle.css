@@ -21,3 +21,16 @@ img {
 .imageToggle>p,.slidecontainer>p{
   text-align: center;
 }
+
+.props {
+  transition: transform;
+  transition-duration: .2s;
+  transition-timing-function: ease-in-out;
+}
+
+.props:hover {
+  transform: rotate(90deg);
+  transition: transform;
+  transition-duration: .2s;
+  transition-timing-function: ease-in-out;
+}

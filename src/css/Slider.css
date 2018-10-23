@@ -38,9 +38,20 @@
   }
 
   .slider::-moz-range-thumb {
+    transform: rotate(0deg);
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
     background: #52d1dc; /* Green background */
     cursor: pointer; /* Cursor on hover */
-    border-radius: 50%;
+    border-radius: 0;
+    transition-property: transform;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .slider::-moz-range-thumb:hover {
+      transform: rotate(45deg);
+      transition-property: transform;
+      transition-duration: .2s;
+      transition-timing-function: ease-in-out;
   }

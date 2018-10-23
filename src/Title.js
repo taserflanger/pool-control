@@ -13,8 +13,9 @@ class Title extends Component {
                          function to be executed on click
                     style: extra styling
         */
+       let handleClick = this.props.onClick? this.props.onClick : function() {return}
         return (
-            <div style={this.props.style} onClick={() => this.props.onClick()} className={ `${this.props.size===1? "" : "d-block"} title-${this.props.size} text-center` }>
+            <div style={this.props.style} onClick={() => handleClick()} className={ `${this.props.size===1? "" : "d-block"} title-${this.props.size} text-center` }>
                 {this.props.text}
             </div>
         );

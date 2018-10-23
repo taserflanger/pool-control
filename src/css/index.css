@@ -3,6 +3,10 @@
   --dark: #292f36;
 }
 
+.container {
+  position: relative;
+}
+
 
 body, html {
   margin: 0;
@@ -12,11 +16,12 @@ body, html {
   text-align: center;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
-
 
 .row {
   flex-wrap: nowrap;
+  margin: 0 0 0 0;
 }
 
 .button {
@@ -62,8 +67,9 @@ p,h2 {
   width: min-content;
 }
 
-.col{
-  padding: 0 .2rem 0 .2rem;
+[class|="col"] {
+  padding: 0 .1rem 0 .1rem;
+  margin: 0 .05rem 0 .05rem;
 }
 
 

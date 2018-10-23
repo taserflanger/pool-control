@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import 'jquery-mousewheel';
 import Title from './Title';
 import Category from './Category';
 import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
 import ImageToggle from './ImageToggle';
+import Slider from './Slider';
 import './css/App.css';
 const r="./ressources/";
+const cumulativeSum = ([head, ...tail]) =>
+   tail.reduce((acc, x, index) => {
+      acc.push(acc[index] + x);
+      return acc
+  }, [head])
+
+  Array.prototype.rotate = (function() {
+    var unshift = Array.prototype.unshift,
+        splice = Array.prototype.splice;
+
+    return function(count) {
+        var len = this.length >>> 0,
+            count = count >> 0;
+
+        unshift.apply(this, splice.call(this, count % len, len));
+        return this;
+    };
+})();
 // import DropdownSelector from './DropdownSelector';
 
 const io = openSocket('http://localhost:8000/');
@@ -34,20 +55,61 @@ class App extends Component {
       names: ["default"],
       isChangingFilterMode: 0,
       seqPropsDropdown: false,
-      seqDropDownWidth: 0
+      seqDropDownWidth: 0,
+      scroll:0,
+      positions: [0, 0, 0, 0, 0, 0],
+      opacities: [0, 0, 0, 0, 0, 0],
+      angles: [0, 0, 0, 0, 0, 0]
     }
+    this.heights = [];
+    this.cHeights = [];
+    this.normalizedPos = [];
+    this.maxHeight = 0;
+  }
+
+  getPosAndOpacityList(scroll) {
+    // console.log(normalizedPos);
+    let positions = [];
+    let opacities = [];
+    let angles = []
+    for (var i=0; i<this.normalizedPos.length; i++) {
+      let angle = this.normalizedPos[i]*2*Math.PI + scroll;
+      angles.push(Math.acos(Math.pow(Math.cos(angle), 1/5)));
+      let computedPos;
+      // if (0<angle<Math.PI) {
+      //   computedPos = (Math.sqrt(Math.sin(angle)) + 1) /2;// range between 0 and 1
+      // } else if (-Math.PI<angle<0) {
+      //   computedPos = -(Math.sqrt(Math.sin(-angle)) +1 /2);
+      // } else {
+      //   computedPos = (Math.sin(angle) + 1) /2;
+      // }
+      computedPos = (Math.sin(angle) + 1) /2;
+      positions.push(computedPos * ($(window).height() -this.maxHeight));
+      let opacity = Math.cos(angle);// the opacity is the cos, but clamped instead of remapped.
+      opacity = opacity<0? 0:opacity;
+      opacities.push(Math.pow(opacity, 1/5));
+    }
+    // console.log(positions);
+    this.setState({
+      positions: positions,
+      opacities: opacities,
+      angles: angles,
+      scroll: scroll
+    });
   }
 
   toggleRowSeqEditorProps() {
     // toggle the dropdown menu for sequence editing
-    this.setState({seqPropsDropdown: !this.state.seqPropsDropdown});
+    this.setState({seqPropsDropdown: !this.state.seqPropsDropdown}, this.calculateHeights);
     // if (this.state.seqPropsDropdown) {
-    //   jQuery('#seqEditorProps').animate({width: '100%'});
-    // }
+      //   jQuery('#seqEditorProps').animate({width: '100%'});
+      // }
   }
 
   componentDidMount() {
     // setting up event listeners
+    this.calculateHeights();
+    $(window).on('mousewheel', (e)=>this.handleScroll(e));
     io.on('updateChangeFilterMode', newVal => {
       this.setState({isChangingFilterMode: newVal});
     });
@@ -83,6 +145,25 @@ class App extends Component {
     });
   }
 
+  calculateHeights() {
+    this.heights = $.map($('.category'), (c) => c.offsetHeight);
+    this.heights.rotate(-1);
+    this.maxHeight = Math.max.apply(null, this.heights);
+    console.log(this.maxHeight);
+    console.log(this.heights);
+    this.cHeights = cumulativeSum(this.heights);
+    //normalize
+    let max = this.cHeights[this.cHeights.length - 1];
+    this.normalizedPos = this.cHeights.map(h => h / max);
+    this.getPosAndOpacityList(this.state.scroll);
+  }
+
+  handleScroll(e) {
+    if (!this.state.isEditingSpotSequence) {
+      this.getPosAndOpacityList(this.state.scroll + e.deltaY*e.deltaFactor/100);
+    }
+  }
+
   handleToggleUseSequencer() {
     // using Sequencer or not
     io.emit('toggleUseSequencer');
@@ -92,25 +173,43 @@ class App extends Component {
     // sequencer dropdown content get
     if (this.state.seqPropsDropdown) {
       return(
-        <div id="seqDropDown" className={`category ${this.state.seqPropsDropdown? "open": "closed"}`}>
+        <div 
+          id="seqDropDown" 
+          className={`category ${this.state.seqPropsDropdown? "open": "closed"}`}
+          style={{
+            top: this.state.positions[1],
+            opacity: this.state.opacities[1],
+            transform: `rotateX(${this.state.angles[1]}rad)`,
+            zIndex: Math.round(this.state.opacities[1]*100)
+          }}>
     <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
-        <div className={`row seqEditorProps`} id="seqEditorProps">
-          <div className="col-4">
+          <div className="container">
+        <div className={`row justify-content-around`}>
+          <div className="col">
             <ImageToggle 
               onClick={(useless) => this.handleToggleUseSequencer()}
               title=""
               size={3}
-              paths={[r+"lit.png", r+"unlit.png"]}
+              paths={[r+"unlit.png", r+"lit.png"]}
               subtitles={["Activer", "Désactiver"]}
               align="center"
               value={this.state.useSequencer}
             />
+            </div>
+            <div className="col-8">
+            <Slider
+                    value={this.state.tempo}
+                    onChange={(e) => io.emit('setTempo', e.target.value)}
+                    min="20" max="300"
+                    suffix="BPM"
+                />
             </div>
             <div id="noShadow" className="col">
             <ImageToggle
               onClick={()=> {
                 this.setState({isEditingSpotSequence: true})
               }}
+              className="props"
               size={3}
               title=""
               paths={["", r+"edit.png"]}
@@ -120,12 +219,20 @@ class App extends Component {
               id="noShadow"
             />
             </div>
+            </div>
         </div>
         </div>
       );
     } else {
         return (
-        <div id="seqDropDown" className="row closed">
+          <div id="seqDropDown" className="category closed"
+          style={{
+            top: this.state.positions[1],
+            opacity: this.state.opacities[1],
+            transform: `rotateX(${this.state.angles[1]}rad)`,
+            zIndex: Math.round(this.state.opacities[1]*100)
+          }}>
+          <div className="row">
         <div className="col">
           <ImageToggle
             onClick={(useless)=>this.toggleRowSeqEditorProps()}
@@ -138,13 +245,14 @@ class App extends Component {
           />
         </div>
         </div>
+        </div>
       );
     }
   }
 
   render() {
     return (
-      <div>
+      <div id="app-container">
         {/* modal content for sequence editing */}
         <div className="modal" style={{display: this.state.isEditingSpotSequence? "block" : "none"}}>
           <div className="modal-content" >
@@ -182,6 +290,9 @@ class App extends Component {
             ]}
           aligns={["center", "center", "center"]}
           sizes={[3, 3, 3]}
+          position={this.state.positions[0]}
+          opacity={this.state.opacities[0]}
+          angle={this.state.angles[0]}
         />
         {/* Sequence editor props*/}
             {this.getSequencerContent()}
@@ -196,6 +307,9 @@ class App extends Component {
           sizes={[3, 3, 3, 3]}
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
+          position={this.state.positions[2]}
+          opacity={this.state.opacities[2]}
+          angle={this.state.angles[2]}
         />
         <Category
           title="Moteur" 
@@ -211,6 +325,9 @@ class App extends Component {
           aligns={["center", "center"]}
           sizes={[3]}
           disabled={this.state.isChangingFilterMode}
+          position={this.state.positions[3]}
+          opacity={this.state.opacities[3]}
+          angle={this.state.angles[3]}
         />
         <Category
           title="Filtre"
@@ -227,6 +344,9 @@ class App extends Component {
           sizes={[3, 3, 3]}
           isToggleGroup={true}
           alignCenter={true}
+          position={this.state.positions[4]}
+          opacity={this.state.opacities[4]}
+          angle={this.state.angles[4]}
         />
       </div>
     );
