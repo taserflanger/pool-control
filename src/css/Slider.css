@@ -35,6 +35,16 @@
     height: 25px; /* Slider handle height */
     background: #52d1dc; /* Green background */
     cursor: pointer; /* Cursor on hover */
+    transition-property: transform;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    transform: rotate(45deg);
+    transition-property: transform;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
   }
 
   .slider::-moz-range-thumb {

@@ -67,18 +67,60 @@ class App extends Component {
     this.maxHeight = 0;
   }
 
+  InverseLerp(min, max, val) {
+    return (val - min) / (max-min);
+  }
+
+  Lerp(min, max, val) {
+    return val*(max-min) + min
+  }
+
+  Clamp(min, val, max) {
+    if (val < min) {
+      return min
+    } else if (val > max) {
+      return max
+    } else {
+      return val
+    }
+  }
+
+  MapRange(inMin, inMax, val, outMin, outMax) {
+    val = this.Clamp(inMin, val, inMax);
+    let inverse = (val-inMin) / (inMax-inMin);
+    return inverse*(outMax-outMin)+outMin;
+  }
+
+  calculateAngles() {
+    let angles = []
+    // console.log(this.normalizedPos);
+    for (var i=0; i<this.state.positions.length; i++) {
+      let normPos = this.state.positions[i] / ($(window).height() -this.maxHeight);
+      let angle = this.MapRange(0.8, 1, normPos, 0, -0.5*Math.PI);
+      let angle2 = this.MapRange(0, 0.2, normPos, 0.5*Math.PI, 0);
+      if (normPos>0.8) {
+        angles.push(angle)
+      } else {
+        angles.push(angle2)
+      }
+    }
+    this.setState({angles: angles});
+  }
+
   getPosAndOpacityList(scroll) {
     // console.log(normalizedPos);
     let positions = [];
     let opacities = [];
-    let angles = []
+    // let angles = []
     for (var i=0; i<this.normalizedPos.length; i++) {
       let angle = this.normalizedPos[i]*2*Math.PI + scroll;
-      if (angle%(2*Math.PI) > Math.PI/4 && angle%(2*Math.PI) < 3*Math.PI/4) {
-          angles.push(-Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
-        } else {
-          angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
-        }
+      // if (angle%(2*Math.PI) > Math.PI/4 && angle%(2*Math.PI) < 3*Math.PI/4) {
+      //     angles.push(-Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
+      //   } else {
+      //     angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
+      //   }
+      // angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/7))); 
+      
       let computedPos;
       computedPos = (Math.sin(angle) + 1) /2;
       positions.push(computedPos * ($(window).height() -this.maxHeight));
@@ -87,10 +129,11 @@ class App extends Component {
       opacities.push(Math.pow(opacity, 1/3));
     }
     // console.log(positions);
+    this.calculateAngles();
     this.setState({
       positions: positions,
       opacities: opacities,
-      angles: angles,
+      // angles: angles,
       scroll: scroll
     });
   }
