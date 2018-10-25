@@ -19,6 +19,12 @@ body, html {
   overflow-y: hidden;
 }
 
+#app-container {
+  perspective: 2000px;
+  position: absolute;
+  perspective-origin: 50vw 50vh;
+}
+
 .row {
   flex-wrap: nowrap;
   margin: 0 0 0 0;

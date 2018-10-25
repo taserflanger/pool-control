@@ -74,20 +74,17 @@ class App extends Component {
     let angles = []
     for (var i=0; i<this.normalizedPos.length; i++) {
       let angle = this.normalizedPos[i]*2*Math.PI + scroll;
-      angles.push(Math.acos(Math.pow(Math.cos(angle), 1/5)));
+      if (angle%(2*Math.PI) > Math.PI/4 && angle%(2*Math.PI) < 3*Math.PI/4) {
+          angles.push(-Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
+        } else {
+          angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
+        }
       let computedPos;
-      // if (0<angle<Math.PI) {
-      //   computedPos = (Math.sqrt(Math.sin(angle)) + 1) /2;// range between 0 and 1
-      // } else if (-Math.PI<angle<0) {
-      //   computedPos = -(Math.sqrt(Math.sin(-angle)) +1 /2);
-      // } else {
-      //   computedPos = (Math.sin(angle) + 1) /2;
-      // }
       computedPos = (Math.sin(angle) + 1) /2;
       positions.push(computedPos * ($(window).height() -this.maxHeight));
       let opacity = Math.cos(angle);// the opacity is the cos, but clamped instead of remapped.
       opacity = opacity<0? 0:opacity;
-      opacities.push(Math.pow(opacity, 1/5));
+      opacities.push(Math.pow(opacity, 1/3));
     }
     // console.log(positions);
     this.setState({
