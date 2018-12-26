@@ -58,13 +58,15 @@ class App extends Component {
       seqDropDownWidth: 0,
       scroll:0,
       positions: [0, 0, 0, 0, 0, 0],
-      opacities: [0, 0, 0, 0, 0, 0],
-      angles: [0, 0, 0, 0, 0, 0]
+      angles: [0, 0, 0, 0, 0, 0],
+      visibilities: [1, 1, 1, 1, 1, 1]
     }
     this.heights = [];
     this.cHeights = [];
     this.normalizedPos = [];
     this.maxHeight = 0;
+    this.lastTouch;
+    this.isScrolling = false;
   }
 
   InverseLerp(min, max, val) {
@@ -96,8 +98,8 @@ class App extends Component {
     // console.log(this.normalizedPos);
     for (var i=0; i<this.state.positions.length; i++) {
       let normPos = this.state.positions[i] / ($(window).height() -this.maxHeight);
-      let angle = this.MapRange(0.8, 1, normPos, 0, -0.5*Math.PI);
-      let angle2 = this.MapRange(0, 0.2, normPos, 0.5*Math.PI, 0);
+      let angle = this.MapRange(0.9, 1, normPos, 0, -0.5*Math.PI);
+      let angle2 = this.MapRange(0, 0.1, normPos, 0.5*Math.PI, 0);
       if (normPos>0.8) {
         angles.push(angle)
       } else {
@@ -110,7 +112,7 @@ class App extends Component {
   getPosAndOpacityList(scroll) {
     // console.log(normalizedPos);
     let positions = [];
-    let opacities = [];
+    let visibilities = [];
     // let angles = []
     for (var i=0; i<this.normalizedPos.length; i++) {
       let angle = this.normalizedPos[i]*2*Math.PI + scroll;
@@ -124,16 +126,15 @@ class App extends Component {
       let computedPos;
       computedPos = (Math.sin(angle) + 1) /2;
       positions.push(computedPos * ($(window).height() -this.maxHeight));
-      let opacity = Math.cos(angle);// the opacity is the cos, but clamped instead of remapped.
-      opacity = opacity<0? 0:opacity;
-      opacities.push(Math.pow(opacity, 1/3));
+      let visibility = Math.cos(angle);// the visibility is the cos, but thresholded instead of remapped.
+      visibility = visibility<0? 0:1;
+      visibilities.push(visibility);
     }
     // console.log(positions);
     this.calculateAngles();
     this.setState({
       positions: positions,
-      opacities: opacities,
-      // angles: angles,
+      visibilities: visibilities,
       scroll: scroll
     });
   }
@@ -146,6 +147,20 @@ class App extends Component {
       // }
   }
 
+  handleTouchMove(ev) {
+    let e = ev.originalEvent;
+    let touch = e.touches[0].pageY/$(window).height();
+    let delta = touch - this.lastTouch;
+    this.lastTouch = touch
+    this.getPosAndOpacityList(this.state.scroll + 2*delta);
+  }
+
+  handleTouchStart(ev) {
+    let e = ev.originalEvent;
+    this.lastTouch = e.touches[0].pageY/$(window).height();
+    this.isScrolling = true;
+  }
+
   componentDidMount() {
     // setting up event listeners
     this.calculateHeights();
@@ -153,6 +168,8 @@ class App extends Component {
     io.on('updateChangeFilterMode', newVal => {
       this.setState({isChangingFilterMode: newVal});
     });
+    $(window).on('touchstart', (e)=>this.handleTouchStart(e));
+    $(window).on('touchmove', (e)=>this.handleTouchMove(e));
     io.on('tempoUpdate', tempo => {
       this.setState({
         tempo: tempo
@@ -218,9 +235,8 @@ class App extends Component {
           className={`category ${this.state.seqPropsDropdown? "open": "closed"}`}
           style={{
             top: this.state.positions[1],
-            opacity: this.state.opacities[1],
             transform: `rotateX(${this.state.angles[1]}rad)`,
-            zIndex: Math.round(this.state.opacities[1]*100)
+            display: `${this.state.visibilities[1]==1?'inline':'none'}`
           }}>
     <Title size="2" align="center" text="Séquenceur" onClick={() => this.toggleRowSeqEditorProps()} style={{cursor: "pointer"}}/>
           <div className="container">
@@ -268,9 +284,8 @@ class App extends Component {
           <div id="seqDropDown" className="category closed"
           style={{
             top: this.state.positions[1],
-            opacity: this.state.opacities[1],
             transform: `rotateX(${this.state.angles[1]}rad)`,
-            zIndex: Math.round(this.state.opacities[1]*100)
+            display: `${this.state.visibilities[1]==1?'inline':'none'}`
           }}>
           <div className="row">
         <div className="col">
@@ -331,8 +346,8 @@ class App extends Component {
           aligns={["center", "center", "center"]}
           sizes={[3, 3, 3]}
           position={this.state.positions[0]}
-          opacity={this.state.opacities[0]}
           angle={this.state.angles[0]}
+          visibility={this.state.visibilities[0]}
         />
         {/* Sequence editor props*/}
             {this.getSequencerContent()}
@@ -348,8 +363,8 @@ class App extends Component {
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
           position={this.state.positions[2]}
-          opacity={this.state.opacities[2]}
           angle={this.state.angles[2]}
+          visibility={this.state.visibilities[2]}
         />
         <Category
           title="Moteur" 
@@ -366,8 +381,8 @@ class App extends Component {
           sizes={[3]}
           disabled={this.state.isChangingFilterMode}
           position={this.state.positions[3]}
-          opacity={this.state.opacities[3]}
           angle={this.state.angles[3]}
+          visibility={this.state.visibilities[3]}
         />
         <Category
           title="Filtre"
@@ -385,8 +400,8 @@ class App extends Component {
           isToggleGroup={true}
           alignCenter={true}
           position={this.state.positions[4]}
-          opacity={this.state.opacities[4]}
           angle={this.state.angles[4]}
+          visibility={this.state.visibilities[4]}
         />
       </div>
     );

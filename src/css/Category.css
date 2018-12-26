@@ -7,5 +7,5 @@
   padding: .2rem;
   /* transform: perspective(10px); */
   transform-style: preserve-3d;
-  backface-visibility: visible;
+  backface-visibility: hidden;
 }

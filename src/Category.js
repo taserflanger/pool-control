@@ -156,8 +156,8 @@ class Category extends Component {
             style={{
                 zIndex: Math.round(this.props.opacitiy*100),
                 top: this.props.position,
-                opacity: this.props.opacity,
-                transform: `rotateX(${this.props.angle}rad)`
+                transform: `rotate3d(1, 0, 0, ${this.props.angle}rad)`,
+                display: `${this.props.visibility==1? 'inline':'none'}`
             }}>
             
             <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
