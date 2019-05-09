@@ -7,11 +7,6 @@ import ImageToggle from './ImageToggle';
 import Slider from './Slider';
 import './css/App.css';
 const r="./ressources/";
-const cumulativeSum = ([head, ...tail]) =>
-   tail.reduce((acc, x, index) => {
-      acc.push(acc[index] + x);
-      return acc
-  }, [head])
 
   Array.prototype.rotate = (function() {
     var unshift = Array.prototype.unshift,
@@ -91,52 +86,6 @@ class App extends Component {
     return inverse*(outMax-outMin)+outMin;
   }
 
-  calculateAngles() {
-    let angles = []
-    // console.log(this.normalizedPos);
-    for (var i=0; i<this.state.positions.length; i++) {
-      let normPos = this.state.positions[i] / ($(window).height() -this.maxHeight);
-      let angle = this.MapRange(0.9, 1, normPos, 0, -0.5*Math.PI);
-      let angle2 = this.MapRange(0, 0.1, normPos, 0.5*Math.PI, 0);
-      if (normPos>0.8) {
-        angles.push(angle)
-      } else {
-        angles.push(angle2)
-      }
-    }
-    this.setState({angles: angles});
-  }
-
-  getPosAndOpacityList(scroll) {
-    // console.log(normalizedPos);
-    let positions = [];
-    let visibilities = [];
-    // let angles = []
-    for (var i=0; i<this.normalizedPos.length; i++) {
-      let angle = this.normalizedPos[i]*2*Math.PI + scroll;
-      // if (angle%(2*Math.PI) > Math.PI/4 && angle%(2*Math.PI) < 3*Math.PI/4) {
-      //     angles.push(-Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
-      //   } else {
-      //     angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/3))); 
-      //   }
-      // angles.push(Math.acos(Math.pow(Math.cos(-angle), 1/7))); 
-      
-      let computedPos;
-      computedPos = (Math.sin(angle) + 1) /2;
-      positions.push(computedPos * ($(window).height() -this.maxHeight));
-      let visibility = Math.cos(angle);// the visibility is the cos, but thresholded instead of remapped.
-      visibility = visibility<0? 0:1;
-      visibilities.push(visibility);
-    }
-    // console.log(positions);
-    this.calculateAngles();
-    this.setState({
-      positions: positions,
-      visibilities: visibilities,
-      scroll: scroll
-    });
-  }
-
   toggleRowSeqEditorProps() {
     // toggle the dropdown menu for sequence editing
     this.setState({seqPropsDropdown: !this.state.seqPropsDropdown}, this.calculateHeights);
@@ -145,30 +94,9 @@ class App extends Component {
       // }
   }
 
-  handleTouchMove(ev) {
-    let e = ev.originalEvent;
-    let touch = e.touches[0].pageY/$(window).height();
-    let delta = touch - this.lastTouch;
-    this.lastTouch = touch
-    this.getPosAndOpacityList(this.state.scroll + 2*delta);
-  }
-
-  handleTouchStart(ev) {
-    let e = ev.originalEvent;
-    this.lastTouch = e.touches[0].pageY/$(window).height();
-    this.isScrolling = true;
-  }
-
   componentDidMount() {
     // setting up event listeners
-    this.calculateHeights();
-    $(window).on('mousewheel', (e)=>this.handleScroll(e));
-    io.on('updateChangeFilterMode', newVal => {
-      this.setState({isChangingFilterMode: newVal});
-    });
-    $(window).on('touchstart', (e)=>this.handleTouchStart(e));
-    $(window).on('touchmove', (e)=>this.handleTouchMove(e));
-    io.on('tempoUpdate', tempo => {
+        io.on('tempoUpdate', tempo => {
       this.setState({
         tempo: tempo
       });
@@ -198,25 +126,6 @@ class App extends Component {
         tempo: val
       });
     });
-  }
-
-  calculateHeights() {
-    this.heights = $.map($('.category'), (c) => c.offsetHeight);
-    this.heights.rotate(-1);
-    this.maxHeight = Math.max.apply(null, this.heights);
-    console.log(this.maxHeight);
-    console.log(this.heights);
-    this.cHeights = cumulativeSum(this.heights);
-    //normalize
-    let max = this.cHeights[this.cHeights.length - 1];
-    this.normalizedPos = this.cHeights.map(h => h / max);
-    this.getPosAndOpacityList(this.state.scroll);
-  }
-
-  handleScroll(e) {
-    if (!this.state.isEditingSpotSequence) {
-      this.getPosAndOpacityList(this.state.scroll + e.deltaY*e.deltaFactor/100);
-    }
   }
 
   handleToggleUseSequencer() {
