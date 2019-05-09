@@ -1,10 +1,13 @@
 const io = require('socket.io')();
 const SequenceController = require('./server/SequenceController');
 const seq = new SequenceController();
-const Gpio = require('onoff').Gpio;
-let NORTHLIGHT = new Gpio(18, 'out');
-let SOUTHEASTLIGHT = new Gpio(23, 'out');
-let SOUTHLIGHT = new Gpio(24, 'out');
+// const Gpio = require('onoff').Gpio;
+// let NORTHLIGHT = new Gpio(18, 'out');
+// let SOUTHEASTLIGHT = new Gpio(23, 'out');
+// let SOUTHLIGHT = new Gpio(24, 'out');
+let NORTHLIGHT = {writeSync:(a)=>null};
+let SOUTHEASTLIGHT = {writeSync:(a)=>null};
+let SOUTHLIGHT = {writeSync:(a)=>null};
 
 let globals = {
     Spots: {

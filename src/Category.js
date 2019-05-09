@@ -9,7 +9,7 @@ import './css/Category.css';
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.10:8000/');
+const io = openSocket('http://192.168.0.100:8000/');
 
 class Category extends Component {
 

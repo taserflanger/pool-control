@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Slider from './Slider';
-import './SequenceEditor.css'
+import './css/SequenceEditor.css'
 
 class SequenceEditor extends Component{
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component }  from 'react';
 import Title from './Title';
 import Category from './Category';
 import SequenceEditor from './SequenceEditor';
@@ -11,7 +11,7 @@ import './css/App.css';
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.10:8000/');
+const io = openSocket('http://192.168.0.100:8000/');
 
 class App extends Component {
 
@@ -95,6 +95,7 @@ class App extends Component {
         <div className="modal" style={{display: this.state.isEditingSpotSequence? "block" : "none"}}>
           <div className="modal-content" >
           <SequenceEditor
+
             sequenceName={this.state.names[this.state.activeSequence]}
             onChangeName={(newName) => io.emit('setSequenceName', this.state.activeSequence, newName)}
             activeSequence={0}
