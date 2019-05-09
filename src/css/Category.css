@@ -1,4 +1,11 @@
 
 .category {
-  margin-bottom: 1rem;
+  margin: 1rem 3.5vw 1rem 3.5vw;
+  position: absolute;
+  width: 93vw;
+  box-shadow: 0 0 30px rgba(.2, .2, .2, .1);
+  padding: .2rem;
+  /* transform: perspective(10px); */
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }

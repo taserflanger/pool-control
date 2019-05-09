@@ -6,7 +6,7 @@ class Slider extends Component {
     render() {
         return (
             <div className="slidecontainer">
-                <Title text={this.props.title} size={1} />
+                {this.getTitle()}
                 <input
                     type="range"
                     min={this.props.min} max={this.props.max}
@@ -17,6 +17,13 @@ class Slider extends Component {
                 <p>{this.props.value} {this.props.suffix}</p>
             </div>
         );
+    }
+
+    getTitle() {
+        if(this.props.title) {
+            return <Title text={this.props.title} size={1} />;
+        }
+        return;
     }
 }
 

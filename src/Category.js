@@ -7,14 +7,15 @@ import openSocket from 'socket.io-client';
 import './css/Category.css';
 
 
-// const io = openSocket('http://localhost:8000/');
+const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.100:8000/');
+// const io = openSocket('http://192.168.0.10:8000/');
 
 class Category extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+        
         this.state = {
             values: this.props.initialValues
         }
@@ -139,7 +140,7 @@ class Category extends Component {
         let alignedCenter = this.props.aligneCenter? "align-items-center" : ""
         for (var i=0; i<Math.floor(this.props.names.length, 4); i++) {
             result.push(
-                <div key={i} className={`row justif-content-around ${alignedCenter}`}>
+                <div key={i} className={`row justify-content-around ${alignedCenter}`}>
                     { this.getCategoryContent(i*4, i*4+4) }
                 </div>
             );
@@ -149,9 +150,17 @@ class Category extends Component {
 
     render() {
         return (
-            <div className="category" id={this.props.title.toLowerCase()} style={{zIndex: -1}}>
+            <div 
+            className="category"
+            id={this.props.title.toLowerCase()}
+            style={{
+                zIndex: Math.round(this.props.opacitiy*100),
+                top: this.props.position,
+                transform: `rotate3d(1, 0, 0, ${this.props.angle}rad)`,
+                display: `${this.props.visibility==1? 'inline':'none'}`
+            }}>
             
-            <Title size="2" text={this.props.title} align={this.props.align}/>
+            <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
 
             <div className="container">
                 { this.getRows() }

@@ -95,9 +95,9 @@ class SequenceEditor extends Component{
         }
         return (
             <div id="sequence-editor-field">
-                <div id="nameArea">
+                {/* <div id="nameArea">
                 {this.getNameDisplay()}
-                </div>
+                </div> */}
                 {rows}
                 <Slider
                     title="Tempo"

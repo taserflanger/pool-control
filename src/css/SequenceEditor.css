@@ -6,6 +6,11 @@
     border-radius: 10%;
 }
 
+.seqTile {
+  height: 2rem;
+  margin: .2rem;
+}
+
 #sequenceSelector, #plusButton {
   display:inline-block;
   vertical-align: center;
@@ -14,6 +19,10 @@
 #plusButton {
     width: fit-content;
     margin-left: 1rem;
+}
+
+.spot-row {
+  margin-bottom: .6rem;
 }
 
 .active-enabled-seq {

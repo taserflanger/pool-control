@@ -1,3 +1,13 @@
+:root {
+  --blue: rgba(30, 232, 247, 0.95);
+  --dark: #292f36;
+}
+
+.container {
+  position: relative;
+}
+
+
 body, html {
   margin: 0;
   padding: 0;
@@ -6,16 +16,22 @@ body, html {
   text-align: center;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
+#app-container {
+  perspective: 2000px;
+  position: absolute;
+  perspective-origin: 50vw 50vh;
+}
 
 .row {
   flex-wrap: nowrap;
+  margin: 0 0 0 0;
 }
 
 .button {
   cursor: pointer;
-  float: right;
 }
 
 h3 {
@@ -35,15 +51,6 @@ h3 {
 
 .button:hover {
   background-color: #52d1dc;
-}
-
-.spot-row {
-  margin-bottom: .6rem;
-}
-
-.seqTile {
-  height: 2rem;
-  margin: .2rem;
 }
 
 p,h2 {
@@ -66,10 +73,9 @@ p,h2 {
   width: min-content;
 }
 
-
-
-.col{
-  padding: 0 .2rem 0 .2rem;
+[class|="col"] {
+  padding: 0 .1rem 0 .1rem;
+  margin: 0 .05rem 0 .05rem;
 }
 
 

@@ -43,17 +43,15 @@ class ImageToggle extends Component {
     render() {
         let align = this.props.align || "left";
         let size = this.props.size || 3;
-        if (!this.props.path) {
-            console.log()
-        }
+        let id = this.props.id || "";
         let path = this.props.paths[this.props.value? 1 : 0]
         path = this.state.hover?  path.slice(0, -4) + "_hover.png" : path;
         let duration = this.state.hover? 10: 300;
         return (
-            <div className={`imageToggle-${this.props.value}`}>
+            <div id={id} className={`imageToggle-${this.props.value} ` + this.props.className}>
                 {this.getTitle()}
                 <a onClick={() => this.props.onClick(this.props.name)} className={`imageToggle text-${align}`}>
-                    <CrossfadeImage duration={duration} onMouseOver={(b) => this.hover(b)} src={path} alt={this.props.name} style = {{width: size+"em", height:size+"em"}}/>
+                    <CrossfadeImage id={this.props.id} duration={duration} onMouseOver={(b) => this.hover(b)} src={path} alt={this.props.name} style = {{width: size+"em", height:size+"em"}}/>
                 </a>
                 {this.getSubtitle()}
             </div>
