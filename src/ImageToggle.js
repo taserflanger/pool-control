@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CrossfadeImage from './CrossfadeImage';
 import Title from './Title';
 import './css/ImageToggle.css';
 

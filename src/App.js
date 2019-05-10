@@ -22,9 +22,9 @@ const r="./ressources/";
 })();
 // import DropdownSelector from './DropdownSelector';
 
-const io = openSocket('http://localhost:8000/');
+// const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-// const io = openSocket('http://192.168.0.100:8000/');
+const io = openSocket('http://192.168.0.100:8000/');
 
 class App extends Component {
 
@@ -49,10 +49,6 @@ class App extends Component {
       isChangingFilterMode: 0,
       seqPropsDropdown: false,
       seqDropDownWidth: 0,
-      scroll:0,
-      positions: [0, 0, 0, 0, 0, 0],
-      angles: [0, 0, 0, 0, 0, 0],
-      visibilities: [1, 1, 1, 1, 1, 1]
     }
     this.heights = [];
     this.cHeights = [];
@@ -257,9 +253,6 @@ class App extends Component {
             ]}
           aligns={["center", "center", "center"]}
           sizes={[3, 3, 3]}
-          position={this.state.positions[0]}
-          angle={this.state.angles[0]}
-          visibility={this.state.visibilities[0]}
         />
         {/* Sequence editor props*/}
             {/* {this.getSequencerContent()} */}
@@ -272,7 +265,6 @@ class App extends Component {
           initialValues = {[25, 20, 7, 0]}
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
-          position={this.state.positions[2]}
         />
         <Category
           title="Moteur" 
@@ -285,7 +277,7 @@ class App extends Component {
           names = {["is_on", "freq"]}
           initialValues={[true, 10]}
           disabled={this.state.isChangingFilterMode}
-        /> # simplifier
+        />
         <Category
           title="Filtre"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
@@ -301,9 +293,6 @@ class App extends Component {
           sizes={[3, 3, 3]}
           isToggleGroup={true}
           alignCenter={true}
-          position={this.state.positions[4]}
-          angle={this.state.angles[4]}
-          visibility={this.state.visibilities[4]}
         />
         <ImageToggle
           onClick = {()=>this.enableAdminMode()}
