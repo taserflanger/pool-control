@@ -1,6 +1,5 @@
 const io = require('socket.io')();
-const SequenceController = require('./server/SequenceController');
-const seq = new SequenceController();
+const fs = require('fs');
 // const Gpio = require('onoff').Gpio;
 // let NORTHLIGHT = new Gpio(18, 'out');
 // let SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -18,25 +17,15 @@ try {
     ISRASPBERRY = false;
 }
 
-let globals = {
-    Spots: {
-        north_light: 0, // here read with gpio
-        southeast_light: 0,
-        south_light: 0
-    },
-    Moteur: {
-        is_on: 1,
-        freq: 10
-    },
-    Filtre: 0,
-    Broadcast: {
-        water_temp: 20,
-        air_temp: 25,
-        ph: 7,
-        orp: 5
-    },
-    useSequencer: false
+data = fs.readFileSync("server/poolState.json", 'utf8');
+function Write() {
+    fs.writeFile("server/poolState.json", JSON.stringify(globals, null, 4), (err)=> {
+        if (err) throw err;
+    })
 }
+
+
+let globals = JSON.parse(data.toString())
 
 io.on('connection', (client) => {
     console.log('client connected')
@@ -61,19 +50,22 @@ io.on('connection', (client) => {
     });
     client.on('toggle', (category, variable) => {
         toggleVariable(category, variable, client);
+        Write();
     });
     client.on('setValue', (category, variable, value) => {
         setValue(category, variable, value, client);
+        Write();
     });
     client.on('setSingleValue', (category, value) => {
         setSingleValue(category, value, client);
+        Write();
     })
     setInterval(()=> {
         globals.Broadcast.water_temp += Math.round(Math.random()*2 - 1, 4);
         globals.Broadcast.air_temp += (Math.round(Math.random()*2 - 1, 4));
         io.emit("update_Broadcast", "water_temp", globals.Broadcast.water_temp);
         io.emit("update_Broadcast", "air_temp", globals.Broadcast.air_temp);
-    }, 1000);
+    }, 10000);
 });
 
 function setSingleValue(category, value, client) {
@@ -85,10 +77,6 @@ function setSingleValue(category, value, client) {
 }
 
 function InitializeClient(client) {
-    client.emit('updateSequences', seq.sequences);
-    client.emit('setTempo', seq.tempo);
-    client.emit('toggleUseSequencer', globals.useSequencer);
-    client.emit('updateNames', seq.names);
     //update variables on Connection
     Object.keys(globals).forEach((category) => {
         initializeCategory(category, client);
@@ -118,6 +106,7 @@ function toggleSequenceSpotTick(index, spot, tick) {
 }
 
 function toggleUseSequencer(client) {
+    // Deprecated, for use of an eventual sequencer
     globals.useSequencer = !globals.useSequencer;
     if (globals.useSequencer) {
         seq.start(lightValues => {

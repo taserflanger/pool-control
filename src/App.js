@@ -177,7 +177,7 @@ class App extends Component {
               title=""
               paths={["", r+"edit.png"]}
               align="center"
-              value={1}
+              value={true}
               name="edit"
               id="noShadow"
             />
@@ -202,7 +202,7 @@ class App extends Component {
             title=""
             paths={[r+"plus.png", r+"plus.png"]} 
             align="center"
-            value={1}
+            value={true}
             name="more"
           />
         </div>
@@ -210,6 +210,10 @@ class App extends Component {
         </div>
       );
     }
+  }
+
+  enableAdminMode() {
+    return;
   }
 
   render() {
@@ -244,7 +248,7 @@ class App extends Component {
           title="Spots"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
           names={["north_light", "southeast_light", "south_light"]}
-          titles={["Nord", "Sud-Est", "Sud"]}
+          titles={[" 1 ", " 2 ", " 3 "]}
           initialValues={[false, false, false]}
           paths={[
               [r+"unlit.png", r+"lit.png"],
@@ -266,13 +270,9 @@ class App extends Component {
           titles={["Air", "Eau", "pH", "ORP"]}
           names={["air_temp", "water_temp", "ph", "orp"]}
           initialValues = {[25, 20, 7, 0]}
-          aligns={["center", "center", "center", "center"]}
-          sizes={[3, 3, 3, 3]}
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
           position={this.state.positions[2]}
-          angle={this.state.angles[2]}
-          visibility={this.state.visibilities[2]}
         />
         <Category
           title="Moteur" 
@@ -283,15 +283,9 @@ class App extends Component {
             []
           ]}
           names = {["is_on", "freq"]}
-          initialValues={[1, 10]}
-          paths={[[r+"launch.png", r+"shutdown.png"]]}
-          aligns={["center", "center"]}
-          sizes={[3]}
+          initialValues={[true, 10]}
           disabled={this.state.isChangingFilterMode}
-          position={this.state.positions[3]}
-          angle={this.state.angles[3]}
-          visibility={this.state.visibilities[3]}
-        />
+        /> # simplifier
         <Category
           title="Filtre"
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
@@ -310,6 +304,15 @@ class App extends Component {
           position={this.state.positions[4]}
           angle={this.state.angles[4]}
           visibility={this.state.visibilities[4]}
+        />
+        <ImageToggle
+          onClick = {()=>this.enableAdminMode()}
+          name={"Admin"}
+          value={true}
+          size={3}
+          subtitles={[]}
+          align={"center"}
+          title={""}
         />
       </div>
     );

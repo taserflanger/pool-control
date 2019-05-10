@@ -75,10 +75,7 @@ class Category extends Component {
                         onClick={(key)=>this.handleImageToggleGroup(key)}
                         name={this.props.names[i]}
                         value={(this.state.values===i)}
-                        size={this.props.sizes[i] }
-                        paths={this.props.paths[i]}
                         subtitles={[]}
-                        align={this.props.aligns[i]}
                         title=""
                         />
                     </div>);
@@ -89,10 +86,7 @@ class Category extends Component {
                             onClick={(key)=>this.handleImageToggleClick(key)}
                             name={this.props.names[i]}
                             value={this.state.values[i]}
-                            size={this.props.sizes[i]}
                             subtitles={[]}
-                            paths={this.props.paths[i]}
-                            align={this.props.aligns[i]}
                             title={(this.props.titles[i])? this.props.titles[i] : ""}
                         />
                     </div>);

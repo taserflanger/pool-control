@@ -1,7 +1,8 @@
 .imageToggle {
-    cursor: pointer;
-  }
+  margin: 0 auto;
+}
 .imageToggle>div{
+  cursor: pointer;
   border-radius: 50%;
   width: 10vw;
   max-width: 3em;

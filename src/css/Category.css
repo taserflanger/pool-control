@@ -1,7 +1,5 @@
 
 .category {
   margin: 1rem 3.5vw 1rem 3.5vw;
-  box-shadow: 0 0 30px rgba(.2, .2, .2, .1);
   padding: .2rem;
-  /* transform: perspective(10px); */
 }
