@@ -245,7 +245,7 @@ class App extends Component {
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
           names={["north_light", "southeast_light", "south_light"]}
           titles={["Nord", "Sud-Est", "Sud"]}
-          initialValues={[0, 0, 0]}
+          initialValues={[false, false, false]}
           paths={[
               [r+"unlit.png", r+"lit.png"],
               [r+"unlit.png", r+"lit.png"],
@@ -258,7 +258,7 @@ class App extends Component {
           visibility={this.state.visibilities[0]}
         />
         {/* Sequence editor props*/}
-            {this.getSequencerContent()}
+            {/* {this.getSequencerContent()} */}
         {/* Broadcast category */}
         <Category
           title="Broadcast"

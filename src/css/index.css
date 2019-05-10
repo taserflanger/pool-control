@@ -1,6 +1,10 @@
 :root {
   --blue: rgba(30, 232, 247, 0.95);
   --dark: #292f36;
+  --color-unlit: rgb(41, 47, 54);
+  --color-unlit-hover: rgb(62, 71, 82);
+  --color-lit: #52d1dc;
+  --color-lit-hover: rgb(88, 190, 199);
 }
 
 .container {

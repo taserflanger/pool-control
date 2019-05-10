@@ -1,7 +1,32 @@
 .imageToggle {
     cursor: pointer;
   }
+.imageToggle>div{
+  border-radius: 50%;
+  width: 10vw;
+  max-width: 3em;
+  min-width: 1em;
+  height: 10vw;
+  max-height: 3em;
+  min-height: 1em;
+  margin: 0 auto;
+  transition: background-color .3s;
+  transition-timing-function: ease-in-out;
+}
+.imageToggle>div.true {
+  background-color: var(--color-lit);
+}
+.imageToggle>div.false {
+  background-color: var(--color-unlit);
+}
 
+.imageToggle>div.true:hover {
+  background-color: var(--color-lit-hover)
+}
+
+.imageToggle>div.false:hover {
+  background-color: var(--color-unlit-hover);
+}
 .imageToggle-false>p {
 color: #52d1dc;
 }
