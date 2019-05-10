@@ -246,11 +246,6 @@ class App extends Component {
           names={["north_light", "southeast_light", "south_light"]}
           titles={[" 1 ", " 2 ", " 3 "]}
           initialValues={[false, false, false]}
-          paths={[
-              [r+"unlit.png", r+"lit.png"],
-              [r+"unlit.png", r+"lit.png"],
-              [r+"unlit.png", r+"lit.png"]
-            ]}
           aligns={["center", "center", "center"]}
           sizes={[3, 3, 3]}
         />
