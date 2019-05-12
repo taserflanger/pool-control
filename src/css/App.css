@@ -9,6 +9,32 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.active{
+  background-color: #90e1e8;
+  text-shadow: 0 0 4px white;
+}
+
+.navbar{
+  padding-top:0;
+  padding-bottom: 0;
+  box-shadow: 0 0 3px var(--color-unlit);
+}
+
+@media screen and (max-width:991px) {
+  .navbar-brand{
+    padding: 2.5vw 0 2.5vw 0
+  }
+}
+
+.nav-item {
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+}
+
+.active > .nav-element .blue {
+  color: var(--color-lit);
+}
+
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;

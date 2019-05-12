@@ -10,9 +10,10 @@
     },
     "Filtre": 2,
     "Broadcast": {
-        "water_temp": -7,
-        "air_temp": 85,
+        "water_temp": 27,
+        "air_temp": 93,
         "ph": 7,
         "orp": 5
-    }
+    },
+    "password": "g"
 }

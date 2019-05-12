@@ -10,6 +10,9 @@
 # production
 /build
 
+#data
+/server/poolState.json
+
 # misc
 .DS_Store
 .env.local

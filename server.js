@@ -42,6 +42,13 @@ io.on('connection', (client) => {
     client.on('toggleUseSequencer', () => {
         toggleUseSequencer(client);
     });
+    client.on('loginAdmin', password => {
+        if (password==globals.password) {
+            client.emit('loginAdmin', true);
+        } else {
+            client.emit('loginAdmin', false);
+        }
+    })
     client.on('toggleSequenceSpotTick', (index, spot, tick)=> {
         toggleSequenceSpotTick(index, spot, tick);
     });
