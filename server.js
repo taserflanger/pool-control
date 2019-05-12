@@ -43,6 +43,7 @@ io.on('connection', (client) => {
         toggleUseSequencer(client);
     });
     client.on('loginAdmin', password => {
+        console.log(client.toString() + " trying to connect width passwd " + password);
         if (password==globals.password) {
             client.emit('loginAdmin', true);
         } else {
@@ -168,4 +169,4 @@ function handleVariableChange(variable, client) {
 
 const port = 8000;
 io.listen(port);
-console.log('listening on port ', port);
+console.log('listening on port', port);

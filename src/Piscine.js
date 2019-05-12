@@ -11,20 +11,9 @@ class Piscine extends Component {
     constructor(props) {
         super(props);
     }
-    getAdminSection() {
-        if (this.state.isAdmin) {
-          return (
-            <button className="btn btn-outline-secondary my-2 my-sm-0" onClick={()=>this.setState({isAdmin: false})}>Déconnexion</button>
-          );
-        } else {
-          return (
-            <button className="btn btn-outline-secondary my-2 my-sm-0" onClick={() => this.setState({loginAdmin: true})}>Mode Admin</button>
-          );
-        }
-      }
     
       getAdminContent() {
-        if (this.state.isAdmin) {
+        if (this.props.isAdmin) {
           return (
             <div id="adminContent">
               <Category
@@ -44,6 +33,7 @@ class Piscine extends Component {
         } return;
       }
     render() {
+      return (
         <div id="Piscine">
         <Category
           title="Spots"
@@ -78,7 +68,6 @@ class Piscine extends Component {
           max={5}
           names = {["is_on", "freq"]}
           initialValues={[true, 1]}
-          disabled={this.state.isChangingFilterMode}
         />
         <Category
           title="Filtre"
@@ -93,5 +82,8 @@ class Piscine extends Component {
         />
         {this.getAdminContent()}
       </div>
+      );
     }
 }
+
+export default Piscine

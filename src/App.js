@@ -1,10 +1,7 @@
 import React, { Component }  from 'react';
-import Title from './Title';
-import Category from './Category';
-import SequenceEditor from './SequenceEditor';
 import openSocket from 'socket.io-client';
-import ImageToggle from './ImageToggle';
-import Slider from './Slider';
+import Piscine from './Piscine.js';
+import CustomForm from './CustomForm.js';
 import './css/App.css';
 
   Array.prototype.rotate = (function() {
@@ -23,8 +20,8 @@ import './css/App.css';
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-// const io = openSocket('http://192.168.0.100:8000/');
-const io = openSocket('http://192.168.0.146:8000/');
+const io = openSocket('http://192.168.0.100:8000/');
+// const io = openSocket('http://192.168.0.146:8000/');
 
 class App extends Component {
 
@@ -35,22 +32,28 @@ class App extends Component {
       //initializing all states
       navBarCollapse: true,
       loginAdmin: false,
-      isAdmin: true
+      isAdmin: false
     }
   }
 
   componentDidMount() {
     // setting up event listeners
     io.on('loginAdmin', bool=> {
-      this.setState({isAdmin: bool});
+      this.setState({isAdmin: bool, loginAdmin: !bool});
     })
   }
 
   
-  
-
-  enableAdminMode() {
-    return;
+  getAdminSection() {
+    if (this.state.isAdmin) {
+      return (
+        <button className="btn btn-outline-secondary my-2 my-sm-0" onClick={()=>this.setState({isAdmin: false})}>Déconnexion</button>
+      );
+    } else {
+      return (
+        <button className="btn btn-outline-secondary my-2 my-sm-0" onClick={() => this.setState({loginAdmin: true})}>Mode Admin</button>
+      );
+    }
   }
 
   render() {
@@ -79,13 +82,18 @@ class App extends Component {
           <span style={{float: "right"}}className="close" onClick={()=> {
               this.setState({loginAdmin: false});
             }}>&times;</span>
-          Connexion au mode admin
-          <input onSubmit={(val)=>{
-            console.log("test")
-            io.emit("loginAdmin", val)
-            }}></input>
+            Mode Admin:
+          <CustomForm
+            onSubmit={(e, value)=> {
+              io.emit("loginAdmin", value);
+              e.preventDefault();
+            }}
+          />
           </div>
           </div>
+          <Piscine
+          isAdmin={this.state.isAdmin}
+          />
         </div>
     );
   }
