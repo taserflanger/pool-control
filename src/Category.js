@@ -9,7 +9,8 @@ import './css/Category.css';
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.100:8000/');
+// const io = openSocket('http://192.168.0.100:8000/');
+const io = openSocket('http://192.168.0.146:8000/');
 
 class Category extends Component {
 
@@ -17,14 +18,15 @@ class Category extends Component {
         super(props)
         
         this.state = {
-            values: this.props.initialValues
+            values: this.props.initialValues,
+            toggleValue: (this.props.initialToggleValue)? this.props.initialToggleValue : null
         }
     }
 
     componentDidMount() {
         if (this.props.isToggleGroup) {
-            io.on(`update_${this.props.title}`, val => {
-                this.setState({values: val});
+            io.on(`update_${this.props.title}`, (val) => {
+                this.setState({toggleValue: val});
             });
         } else {
             io.on(`update_${this.props.title}`, (variableName, val) => {
@@ -66,14 +68,14 @@ class Category extends Component {
         let isToggleGroup = this.props.isToggleGroup | false;
         for (var i=begin; i<end; i++) {
             if (this.props.types[i]==="ImageToggle" || type==="ImageToggle") {
-                if (isToggleGroup) {
+                if (isToggleGroup && this.props.toggleIndices.includes(i)) {
                     result.push(
                         <div key={i}className={"col"}>
                         <Title size={1} align="center" text={this.props.titles[i]} />
                         <ImageToggle 
                         onClick={(key)=>this.handleImageToggleGroup(key)}
                         name={this.props.names[i]}
-                        value={(this.state.values===i)}
+                        value={(this.state.toggleValue===i)}
                         subtitles={[]}
                         title=""
                         />
@@ -117,12 +119,13 @@ class Category extends Component {
                     if (this.props.disabled) {
                         return;
                     }
-                    this.handleSliderChange(i, parseInt(e.target.value, 10))}}value={this.state.values[i]
-                }
+                    this.handleSliderChange(i, parseInt(e.target.value, 10))
+                }}
+                value={this.state.values[i]}
                 name={this.props.names[i]}
                 align={this.props.align} 
                 title={this.props.titles[i]}
-                min="10" max="30"
+                min="1" max="5"
                 suffix={<a>m<sup>3</sup>/h</a>}
             />
         </div>;

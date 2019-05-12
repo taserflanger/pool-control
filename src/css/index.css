@@ -11,6 +11,16 @@
   position: relative;
 }
 
+@media screen and (max-width: 500px) {
+  p, h1, h2, h3, h4, a, div {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  }
+}
 
 body, html {
   margin: 0;

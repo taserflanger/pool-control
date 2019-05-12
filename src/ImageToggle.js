@@ -27,7 +27,7 @@ class ImageToggle extends Component {
         if (this.props.name==="is_on") {
             return (
             <p>
-                {this.props.value? "Eteindre" : "Allumer"}
+                {this.props.value? "ON" : "OFF"}
             </p>
             );
         } return;
@@ -43,10 +43,10 @@ class ImageToggle extends Component {
         let align = this.props.align || "left";
         let id = this.props.id || "";
         return (
-            <div id={id} className={`imageToggle-${this.props.value} ` + this.props.className}>
-                {this.getTitle()}
+            <div id={id} className={`imageToggle-${this.props.value}`}>
+                {/* {this.getTitle()} */}
                 <a  className={`imageToggle text-${align}`}>
-                    <div onClick={() => this.props.onClick(this.props.name)} className={this.props.value.toString()}></div>
+                    <div onClick={() => this.props.onClick(this.props.name)} className={this.props.value.toString()}><p>{this.props.title}</p></div>
                 </a>
                 {this.getSubtitle()}
             </div>

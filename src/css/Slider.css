@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.innerContainer {
+  margin: 1em;
+} 
+
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
@@ -65,3 +69,22 @@
       transition-duration: .2s;
       transition-timing-function: ease-in-out;
   }
+
+.freqButton {
+  cursor: pointer;
+  background-color: var(--color-lit);
+  margin: 1vw;
+  border-radius: 5%;
+  padding: 0;
+}
+
+.freqButton>p {
+  font-size: 4vmin;
+  margin: 0;
+  color: rgb(109, 109, 109);
+}
+
+.freqButton>p:hover {
+  background-color: var(--color-lit-hover);
+  color: black;
+}

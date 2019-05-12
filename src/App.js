@@ -24,7 +24,8 @@ const r="./ressources/";
 
 // const io = openSocket('http://localhost:8000/');
 // const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.100:8000/');
+// const io = openSocket('http://192.168.0.100:8000/');
+const io = openSocket('http://192.168.0.146:8000/');
 
 class App extends Component {
 
@@ -147,11 +148,7 @@ class App extends Component {
           <div className="col">
             <ImageToggle 
               onClick={(useless) => this.handleToggleUseSequencer()}
-              title=""
-              size={3}
-              paths={[r+"unlit.png", r+"lit.png"]}
-              subtitles={["Activer", "Désactiver"]}
-              align="center"
+              title={""}
               value={this.state.useSequencer}
             />
             </div>
@@ -264,13 +261,15 @@ class App extends Component {
         <Category
           title="Moteur" 
           types={["ImageToggle", "Slider"]} 
-          titles={["ON/OFF", "Débit"]}
+          titles={["", "Débit"]}
           subtitles={[
-            ["Démarrer", "Arrêter"],
+            ["OFF", "On"],
             []
           ]}
+          min={1}
+          max={5}
           names = {["is_on", "freq"]}
-          initialValues={[true, 10]}
+          initialValues={[true, 1]}
           disabled={this.state.isChangingFilterMode}
         />
         <Category
@@ -278,15 +277,10 @@ class App extends Component {
           types={["ImageToggle", "ImageToggle", "ImageToggle"]}
           names = {["normal", "backwash", "recirculation"]}
           titles={["Filtration", "Lavage", "Recirculation"]}
-          initialValues={1}
-          paths={[
-            [r+"unlit.png", r+"lit.png"],
-            [r+"unlit.png", r+"lit.png"],
-            [r+"unlit.png", r+"lit.png"]
-          ]}
-          aligns={["center", "center", "center"]}
-          sizes={[3, 3, 3]}
+          initialToggleValue={1}
+          initialValues={null}
           isToggleGroup={true}
+          toggleIndices={[0, 1, 2]}
           alignCenter={true}
         />
         <ImageToggle

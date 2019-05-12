@@ -1,17 +1,17 @@
 {
     "Spots": {
         "north_light": false,
-        "southeast_light": true,
-        "south_light": true
+        "southeast_light": false,
+        "south_light": false
     },
     "Moteur": {
         "is_on": true,
-        "freq": 16
+        "freq": 4
     },
-    "Filtre": 0,
+    "Filtre": 2,
     "Broadcast": {
-        "water_temp": 0,
-        "air_temp": 43,
+        "water_temp": 208,
+        "air_temp": -61,
         "ph": 7,
         "orp": 5
     }
