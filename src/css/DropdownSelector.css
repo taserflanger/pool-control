@@ -1,34 +1,29 @@
 .selector {
-    position: relative;
-    display: inline-block;
-    /* margin-left: 40px;; */
-}
+  position: relative;
+  display: inline-block;
+  /* margin-left: 40px;; */ }
 
 .selector selected {
-    border-radius: 0px;
-    width: 300px;
-}
+  border-radius: 0px;
+  width: 300px; }
 
 .selector-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the #selector items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
-}
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the #selector items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0; }
 
 #selector-items div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
-  }
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4; }
 
 #selector-items div:hover {
-    /*when hovering an item:*/
-    background-color: #e9e9e9;
-}
+  /*when hovering an item:*/
+  background-color: #e9e9e9; }
