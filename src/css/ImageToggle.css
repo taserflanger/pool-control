@@ -1,75 +1,43 @@
 .imageToggle {
-  margin: 0 auto;
-}
-span{
-  line-height: 0vw;
-}
-.imageToggle>div{
-  display: inline-block;
-  padding: 2vw;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 50%;
-  width: 10vw;
-  max-width: 3em;
-  min-width: 1em;
-  height: 10vw;
-  max-height: 3em;
-  min-height: 1em;
-  margin: 0 auto;
-  transition: background-color .3s;
-  transition-timing-function: ease-in-out;
-}
-.imageToggle>div.true {
-  background-color: var(--color-lit);
-  color: rgb(109, 109, 109);
-}
-.imageToggle>div.false {
-  background-color: var(--color-unlit);
-  color: lightgray;
-}
+  margin: 0 auto; }
+  .imageToggle > div {
+    display: inline-block;
+    padding: 2vw;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+    width: 10vw;
+    max-width: 3em;
+    min-width: 1em;
+    height: 10vw;
+    max-height: 3em;
+    min-height: 1em;
+    margin: 0 auto;
+    transition: background-color .3s;
+    transition-timing-function: ease-in-out; }
+    .imageToggle > div.true {
+      background-color: var(--color-lit);
+      color: #6d6d6d; }
+      .imageToggle > div.true:hover {
+        background-color: var(--color-lit-hover);
+        color: black; }
+    .imageToggle > div.false {
+      background-color: var(--color-unlit);
+      color: lightgray; }
+      .imageToggle > div.false:hover {
+        background-color: var(--color-unlit-hover);
+        color: white; }
 
-.imageToggle>div.true:hover {
-  background-color: var(--color-lit-hover);
-  color: black;
-}
+span {
+  line-height: 0vw; }
 
-.imageToggle>div.false:hover {
-  background-color: var(--color-unlit-hover);
-  color: white;
+.imageToggle-false > p {
+  color: red;
+  text-shadow: 0 0 10px red; }
 
-}
-.imageToggle-false>p {
-color: red;
-text-shadow: 0 0 10px red;
-}
+.imageToggle-true > p {
+  color: #13a700;
+  text-shadow: 0 0 10px #13a700; }
 
-.imageToggle-true>p {
-color: rgb(19, 167, 0);
-text-shadow: 0 0 10px rgb(19, 167, 0);
-}
-
-.imageToggleMargin {
-  margin-top: 2em;
-}
-
-img {
-  border-radius: 50%;
-}
-
-.imageToggle>p,.slidecontainer>p{
-  text-align: center;
-}
-
-.props {
-  transition: transform;
-  transition-duration: .2s;
-  transition-timing-function: ease-in-out;
-}
-
-.props:hover {
-  transform: rotate(90deg);
-  transition: transform;
-  transition-duration: .2s;
-  transition-timing-function: ease-in-out;
-}
+.imageToggle > p, .slidecontainer > p {
+  text-align: center; }

@@ -1,68 +1,57 @@
 .modal {
-  display: none; /* Hidden by default */
-  z-index: 10000; /* Sit on top */
+  display: none;
+  /* Hidden by default */
+  z-index: 10000;
+  /* Sit on top */
   left: 0;
   top: 0;
-  width: 100vw; /* Full width */
-  height: 100vh; /* Full height */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+  width: 100vw;
+  /* Full width */
+  height: 100vh;
+  /* Full height */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
 
-.blue.active{
+.active {
   background-color: #90e1e8;
-  text-shadow: 0 0 4px white;
-}
+  text-shadow: 0 0 4px white; }
 
-.green.active{
-  background-color: #93e890;
-  text-shadow: 0 0 4px rgb(255, 255, 255);
-}
-
-.navbar{
-  padding-top:0;
+.navbar {
+  padding-top: 0;
   padding-bottom: 0;
-  box-shadow: 0 0 3px var(--color-unlit);
-}
-.nav-element {
-  cursor: pointer;
-}
-@media screen and (max-width:991px) {
-  .navbar-brand{
-    padding: 2.5vw 0 2.5vw 0
-  }
-  #navbarSupportedContent {
-    padding-bottom: 1rem;
-  }
-  .nav-item {
-    margin-bottom: 1rem;
-  }
-}
+  box-shadow: 0 0 3px var(--color-unlit); }
+
+@media screen and (max-width: 991px) {
+  .navbar-brand {
+    padding: 2.5vw 0 2.5vw 0; } }
 
 .nav-item {
-  padding-top: .4vw;
-  padding-bottom: .4vw;
-}
+  padding-top: 1vw;
+  padding-bottom: 1vw; }
+
+.active > .nav-element .blue {
+  color: var(--color-lit); }
 
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
+  /* 15% from the top and centered */
   padding: 20px;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
+  width: 80%;
+  /* Could be more or less, depending on screen size */ }
 
 /* The Close Button */
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
-  text-decoration: bold;
-}
+  text-decoration: bold; }
 
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
-  cursor: pointer;
-}
+  cursor: pointer; }
