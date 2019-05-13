@@ -3,14 +3,9 @@ import ImageToggle from './ImageToggle';
 import Title from './Title'
 import Slider from './Slider';
 import ValueBroadcast from './ValueBroadcast';
-import openSocket from 'socket.io-client';
 import './css/Category.css';
+import {io} from './index';
 
-
-// const io = openSocket('http://localhost:8000/');
-// const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.100:8000/');
-// const io = openSocket('http://192.168.0.146:8000/');
 
 class Category extends Component {
 
@@ -66,11 +61,12 @@ class Category extends Component {
         let singleType = this.props.types.length === 1
         let type = singleType? this.props.types[0] : null;
         let isToggleGroup = this.props.isToggleGroup | false;
+        let colSize = this.props.colSize | ""
         for (var i=begin; i<end; i++) {
             if (this.props.types[i]==="ImageToggle" || type==="ImageToggle") {
                 if (isToggleGroup && this.props.toggleIndices.includes(i)) {
                     result.push(
-                        <div key={i}className={"col"}>
+                        <div key={i}className={`col${colSize}`}>
                         <Title size={1} align="center" text={this.props.titles[i]} />
                         <ImageToggle 
                         onClick={(key)=>this.handleImageToggleGroup(key)}
@@ -82,7 +78,7 @@ class Category extends Component {
                     </div>);
                 } else {
                     result.push(
-                    <div key={i}className={"col"}>
+                    <div key={i}className={`col${colSize}`}>
                         <ImageToggle 
                             onClick={(key)=>this.handleImageToggleClick(key)}
                             name={this.props.names[i]}
@@ -98,7 +94,7 @@ class Category extends Component {
                     );
             } if (this.props.types[i]==="ValueBroadcast" || type==="ValueBroadcast") {
                 result.push(
-                    <div key={i} className={`col-3`}>
+                    <div key={i} className={`col${colSize}`}>
                         <Title size={1} align="center" text={this.props.titles[i]} />
                         <ValueBroadcast
                             value={this.state.values[i]}

@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import './css/CustomForm.css';
 
 class CustomForm extends Component {
     constructor(props) {
@@ -12,10 +13,10 @@ class CustomForm extends Component {
               this.props.onSubmit(e, this.state.value);
           }}>
           <div className="form-row align-items-center">
-              <input type="password" className="form-control col" placeholder="password" value={this.state.value} onChange={(e)=> {
+              <input type="password" className="form-control col" placeholder="Entrez le mot de passe" value={this.state.value} onChange={(e)=> {
                   this.setState({value: e.target.value});
               }} />
-            <input className="btn btn-secondary col-2" type="submit" value="Submit" />
+            <input className="btn btn-secondary col-3 float-right" type="submit" value="Connexion" />
             </div>
           </form>
         );

@@ -1,13 +1,8 @@
 import React, { Component }  from 'react';
-import Title from './Title';
 import Category from './Category';
-import SequenceEditor from './SequenceEditor';
-import openSocket from 'socket.io-client';
-import ImageToggle from './ImageToggle';
-import Slider from './Slider';
 import './css/App.css';
 
-class Piscine extends Component {
+class Pool extends Component {
     constructor(props) {
         super(props);
     }
@@ -55,6 +50,7 @@ class Piscine extends Component {
           initialValues = {[25, 20, 7, 0]}
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
+          colSize={"-3"}
         />
         <Category
           title="Moteur" 
@@ -86,4 +82,4 @@ class Piscine extends Component {
     }
 }
 
-export default Piscine
+export default Pool

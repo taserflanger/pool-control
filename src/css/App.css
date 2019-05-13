@@ -9,9 +9,14 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.active{
+.blue.active{
   background-color: #90e1e8;
   text-shadow: 0 0 4px white;
+}
+
+.green.active{
+  background-color: #93e890;
+  text-shadow: 0 0 4px rgb(255, 255, 255);
 }
 
 .navbar{
@@ -19,20 +24,24 @@
   padding-bottom: 0;
   box-shadow: 0 0 3px var(--color-unlit);
 }
-
+.nav-element {
+  cursor: pointer;
+}
 @media screen and (max-width:991px) {
   .navbar-brand{
     padding: 2.5vw 0 2.5vw 0
   }
+  #navbarSupportedContent {
+    padding-bottom: 1rem;
+  }
+  .nav-item {
+    margin-bottom: 1rem;
+  }
 }
 
 .nav-item {
-  padding-top: 1vw;
-  padding-bottom: 1vw;
-}
-
-.active > .nav-element .blue {
-  color: var(--color-lit);
+  padding-top: .4vw;
+  padding-bottom: .4vw;
 }
 
 /* Modal Content/Box */

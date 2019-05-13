@@ -1,8 +1,9 @@
 import React, { Component }  from 'react';
-import openSocket from 'socket.io-client';
-import Piscine from './Piscine.js';
+import Pool from './Pool.js';
+import Watering from './Watering.js'
 import CustomForm from './CustomForm.js';
 import './css/App.css';
+import {io} from './index';
 
   Array.prototype.rotate = (function() {
     var unshift = Array.prototype.unshift,
@@ -18,11 +19,6 @@ import './css/App.css';
 })();
 // import DropdownSelector from './DropdownSelector';
 
-// const io = openSocket('http://localhost:8000/');
-// const io = openSocket('http://90.63.156.114:8000');
-const io = openSocket('http://192.168.0.100:8000/');
-// const io = openSocket('http://192.168.0.146:8000/');
-
 class App extends Component {
 
   constructor(props) {
@@ -32,7 +28,8 @@ class App extends Component {
       //initializing all states
       navBarCollapse: true,
       loginAdmin: false,
-      isAdmin: false
+      isAdmin: false,
+      appState: "watering",
     }
   }
 
@@ -56,22 +53,41 @@ class App extends Component {
     }
   }
 
+  getContent() {
+    if (this.state.appState == "pool") {
+      return (<Pool
+        io={io}
+        isAdmin={this.state.isAdmin}
+        />);
+    } else if (this.state.appState=="watering") {
+      return (
+      <Watering
+        io={io}
+      />
+      )
+    } else {
+      return (
+        <span style={{color: "red", fontSize: "1.5em"}}>Unknown app State: {this.state.appState}</span>
+      )
+    }
+  }
+
   render() {
     return (
       <div id="app-container">
         <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">Pool-Control</a>
+        <a className="navbar-brand">Jardin</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onClick={()=> {this.setState({navBarCollapse: !this.state.navBarCollapse})}}>
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div className={`${this.state.navBarCollapse? "": "show"} collapse navbar-collapse`} id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link nav-element blue" href="#">Piscine <span className="sr-only">(current)</span></a>
+            <li className={`nav-item blue ${this.state.appState=="pool"?"active":""}`}>
+              <a className="nav-link nav-element" onClick={()=>{this.setState({appState: "pool"})}}>Piscine <span className="sr-only">(current)</span></a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link nav-element green" href="#">Arrosage</a>
+            <li className={`nav-item green ${this.state.appState=="watering"?"active":""}`}>
+              <a className="nav-link nav-element" onClick={()=> {this.setState({appState: "watering"})}}>Arrosage</a>
             </li>
           </ul>
             {this.getAdminSection()}
@@ -91,9 +107,7 @@ class App extends Component {
           />
           </div>
           </div>
-          <Piscine
-          isAdmin={this.state.isAdmin}
-          />
+          {this.getContent()}
         </div>
     );
   }
