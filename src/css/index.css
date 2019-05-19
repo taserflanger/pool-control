@@ -6,6 +6,9 @@
   --color-lit: #52d1dc;
   --color-lit-hover: rgb(88, 190, 199); }
 
+.pointer {
+  cursor: "pointer"; }
+
 .container {
   position: relative; }
 
@@ -30,14 +33,14 @@ body, html {
   flex-wrap: nowrap;
   margin: 0 0 0 0; }
 
-.button {
-  cursor: pointer; }
-
 h3 {
   font-size: inherit; }
 
 #noShadow {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+
+.nav-link {
+  cursor: pointer; }
 
 .button {
   background-color: #90e1e8;

@@ -83,10 +83,10 @@ class App extends Component {
 
         <div className={`${this.state.navBarCollapse? "": "show"} collapse navbar-collapse`} id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className={`nav-item blue ${this.state.appState=="pool"?"active":""}`}>
+            <li className={`nav-item pointer blue ${this.state.appState=="pool"?"active":""}`}>
               <a className="nav-link nav-element" onClick={()=>{this.setState({appState: "pool"})}}>Piscine <span className="sr-only">(current)</span></a>
             </li>
-            <li className={`nav-item green ${this.state.appState=="watering"?"active":""}`}>
+            <li className={`nav-item pointer green ${this.state.appState=="watering"?"active":""}`}>
               <a className="nav-link nav-element" onClick={()=> {this.setState({appState: "watering"})}}>Arrosage</a>
             </li>
           </ul>
