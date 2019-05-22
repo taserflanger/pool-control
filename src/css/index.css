@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 :root {
   --blue: rgba(30, 232, 247, 0.95);
   --dark: #292f36;
@@ -11,7 +9,6 @@
 .pointer {
   cursor: "pointer"; }
 
->>>>>>> a5f4f528eea7d7b623c8f4bc22f3da8fe4795041
 .container {
   position: relative; }
 
