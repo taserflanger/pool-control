@@ -16,16 +16,16 @@
     transition: background-color .3s;
     transition-timing-function: ease-in-out; }
     .imageToggle > div.true {
-      background-color: var(--color-lit);
+      background-color: #52d1dc;
       color: #6d6d6d; }
       .imageToggle > div.true:hover {
-        background-color: var(--color-lit-hover);
+        background-color: #58bec7;
         color: black; }
     .imageToggle > div.false {
-      background-color: var(--color-unlit);
+      background-color: #292f36;
       color: lightgray; }
       .imageToggle > div.false:hover {
-        background-color: var(--color-unlit-hover);
+        background-color: #3e4752;
         color: white; }
 
 span {

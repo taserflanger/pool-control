@@ -24,9 +24,7 @@
     cursor: default;
 }
 
-.disabled .slider::-moz-range-thumb{
-    background-color: grey;
-}
+
 
 .slider:hover {
     opacity: 1; /* Fully shown on mouse-over */
@@ -42,15 +40,13 @@
     transition-property: transform;
     transition-duration: 1s;
     transition-timing-function: ease-in-out;
+    &:hover {
+      transform: rotate(45deg);
+      transition-property: transform;
+      transition-duration: .2s;
+      transition-timing-function: ease-in-out;
+    }
   }
-
-  .slider::-webkit-slider-thumb:hover {
-    transform: rotate(45deg);
-    transition-property: transform;
-    transition-duration: .2s;
-    transition-timing-function: ease-in-out;
-  }
-
   .slider::-moz-range-thumb {
     transform: rotate(0deg);
     width: 25px; /* Set a specific slider handle width */
@@ -61,30 +57,31 @@
     transition-property: transform;
     transition-duration: 1s;
     transition-timing-function: ease-in-out;
-  }
-
-  .slider::-moz-range-thumb:hover {
+    &.disabled{
+      background-color: grey;
+    }
+    &:hover {
       transform: rotate(45deg);
       transition-property: transform;
       transition-duration: .2s;
       transition-timing-function: ease-in-out;
+    }
   }
+
 
 .freqButton {
   cursor: pointer;
-  background-color: var(--color-lit);
+  background-color: $color-lit;
   margin: 1vw;
   border-radius: 5%;
   padding: 0;
-}
-
-.freqButton>p {
-  font-size: 4vmin;
-  margin: 0;
-  color: rgb(109, 109, 109);
-}
-
-.freqButton>p:hover {
-  background-color: var(--color-lit-hover);
-  color: black;
+  >p {
+    font-size: 4vmin;
+    margin: 0;
+    color: rgb(109, 109, 109);
+    &:hover {
+      background-color: $color-lit-hover;
+      color: black;
+    }
+  }
 }

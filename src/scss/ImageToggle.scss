@@ -1,3 +1,4 @@
+@import 'colors';
 .imageToggle {
   margin: 0 auto;
   >div {
@@ -17,18 +18,18 @@
     transition-timing-function: ease-in-out;
 
     &.true {
-      background-color: var(--color-lit);
+      background-color: $color-lit;
       color: rgb(109, 109, 109);
       &:hover {
-        background-color: var(--color-lit-hover);
+        background-color: $color-lit-hover;
         color: black;
       }
     }
     &.false {
-      background-color: var(--color-unlit);
+      background-color: $color-unlit;
       color: lightgray;
       &:hover {
-        background-color: var(--color-unlit-hover);
+        background-color: $color-unlit-hover;
         color: white;
       }
     }

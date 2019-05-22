@@ -21,7 +21,7 @@
 .navbar {
   padding-top: 0;
   padding-bottom: 0;
-  box-shadow: 0 0 3px var(--color-unlit); }
+  box-shadow: 0 0 3px #292f36; }
 
 @media screen and (max-width: 991px) {
   .navbar-brand {
@@ -29,10 +29,11 @@
 
 .nav-item {
   padding-top: 1vw;
-  padding-bottom: 1vw; }
+  padding-bottom: 1vw;
+  cursor: pointer; }
 
-.active > .nav-element .blue {
-  color: var(--color-lit); }
+.active.blue {
+  color: #52d1dc; }
 
 /* Modal Content/Box */
 .modal-content {

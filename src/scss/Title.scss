@@ -1,8 +1,9 @@
+@import 'colors';
 .title-4 {
     padding-top: 1rem;
     padding-bottom: 1rem;
     /* background-color: #52d1dc; */
-    background-color: var(--blue);
+    background-color: $blue;
     z-index: 50;
     font-size: 6vw;
     font-family: 'Comfortaa', cursive;
@@ -79,7 +80,7 @@
    padding-top: 1rem;
    padding-bottom: 1rem;
    /* background-color: #52d1dc; */
-   background-color: var(--blue);
+   background-color: $blue;
    opacity: 50%;
    z-index: 50;
    font-size: 6vw;
