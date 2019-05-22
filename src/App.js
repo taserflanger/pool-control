@@ -29,7 +29,7 @@ class App extends Component {
       navBarCollapse: true,
       loginAdmin: false,
       isAdmin: false,
-      appState: "watering",
+      appState: "pool",
     }
   }
 
