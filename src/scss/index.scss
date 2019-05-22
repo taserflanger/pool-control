@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+=======
+:root {
+  --blue: rgba(30, 232, 247, 0.95);
+  --dark: #292f36;
+  --color-unlit: rgb(41, 47, 54);
+  --color-unlit-hover: rgb(62, 71, 82);
+  --color-lit: #52d1dc;
+  --color-lit-hover: rgb(88, 190, 199);
+}
+
+.pointer {
+  cursor: "pointer";
+}
+
+>>>>>>> a5f4f528eea7d7b623c8f4bc22f3da8fe4795041
 .container {
   position: relative;
 }
@@ -27,16 +43,16 @@ body, html {
   margin: 0 0 0 0;
 }
 
-.button {
-  cursor: pointer;
-}
-
 h3 {
   font-size: inherit;
 }
 
 #noShadow {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.nav-link {
+  cursor: pointer;
 }
 
 .button {
