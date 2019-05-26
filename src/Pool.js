@@ -32,7 +32,7 @@ class Pool extends Component {
         <div id="Piscine">
         <Category
           title="Spots"
-          types={["ImageToggle", "ImageToggle", "ImageToggle"]}
+          types={["Button", "Button", "Button"]}
           names={["north_light", "southeast_light", "south_light"]}
           titles={[" 1 ", " 2 ", " 3 "]}
           initialValues={[false, false, false]}
@@ -54,7 +54,7 @@ class Pool extends Component {
         />
         <Category
           title="Moteur" 
-          types={["ImageToggle", "Slider"]} 
+          types={["Button", "Slider"]} 
           titles={["", "Débit"]}
           subtitles={[
             ["OFF", "On"],
@@ -67,7 +67,7 @@ class Pool extends Component {
         />
         <Category
           title="Filtre"
-          types={["ImageToggle", "ImageToggle", "ImageToggle"]}
+          types={["Button", "Button", "Button"]}
           names = {["normal", "backwash", "recirculation"]}
           titles={["Filtration", "Lavage", "Recirculation"]}
           initialToggleValue={1}
