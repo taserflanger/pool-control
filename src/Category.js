@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ImageToggle from './ImageToggle';
+import Button from './Button';
 import Title from './Title'
 import Slider from './Slider';
 import ValueBroadcast from './ValueBroadcast';
@@ -34,10 +34,10 @@ class Category extends Component {
 
     }
 
-    handleImageToggleClick(variable) {
+    handleButtonClick(variable) {
         io.emit('toggle', this.props.title, variable);
     }
-    handleImageToggleGroup(key) {
+    handleButtonGroup(key) {
         let index = this.props.names.indexOf(key);
         io.emit('setSingleValue', this.props.title, index);
     }
@@ -63,13 +63,13 @@ class Category extends Component {
         let isToggleGroup = this.props.isToggleGroup | false;
         let colSize = this.props.colSize | ""
         for (var i=begin; i<end; i++) {
-            if (this.props.types[i]==="ImageToggle" || type==="ImageToggle") {
+            if (this.props.types[i]==="Button" || type==="Button") {
                 if (isToggleGroup && this.props.toggleIndices.includes(i)) {
                     result.push(
                         <div key={i}className={`col${colSize}`}>
                         <Title size={1} align="center" text={this.props.titles[i]} />
-                        <ImageToggle 
-                        onClick={(key)=>this.handleImageToggleGroup(key)}
+                        <Button 
+                        onClick={(key)=>this.handleButtonGroup(key)}
                         name={this.props.names[i]}
                         value={(this.state.toggleValue===i)}
                         subtitles={[]}
@@ -79,8 +79,8 @@ class Category extends Component {
                 } else {
                     result.push(
                     <div key={i}className={`col${colSize}`}>
-                        <ImageToggle 
-                            onClick={(key)=>this.handleImageToggleClick(key)}
+                        <Button 
+                            onClick={(key)=>this.handleButtonClick(key)}
                             name={this.props.names[i]}
                             value={this.state.values[i]}
                             subtitles={[]}

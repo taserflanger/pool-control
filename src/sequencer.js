@@ -14,7 +14,7 @@ function getSequencerContent() {
           <div className="container">
         <div className={`row justify-content-around`}>
           <div className="col">
-            <ImageToggle 
+            <Button 
               onClick={(useless) => this.handleToggleUseSequencer()}
               title={""}
               value={this.state.useSequencer}
@@ -29,7 +29,7 @@ function getSequencerContent() {
                 />
             </div>
             <div id="noShadow" className="col">
-            <ImageToggle
+            <Button
               onClick={()=> {
                 this.setState({isEditingSpotSequence: true})
               }}
@@ -57,7 +57,7 @@ function getSequencerContent() {
           }}>
           <div className="row">
         <div className="col">
-          <ImageToggle
+          <Button
             onClick={(useless)=>this.toggleRowSeqEditorProps()}
             size={2.5}
             title=""

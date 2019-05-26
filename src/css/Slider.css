@@ -1,0 +1,94 @@
+.slidecontainer {
+  width: 100%; }
+
+.innerContainer {
+  margin: 1em; }
+
+.slider {
+  -webkit-appearance: none;
+  /* Override default CSS styles */
+  appearance: none;
+  width: 100%;
+  /* Full-width */
+  height: 15px;
+  /* Specified height */
+  border-radius: 5px;
+  background: #d3d3d3;
+  /* Grey background */
+  outline: none;
+  /* Remove outline */
+  opacity: 0.7;
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  margin: 1em 0em 1em 0em; }
+
+.disabled .close:focus, .close:hover {
+  cursor: default; }
+
+.disabled .slider::-moz-range-thumb {
+  background-color: grey; }
+
+.slider:hover {
+  opacity: 1;
+  /* Fully shown on mouse-over */ }
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  width: 25px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #52d1dc;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
+  transition-property: transform;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out; }
+
+.slider::-webkit-slider-thumb:hover {
+  transform: rotate(45deg);
+  transition-property: transform;
+  transition-duration: .2s;
+  transition-timing-function: ease-in-out; }
+
+.slider::-moz-range-thumb {
+  transform: rotate(0deg);
+  width: 25px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #52d1dc;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
+  border-radius: 0;
+  transition-property: transform;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out; }
+
+.slider::-moz-range-thumb:hover {
+  transform: rotate(45deg);
+  transition-property: transform;
+  transition-duration: .2s;
+  transition-timing-function: ease-in-out; }
+
+.freqButton {
+  cursor: pointer;
+  background-color: var(--color-lit);
+  margin: 1vw;
+  border-radius: 5%;
+  padding: 0; }
+
+.freqButton > p {
+  font-size: 4vmin;
+  margin: 0;
+  color: #6d6d6d; }
+
+.freqButton > p:hover {
+  background-color: var(--color-lit-hover);
+  color: black; }

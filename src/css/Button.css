@@ -1,0 +1,46 @@
+.Button {
+  margin: 0 auto; }
+  .Button > div {
+    display: inline-block;
+    padding: 2vw;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+    width: 10vw;
+    max-width: 4em;
+    min-width: 1em;
+    height: 10vw;
+    max-height: 4em;
+    min-height: 1em;
+    margin: 0 auto;
+    transition: background-color .3s;
+    transition-timing-function: ease-in-out; }
+    .Button > div.true {
+      color: #6d6d6d; }
+      .Button > div.true.blue {
+        background-color: #52d1dc; }
+        .Button > div.true.blue:hover {
+          background-color: #58bec7;
+          color: black; }
+      .Button > div.true.green {
+        background-color: #6edc52; }
+        .Button > div.true.green:hover {
+          background-color: var(--color-lit-hover);
+          color: black; }
+    .Button > div.false {
+      background-color: #292f36;
+      color: lightgray; }
+      .Button > div.false:hover {
+        background-color: #3e4752;
+        color: white; }
+
+.Button-false > p {
+  color: red;
+  text-shadow: 0 0 10px red; }
+
+.Button-true > p {
+  color: #13a700;
+  text-shadow: 0 0 10px #13a700; }
+
+.Button > p, .slidecontainer > p {
+  text-align: center; }
