@@ -15,18 +15,6 @@
     margin: 0 auto;
     transition: background-color .3s;
     transition-timing-function: ease-in-out; }
-    .Button > div.true {
-      color: #6d6d6d; }
-      .Button > div.true.blue {
-        background-color: #52d1dc; }
-        .Button > div.true.blue:hover {
-          background-color: #58bec7;
-          color: black; }
-      .Button > div.true.green {
-        background-color: #89dc52; }
-        .Button > div.true.green:hover {
-          background-color: var(--color-lit-hover);
-          color: black; }
     .Button > div.false {
       background-color: #292f36;
       color: lightgray; }

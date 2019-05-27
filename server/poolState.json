@@ -1,17 +1,17 @@
 {
     "Spots": {
-        "north_light": true,
-        "southeast_light": true,
+        "north_light": false,
+        "southeast_light": false,
         "south_light": true
     },
     "Moteur": {
         "is_on": true,
-        "freq": 5
+        "freq": 3
     },
     "Filtre": 0,
     "Broadcast": {
-        "water_temp": 16,
-        "air_temp": 141,
+        "water_temp": 3,
+        "air_temp": 162,
         "ph": 7,
         "orp": 5
     },
@@ -21,7 +21,7 @@
         {
             "title": "Rat",
             "active": true,
-            "activity": 0,
+            "activity": 3,
             "sequences": [
                 {
                     "begin": "02:00",

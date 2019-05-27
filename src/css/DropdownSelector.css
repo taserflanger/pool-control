@@ -1,0 +1,32 @@
+.selector {
+  position: relative;
+  display: inline-block;
+  /* margin-left: 40px;; */ }
+
+.selector .selected {
+  background-color: #292f36;
+  padding: .2rem;
+  cursor: pointer;
+  width: 10rem;
+  color: white; }
+
+.selector-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the #selector items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0; }
+
+#selector-items div {
+  padding: .2rem;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4; }
+  #selector-items div.selected {
+    background-color: #292f36; }
+  #selector-items div:not(.selected):hover {
+    background-color: #e9e9e9; }

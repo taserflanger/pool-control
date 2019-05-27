@@ -16,24 +16,6 @@
     margin: 0 auto;
     transition: background-color .3s;
     transition-timing-function: ease-in-out;
-
-    &.true {
-        &.blue {
-            background-color: $blue;
-            &:hover {
-              background-color: $blue-hover;
-              color: black;
-            }
-        }
-        &.green {
-            background-color: $green;
-            &:hover {
-              background-color: var(--color-lit-hover);
-              color: black;
-            }
-        }
-      color: rgb(109, 109, 109);
-    }
     &.false {
       background-color: $black;
       color: lightgray;

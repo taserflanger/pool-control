@@ -38,7 +38,7 @@
         "order": [0, 1, 1],
         "beginning": "03:00",
         "end": "03:30",
-        "duration": 10,
+        "duration": [10, 5, 10],
         "time-reference": "beginning"
     }
 }

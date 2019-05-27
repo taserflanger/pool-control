@@ -60,6 +60,13 @@ io.on('connection', (client) => {
         toggleVariable(category, variable, client);
         Write();
     });
+    client.on('setIndividualValue', (index, variable, value) => {
+        globals.individual[index][variable] = value;
+        console.log("individual " + variable + ": " + value);
+        handleVariableChange("individual", client);
+        client.emit("update_individual", globals.individual);
+        Write();
+    }) 
     client.on('setValue', (category, variable, value) => {
         setValue(category, variable, value, client);
         Write();

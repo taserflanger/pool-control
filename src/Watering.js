@@ -60,8 +60,15 @@ class Watering extends Component {
     }
 
     getSlots() {
-        for (let slot of this.state.individual) {
-            return <WateringSlot slotInfo={slot} ></WateringSlot>
+        for (let i=0; i<this.state.individual.length; i++) {
+            return <WateringSlot 
+            slotInfo={this.state.individual[i]}
+            onToggle={()=> io.emit("setIndividualValue", i, "active", !this.state.individual[i].active)}
+            changeActivity={(val)=> {
+                io.emit("setIndividualValue", i, "activity", val);
+                console.log(val);
+            }}
+             ></WateringSlot>
         }
     }
 

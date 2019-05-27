@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './css/DropdownSelector.css'
 
 class DropdownSelector extends Component{
 
@@ -9,33 +10,37 @@ class DropdownSelector extends Component{
         }
     }
 
-    handleClick(i) {
-        return (i) => this.props.onChangeName(i);
+    handleClick(val) {
+        this.props.onChangeName(val);
     }
-
     getDropDownElements() {
         let result = [];
-        for (var i=0; i<this.props.names.length; i++) {
-            let c = (this.props.selected===i)? "selected" : "";
-            result.push(<div className={c}>{this.props.names[i]}</div>);
+        if (this.state.dropdown) {
+            for (var i=0; i<this.props.names.length; i++) {
+                if (i!=this.props.selected) {
+                result.push(<div key={i} onClick={()=>this.handleClick(i)}>{this.props.names[i]}</div>);
+                }
+            }
+        // } else {
+        //     return (<div className="selected">{this.props.names[this.props.selected]}</div>);
+        // }
         }
         return result;
 
     }
 
     render() {
-        if (this.state.dropdown) {
             return (
                 <div className="selector">
                     <div className="selected" onClick={
                         () => this.setState({dropdown: !this.state.dropdown})}>{this.props.names[this.props.selected]
                     }</div>
-                    {this.getDropDownElements()}
+                    <div id="selector-items">
+                        {this.getDropDownElements()}
+                    </div>
                 </div>
             );
-        } else {
-            return <div className="selector">{this.props.names[this.props.selected]}</div>
-        }
+
     }
 }
 
