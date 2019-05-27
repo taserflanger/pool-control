@@ -1,3 +1,5 @@
+@import "colors";
+
 .slidecontainer {
     width: 100%;
 }
@@ -9,14 +11,14 @@
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 100%; /* Full-width */
+    width: 95%; /* Full-width */
     height: 15px; /* Specified height */
     border-radius: 5px;
-    background: #d3d3d3; /* Grey background */
+    background: $black; /* Grey background */
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    opacity: 1; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
+    transition: width .2s;
     margin: 1em 0em 1em 0em;
 }
 
@@ -29,7 +31,7 @@
 }
 
 .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+    width: 100%
   }
   
   .slider::-webkit-slider-thumb {
@@ -72,7 +74,7 @@
 
 .freqButton {
   cursor: pointer;
-  background-color: var(--color-lit);
+  background-color: $blue;
   margin: 1vw;
   border-radius: 5%;
   padding: 0;

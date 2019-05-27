@@ -5,7 +5,7 @@ class ValueBroadcast extends Component {
     render() {
         return (
             <div className="valueBroadcast">
-                <h3>{this.props.value}<span>{this.props.suffix}</span></h3>
+                <h2>{this.props.value}<span>{this.props.suffix}</span></h2>
             </div>
         );
     }

@@ -7,12 +7,26 @@
   text-shadow: 0 0 1px white;
   box-shadow: 0 2.5px 5px #292f36;
   margin-bottom: 1rem; }
+  @media screen and (max-width: 500px) {
+    .title-2 {
+      font-size: 7vw; } }
 
 .title-1 {
-  font-size: 1.5rem;
-  background-color: #52d1dc;
   padding: .6rem .5rem .6rem .5rem;
   font-family: 'Slabo 27px', serif;
   width: fit-content;
   margin: 0 auto;
-  margin-bottom: .5rem; }
+  margin-bottom: .5rem;
+  box-shadow: 0 0 5px gray; }
+  .title-1.green {
+    font-size: 1.5rem;
+    background-color: #89dc52; }
+    @media screen and (max-width: 500px) {
+      .title-1.green {
+        font-size: 4vw; } }
+  .title-1:not(.green) {
+    font-size: 1.5rem;
+    background-color: #52d1dc; }
+    @media screen and (max-width: 500px) {
+      .title-1:not(.green) {
+        font-size: 4vw; } }

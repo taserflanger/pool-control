@@ -10,6 +10,13 @@
     -ms-user-select: none;
     user-select: none; } }
 
+.active, .true {
+  box-shadow: inset 0 0 15px #4e4e4e; }
+  .active.blue, .true.blue {
+    background-color: #52d1dc; }
+  .active.green, .true.green {
+    background-color: #89dc52; }
+
 body, html {
   margin: 0;
   padding: 0;

@@ -23,7 +23,7 @@
           background-color: #58bec7;
           color: black; }
       .Button > div.true.green {
-        background-color: #6edc52; }
+        background-color: #89dc52; }
         .Button > div.true.green:hover {
           background-color: var(--color-lit-hover);
           color: black; }

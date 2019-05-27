@@ -1,0 +1,12 @@
+@import "colors";
+
+.chooseWrapper {
+    display: flex;
+    padding: 1rem;
+}
+.chooseButton {
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 0 5px gray;
+    padding: 1rem 0 1rem 0;
+}

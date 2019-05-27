@@ -2,6 +2,9 @@
 
 @mixin title($size, $color) {
   font-size: 1rem + $size/2;
+  @media screen and (max-width: 500px){
+    font-size: 1vw+3*$size;
+  }
   background-color: $color;
 }
 .title-2 {
@@ -14,12 +17,18 @@
   margin-bottom: 1rem;
 }
 .title-1 {
-  @include title(1, $blue);
   padding: .6rem .5rem .6rem .5rem;
   font-family: 'Slabo 27px', serif;
   width: fit-content;
   margin: 0 auto;
   margin-bottom: .5rem;
+  box-shadow: 0 0 5px gray;
+  &.green {
+    @include title(1, $green)
+  }
+  &:not(.green) {
+    @include title(1, $blue);
+  }
 }
 
 

@@ -1,9 +1,28 @@
 {
+    "Spots": {
+        "north_light": true,
+        "southeast_light": true,
+        "south_light": false
+    },
+    "Moteur": {
+        "is_on": true,
+        "freq": 5
+    },
+    "Filtre": 0,
+    "Broadcast": {
+        "water_temp": 14,
+        "air_temp": 141,
+        "ph": 7,
+        "orp": 5
+    },
+    "password": "2909",
+    "wateringMode": "individual",
     "individual":
     [
         {
+            "title": "Rat",
             "active": true,
-            "activity": 1,
+            "activity": 0,
             "sequences": [
                 {"begin": "02:00", "duration": 60}
             ],

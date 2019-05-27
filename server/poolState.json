@@ -2,18 +2,54 @@
     "Spots": {
         "north_light": true,
         "southeast_light": true,
-        "south_light": false
+        "south_light": true
     },
     "Moteur": {
-        "is_on": false,
-        "freq": 4
+        "is_on": true,
+        "freq": 5
     },
     "Filtre": 0,
     "Broadcast": {
-        "water_temp": 24,
-        "air_temp": 165,
+        "water_temp": 16,
+        "air_temp": 141,
         "ph": 7,
         "orp": 5
     },
-    "password": "edfr43EDFR"
+    "password": "2909",
+    "wateringMode": "individual",
+    "individual": [
+        {
+            "title": "Rat",
+            "active": true,
+            "activity": 0,
+            "sequences": [
+                {
+                    "begin": "02:00",
+                    "duration": 60
+                }
+            ],
+            "exceptions": [
+                "14/05/2002"
+            ],
+            "forced": [
+                "14/05/2002"
+            ]
+        }
+    ],
+    "sequential": {
+        "activity": 2,
+        "exceptions": [
+            "01/02/2003"
+        ],
+        "forced": [],
+        "order": [
+            0,
+            1,
+            1
+        ],
+        "beginning": "03:00",
+        "end": "03:30",
+        "duration": 10,
+        "time-reference": "beginning"
+    }
 }

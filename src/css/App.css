@@ -1,2 +1,51 @@
-.active > .nav-element .blue {
-  color: #52d1dc; }
+.modal {
+  display: none;
+  /* Hidden by default */
+  z-index: 10000;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100vw;
+  /* Full width */
+  height: 100vh;
+  /* Full height */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+  box-shadow: 0 0 3px #292f36; }
+
+@media screen and (max-width: 991px) {
+  .navbar-brand {
+    padding: 2.5vw 0 2.5vw 0; } }
+
+.nav-item {
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  box-shadow: 0 0 10px gray; }
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  width: 80%;
+  /* Could be more or less, depending on screen size */ }
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  text-decoration: bold; }
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; }
