@@ -14,10 +14,6 @@
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */ }
 
-.active {
-  background-color: #90e1e8;
-  text-shadow: 0 0 4px white; }
-
 .navbar {
   padding-top: 0;
   padding-bottom: 0;
@@ -30,10 +26,7 @@
 .nav-item {
   padding-top: 1vw;
   padding-bottom: 1vw;
-  cursor: pointer; }
-
-.active.blue {
-  color: #52d1dc; }
+  box-shadow: 0 0 10px gray; }
 
 /* Modal Content/Box */
 .modal-content {

@@ -1,43 +1,37 @@
-.imageToggle {
+.Button {
   margin: 0 auto; }
-  .imageToggle > div {
+  .Button > div {
     display: inline-block;
     padding: 2vw;
     cursor: pointer;
     text-align: center;
     border-radius: 50%;
     width: 10vw;
-    max-width: 3em;
+    max-width: 4em;
     min-width: 1em;
     height: 10vw;
-    max-height: 3em;
+    max-height: 4em;
     min-height: 1em;
     margin: 0 auto;
     transition: background-color .3s;
     transition-timing-function: ease-in-out; }
-    .imageToggle > div.true {
-      background-color: #52d1dc;
-      color: #6d6d6d; }
-      .imageToggle > div.true:hover {
-        background-color: #58bec7;
-        color: black; }
-    .imageToggle > div.false {
+    .Button > div.false {
       background-color: #292f36;
       color: lightgray; }
-      .imageToggle > div.false:hover {
+      .Button > div.false:hover {
         background-color: #3e4752;
         color: white; }
+  .Button.square > div {
+    border-radius: 0;
+    width: fit-content; }
 
-span {
-  line-height: 0vw; }
-
-.imageToggle-false > p {
+.Button-false > p {
   color: red;
   text-shadow: 0 0 10px red; }
 
-.imageToggle-true > p {
+.Button-true > p {
   color: #13a700;
   text-shadow: 0 0 10px #13a700; }
 
-.imageToggle > p, .slidecontainer > p {
+.Button > p, .slidecontainer > p {
   text-align: center; }

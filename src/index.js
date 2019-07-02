@@ -9,6 +9,6 @@ const adress="localhost"
 // const adress = "192.168.0.100"
 // const adress = "192.168.0.146"
 const io = openSocket(`http://${adress}:8000`);
-ReactDOM.render(<App io={io}/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
 export {io};

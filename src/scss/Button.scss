@@ -1,5 +1,5 @@
-@import 'colors';
-.imageToggle {
+@import "colors";
+.Button {
   margin: 0 auto;
   >div {
     display: inline-block;
@@ -8,47 +8,40 @@
     text-align: center;
     border-radius: 50%;
     width: 10vw;
-    max-width: 3em;
+    max-width: 4em;
     min-width: 1em;
     height: 10vw;
-    max-height: 3em;
+    max-height: 4em;
     min-height: 1em;
     margin: 0 auto;
     transition: background-color .3s;
     transition-timing-function: ease-in-out;
-
-    &.true {
-      background-color: $color-lit;
-      color: rgb(109, 109, 109);
-      &:hover {
-        background-color: $color-lit-hover;
-        color: black;
-      }
-    }
     &.false {
-      background-color: $color-unlit;
+      background-color: $black;
       color: lightgray;
       &:hover {
-        background-color: $color-unlit-hover;
+        background-color: $black-hover;
         color: white;
       }
     }
   }
-}
-span{
-  line-height: 0vw;
+  &.square>div {
+    border-radius: 0;
+    width: fit-content;
+    
+  }
 }
 
-.imageToggle-false>p {
+.Button-false>p {
 color: red;
 text-shadow: 0 0 10px red;
 }
 
-.imageToggle-true>p {
+.Button-true>p {
 color: rgb(19, 167, 0);
 text-shadow: 0 0 10px rgb(19, 167, 0);
 }
 
-.imageToggle>p,.slidecontainer>p{
+.Button>p,.slidecontainer>p{
   text-align: center;
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Title from './Title';
-import './css/ImageToggle.css';
+import './css/Button.css';
 
-class ImageToggle extends Component {
+class Button extends Component {
 
     constructor(props) {
         super(props);
@@ -43,10 +43,10 @@ class ImageToggle extends Component {
         let align = this.props.align || "left";
         let id = this.props.id || "";
         return (
-            <div id={id} className={`imageToggle-${this.props.value}`}>
+            <div id={id} className={`Button-${this.props.value}`}>
                 {/* {this.getTitle()} */}
-                <a  className={`imageToggle text-${align}`}>
-                    <div onClick={() => this.props.onClick(this.props.name)} className={this.props.value.toString()}><p>{this.props.title}</p></div>
+                <a  className={`${this.props.square? "square" : ""} Button text-${align}`}>
+                    <div onClick={() => this.props.onClick(this.props.name)} className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p>{this.props.title}</p></div>
                 </a>
                 {this.getSubtitle()}
             </div>
@@ -55,4 +55,4 @@ class ImageToggle extends Component {
     }
 }
 
-export default ImageToggle
+export default Button

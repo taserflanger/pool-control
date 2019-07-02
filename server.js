@@ -17,9 +17,9 @@ try {
     ISRASPBERRY = false;
 }
 
-data = fs.readFileSync("server/poolState.json", 'utf8');
+data = fs.readFileSync("server/serverState.json", 'utf8');
 function Write() {
-    fs.writeFile("server/poolState.json", JSON.stringify(globals, null, 4), (err)=> {
+    fs.writeFile("server/serverState.json", JSON.stringify(globals, null, 4), (err)=> {
         if (err) throw err;
     })
 }
@@ -60,6 +60,13 @@ io.on('connection', (client) => {
         toggleVariable(category, variable, client);
         Write();
     });
+    client.on('setIndividualValue', (index, variable, value) => {
+        globals.individual[index][variable] = value;
+        console.log("individual " + variable + ": " + value);
+        handleVariableChange("individual", client);
+        client.emit("update_individual", globals.individual);
+        Write();
+    }) 
     client.on('setValue', (category, variable, value) => {
         setValue(category, variable, value, client);
         Write();
@@ -68,6 +75,16 @@ io.on('connection', (client) => {
         setSingleValue(category, value, client);
         Write();
     })
+    client.on('refresh-pool', ()=> {
+        for (category of ["Spots", "Moteur", "Filtre", "Broadcast"]) {
+            initializeCategory(category, client);
+        }
+    });
+    client.on('refresh-watering', ()=> {
+        for (category of ["wateringMode", "individual", "sequential"]) {
+            initializeCategory(category, client);
+        }
+    });
     setInterval(()=> {
         globals.Broadcast.water_temp += Math.round(Math.random()*2 - 1, 4);
         globals.Broadcast.air_temp += (Math.round(Math.random()*2 - 1, 4));
@@ -136,7 +153,7 @@ function toggleUseSequencer(client) {
 }
 
 function initializeCategory(category, client) {
-    if (category == "Filtre") {
+    if (category == "Filtre" || category=="wateringMode" || category=="individual" || category=="sequential") {
         client.emit("update_" + category, globals[category]);
     }
     else {

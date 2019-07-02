@@ -8,28 +8,27 @@
   -webkit-appearance: none;
   /* Override default CSS styles */
   appearance: none;
-  width: 100%;
+  width: 95%;
   /* Full-width */
   height: 15px;
   /* Specified height */
   border-radius: 5px;
-  background: #d3d3d3;
+  background: #292f36;
   /* Grey background */
   outline: none;
   /* Remove outline */
-  opacity: 0.7;
+  opacity: 1;
   /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s;
   /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+  transition: width .2s;
   margin: 1em 0em 1em 0em; }
 
 .disabled .close:focus, .close:hover {
   cursor: default; }
 
 .slider:hover {
-  opacity: 1;
-  /* Fully shown on mouse-over */ }
+  width: 100%; }
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -76,14 +75,16 @@
 
 .freqButton {
   cursor: pointer;
-  background-color: $color-lit;
+  background-color: #52d1dc;
   margin: 1vw;
   border-radius: 5%;
   padding: 0; }
-  .freqButton > p {
-    font-size: 4vmin;
-    margin: 0;
-    color: #6d6d6d; }
-    .freqButton > p:hover {
-      background-color: $color-lit-hover;
-      color: black; }
+
+.freqButton > p {
+  font-size: 4vmin;
+  margin: 0;
+  color: #6d6d6d; }
+
+.freqButton > p:hover {
+  background-color: #58bec7;
+  color: black; }

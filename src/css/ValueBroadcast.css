@@ -7,9 +7,10 @@
     display: block;
     font-size: 6vw; } }
 
-h2 > span {
-  font-size: 70%;
-  font-weight: 100; }
+h2 {
+  font-size: 80%; }
+  h2 > span {
+    font-weight: 100; }
 
 span {
   width: 100%;

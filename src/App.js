@@ -84,10 +84,16 @@ class App extends Component {
         <div className={`${this.state.navBarCollapse? "": "show"} collapse navbar-collapse`} id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className={`nav-item pointer blue ${this.state.appState=="pool"?"active":""}`}>
-              <a className="nav-link nav-element" onClick={()=>{this.setState({appState: "pool"})}}>Piscine <span className="sr-only">(current)</span></a>
+              <a className="nav-link nav-element" onClick={()=>{
+                this.setState({appState: "pool"}, ()=> {
+                  io.emit("refresh-pool"); // get all values again
+                });
+                }}>Piscine <span className="sr-only">(current)</span></a>
             </li>
             <li className={`nav-item pointer green ${this.state.appState=="watering"?"active":""}`}>
-              <a className="nav-link nav-element" onClick={()=> {this.setState({appState: "watering"})}}>Arrosage</a>
+              <a className="nav-link nav-element" onClick={()=> {this.setState({appState: "watering"}, ()=> {
+                io.emit('refresh-watering')
+              })}}>Arrosage</a>
             </li>
           </ul>
             {this.getAdminSection()}
