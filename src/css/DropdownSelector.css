@@ -1,16 +1,17 @@
 .selector {
   position: relative;
   display: inline-block;
+  margin-bottom: .5rem;
   /* margin-left: 40px;; */ }
 
 .selector .selected {
   background-color: #292f36;
   padding: .2rem;
   cursor: pointer;
-  width: 10rem;
+  width: 25vw;
   color: white; }
 
-.selector-items {
+#selector-items {
   position: absolute;
   border: 1px solid #d4d4d4;
   border-bottom: none;

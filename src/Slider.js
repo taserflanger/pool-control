@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Title from './Title';
 import './css/Slider.css';
-import Category from './Category';
 
 class Slider extends Component {
     render() {

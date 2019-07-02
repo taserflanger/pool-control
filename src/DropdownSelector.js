@@ -10,15 +10,19 @@ class DropdownSelector extends Component{
         }
     }
 
-    handleClick(val) {
-        this.props.onChangeName(val);
+    handleClick(e) {
+        let index=this.props.names.indexOf(e.target.innerHTML);
+        this.props.onChangeName(index);
+        this.setState({dropdown: false})
     }
     getDropDownElements() {
         let result = [];
         if (this.state.dropdown) {
             for (var i=0; i<this.props.names.length; i++) {
                 if (i!=this.props.selected) {
-                result.push(<div key={i} onClick={()=>this.handleClick(i)}>{this.props.names[i]}</div>);
+                result.push(<div key={i} onClick={(key)=>{
+                    this.handleClick(key);
+                }}>{this.props.names[i]}</div>);
                 }
             }
         // } else {

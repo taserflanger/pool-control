@@ -19,7 +19,7 @@ try {
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
 function Write() {
-    fs.writeFile("server/poolState.json", JSON.stringify(globals, null, 4), (err)=> {
+    fs.writeFile("server/serverState.json", JSON.stringify(globals, null, 4), (err)=> {
         if (err) throw err;
     })
 }

@@ -21,6 +21,9 @@
       .Button > div.false:hover {
         background-color: #3e4752;
         color: white; }
+  .Button.square > div {
+    border-radius: 0;
+    width: fit-content; }
 
 .Button-false > p {
   color: red;

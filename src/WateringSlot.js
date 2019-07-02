@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import Title from './Title';
 import Button from './Button';
-import DropdownSelector from './DropdownSelector'
+import DropdownSelector from './DropdownSelector';
+import './css/WateringSlot.css';
 
 export default class WateringSlot extends Component {
     render() {
         return (
             <div className="wateringSlot">
-                <Title size={1} text={this.props.slotInfo.title} color="green"></Title>
+                <Title size={1} text={this.props.slotInfo.name} color="green"></Title>
                 <Button
                     onClick={()=>this.props.onToggle()}
                     name={this.props.name}
@@ -17,20 +18,31 @@ export default class WateringSlot extends Component {
 
                 ></Button>
                 <div className="row">
-                    <div className="col">
+                    {/* <div className="col">
                         Lancer la séquence: 
-                    </div>
+                    </div> */}
                     <div className="col">
                         <DropdownSelector
-                        names={["tous les jours", "un jour sur deux", "une fois par semaine"]}
+                        names={["jamais", "tous les jours", "un jour sur deux", "une fois par semaine"]}
                         selected={this.props.slotInfo.activity}
                         onChangeName={(val)=> {
                             this.props.changeActivity(val);
                         }}
-                        ></DropdownSelector>
+                        />
                     </div>
                 </div>
-                {JSON.stringify(this.props.slotInfo)}
+                <div className="row">
+                    <div className="col">
+                    <Button
+                        name="edit_sequence"
+                        title="Editer"
+                        square={true}
+                        color="green"
+                        onClick={()=>this.props.editSequence()}
+                        value={true}
+                    />
+                    </div>
+                </div>
             </div>
         )
     }
