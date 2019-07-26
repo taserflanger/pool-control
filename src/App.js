@@ -30,6 +30,7 @@ class App extends Component {
       loginAdmin: false,
       isAdmin: false,
       appState: "watering",
+      tempLog: {x: [], y: []}
     }
   }
 
@@ -37,7 +38,10 @@ class App extends Component {
     // setting up event listeners
     io.on('loginAdmin', bool=> {
       this.setState({isAdmin: bool, loginAdmin: !bool});
-    })
+    });
+    io.on('updateTempLog', newLog=> {
+      this.setState({tempLog: newLog})
+    });
   }
 
   
@@ -58,6 +62,7 @@ class App extends Component {
       return (<Pool
         io={io}
         isAdmin={this.state.isAdmin}
+        tempLog={this.state.tempLog}
         />);
     } else if (this.state.appState=="watering") {
       return (

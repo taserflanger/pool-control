@@ -5,7 +5,7 @@ class ValueBroadcast extends Component {
     render() {
         return (
             <div className="valueBroadcast">
-                <h2>{this.props.value}<span>{this.props.suffix}</span></h2>
+                <h2>{Math.round(this.props.value, 4)}<span>{this.props.suffix}</span></h2>
             </div>
         );
     }

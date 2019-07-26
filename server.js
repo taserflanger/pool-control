@@ -1,5 +1,6 @@
 const io = require('socket.io')();
 const fs = require('fs');
+const moment = require('moment');
 // const Gpio = require('onoff').Gpio;
 // let NORTHLIGHT = new Gpio(18, 'out');
 // let SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -10,22 +11,29 @@ let SOUTHLIGHT = {writeSync:(a)=>null};
 let ISRASPBERRY = true;
 try {
     const Gpio = require('onoff').Gpio;
-    let NORTHLIGHT = new Gpio(18, 'out');
-    let SOUTHEASTLIGHT = new Gpio(23, 'out');
-    let SOUTHLIGHT = new Gpio(24, 'out');
+    NORTHLIGHT = new Gpio(18, 'out');
+    SOUTHEASTLIGHT = new Gpio(23, 'out');
+    SOUTHLIGHT = new Gpio(24, 'out');
 } catch (error) {
     ISRASPBERRY = false;
 }
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
+logsdata = fs.readFileSync("server/log.json", 'utf8');
 function Write() {
     fs.writeFile("server/serverState.json", JSON.stringify(globals, null, 4), (err)=> {
         if (err) throw err;
     })
 }
+function WriteLogs() {
+    fs.writeFile("server/log.json", JSON.stringify(logs, null, 4), (err)=> {
+        if (err) throw err;
+    })
+}
 
 
-let globals = JSON.parse(data.toString())
+let globals = JSON.parse(data.toString());
+let logs = JSON.parse(logsdata.toString());
 
 io.on('connection', (client) => {
     console.log('client connected')
@@ -86,11 +94,15 @@ io.on('connection', (client) => {
         }
     });
     setInterval(()=> {
-        globals.Broadcast.water_temp += Math.round(Math.random()*2 - 1, 4);
-        globals.Broadcast.air_temp += (Math.round(Math.random()*2 - 1, 4));
+        globals.Broadcast.water_temp +=(Math.random()*2 - 1)/10;
+        globals.Broadcast.air_temp += (Math.random()*2 - 1)/10;
+        logs.temp.x.push(moment().format())
+        logs.temp.y.push(globals.Broadcast.water_temp)
+        WriteLogs();
         io.emit("update_Broadcast", "water_temp", globals.Broadcast.water_temp);
         io.emit("update_Broadcast", "air_temp", globals.Broadcast.air_temp);
-    }, 10000);
+        io.emit("updateTempLog", logs.temp);
+    }, 100);
 });
 
 function setSingleValue(category, value, client) {
@@ -106,6 +118,7 @@ function InitializeClient(client) {
     Object.keys(globals).forEach((category) => {
         initializeCategory(category, client);
     }, this);
+    client.emit("updateTempLog", logs.temp)
 }
 
 function setValue(category, variable, value, client) {

@@ -1,6 +1,8 @@
 import React, { Component }  from 'react';
+import Plot from 'react-plotly.js';
 import Category from './Category';
-import './css/App.css';
+import Title from './Title';
+import './css/Pool.css';
 
 class Pool extends Component {
     constructor(props) {
@@ -11,12 +13,20 @@ class Pool extends Component {
         if (this.props.isAdmin) {
           return (
             <div id="adminContent">
-              <Category
-              title="Log"
-              types={[]}
-              names={[]}
-              titles={[]}
-              />
+              <div class="category">
+              <Title size={2} align="center" text="Log"/>
+                <Plot
+                  data={[
+                    {
+                      x: this.props.tempLog.x,
+                      y: this.props.tempLog.y,
+                      type: "scatter"
+                    }
+                  ]}
+                  layout={ {autosize: true, title: 'Température'} }
+                  graphOptions = {{filename: "date-axes", fileopt: "overwrite"}}
+                />
+              </div>
               <Category
               title="Vannes individuelles"
               types={[]}

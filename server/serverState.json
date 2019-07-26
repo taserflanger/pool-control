@@ -10,8 +10,8 @@
     },
     "Filtre": 0,
     "Broadcast": {
-        "water_temp": 55,
-        "air_temp": 74,
+        "water_temp": 25,
+        "air_temp": 35,
         "ph": 7,
         "orp": 5
     },
