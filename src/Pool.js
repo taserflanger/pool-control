@@ -48,6 +48,7 @@ class Pool extends Component {
           initialValues={[false, false, false]}
           aligns={["center", "center", "center"]}
           sizes={[3, 3, 3]}
+         
         />
         {/* Sequence editor props*/}
             {/* {this.getSequencerContent()} */}

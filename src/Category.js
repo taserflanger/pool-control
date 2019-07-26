@@ -77,6 +77,7 @@ class Category extends Component {
                         />
                     </div>);
                 } else {
+                    console.log(i);
                     result.push(
                     <div key={i}className={`col${colSize}`}>
                         <Button 
@@ -129,14 +130,12 @@ class Category extends Component {
 
     getRows() {
         let result = []
-        let alignedCenter = this.props.aligneCenter? "align-items-center" : ""
-        for (var i=0; i<Math.floor(this.props.names.length, 4); i++) {
-            result.push(
-                <div key={i} className={`row justify-content-around ${alignedCenter}`}>
-                    { this.getCategoryContent(i*4, i*4+4) }
-                </div>
-            );
-        }
+        let alignedCenter = this.props.aligneCenter? "align-items-center" : "";
+        result.push(
+            <div className={`row justify-content-around ${alignedCenter}`}>
+                {this.getCategoryContent(0, this.props.names.length)}
+            </div>
+        )
         return result
     }
 
