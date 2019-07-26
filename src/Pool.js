@@ -42,12 +42,12 @@ class Pool extends Component {
         <div id="Piscine">
         <Category
           title="Spots"
-          types={["Button", "Button", "Button"]}
-          names={["north_light", "southeast_light", "south_light"]}
-          titles={[" 1 ", " 2 ", " 3 "]}
+          types={["Button"]}
+          names={["north_light"]}
+          titles={[""]}
           initialValues={[false, false, false]}
-          aligns={["center", "center", "center"]}
-          sizes={[3, 3, 3]}
+          aligns={["center"]}
+          sizes={[3]}
          
         />
         {/* Sequence editor props*/}
