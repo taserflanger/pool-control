@@ -1,6 +1,7 @@
 const io = require('socket.io')();
 const fs = require('fs');
 const moment = require('moment');
+const MCP23017 = require('node-mcp23017');
 // const Gpio = require('onoff').Gpio;
 // let NORTHLIGHT = new Gpio(18, 'out');
 // let SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -14,9 +15,21 @@ try {
     NORTHLIGHT = new Gpio(18, 'out');
     SOUTHEASTLIGHT = new Gpio(23, 'out');
     SOUTHLIGHT = new Gpio(24, 'out');
+    var mcp = new MCP23017({
+        address: 0x20, //default: 0x20
+        device: '/dev/i2c-1', // '/dev/i2c-1' on model B | '/dev/i2c-0' on model A
+        debug: true //default: false
+      });
+      for (var i = 0; i < 16; i++) {
+        mcp.pinMode(i, mcp.OUTPUT);
+        //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
+        //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
+      }
 } catch (error) {
     ISRASPBERRY = false;
 }
+
+mcp.digitalWrite(0, mcp.HIGH);
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
 logsdata = fs.readFileSync("server/log.json", 'utf8');
