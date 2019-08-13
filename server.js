@@ -1,7 +1,6 @@
 const io = require('socket.io')();
 const fs = require('fs');
 const moment = require('moment');
-const MCP23017 = require('node-mcp23017');
 // const Gpio = require('onoff').Gpio;
 // let NORTHLIGHT = new Gpio(18, 'out');
 // let SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -11,6 +10,7 @@ let SOUTHEASTLIGHT = {writeSync:(a)=>null};
 let SOUTHLIGHT = {writeSync:(a)=>null};
 let ISRASPBERRY = true;
 try {
+    const MCP23017 = require('node-mcp23017');
     const Gpio = require('onoff').Gpio;
     NORTHLIGHT = new Gpio(18, 'out');
     SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -18,18 +18,18 @@ try {
     var mcp = new MCP23017({
         address: 0x20, //default: 0x20
         device: '/dev/i2c-1', // '/dev/i2c-1' on model B | '/dev/i2c-0' on model A
-        debug: true //default: false
       });
       for (var i = 0; i < 16; i++) {
         mcp.pinMode(i, mcp.OUTPUT);
+        mcp.digitalWrite(i, mcp.HIGH);
         //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
         //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
       }
+      mcp.pinMode(8, mcp.INPUT);
 } catch (error) {
     ISRASPBERRY = false;
 }
 
-mcp.digitalWrite(0, mcp.HIGH);
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
 logsdata = fs.readFileSync("server/log.json", 'utf8');
@@ -39,6 +39,7 @@ function Write() {
     })
 }
 function WriteLogs() {
+    return
     fs.writeFile("server/log.json", JSON.stringify(logs, null, 4), (err)=> {
         if (err) throw err;
     })
@@ -46,7 +47,7 @@ function WriteLogs() {
 
 
 let globals = JSON.parse(data.toString());
-let logs = JSON.parse(logsdata.toString());
+// let logs = JSON.parse(logsdata.toString());
 
 io.on('connection', (client) => {
     console.log('client connected')
@@ -109,12 +110,12 @@ io.on('connection', (client) => {
     setInterval(()=> {
         globals.Broadcast.water_temp +=(Math.random()*2 - 1)/10;
         globals.Broadcast.air_temp += (Math.random()*2 - 1)/10;
-        logs.temp.x.push(moment().format())
-        logs.temp.y.push(globals.Broadcast.water_temp)
-        WriteLogs();
+        // logs.temp.x.push(moment().format())
+        // logs.temp.y.push(globals.Broadcast.water_temp)
+        // WriteLogs();
         io.emit("update_Broadcast", "water_temp", globals.Broadcast.water_temp);
         io.emit("update_Broadcast", "air_temp", globals.Broadcast.air_temp);
-        io.emit("updateTempLog", logs.temp);
+        // io.emit("updateTempLog", logs.temp);
     }, 100);
 });
 
@@ -131,7 +132,7 @@ function InitializeClient(client) {
     Object.keys(globals).forEach((category) => {
         initializeCategory(category, client);
     }, this);
-    client.emit("updateTempLog", logs.temp)
+    // client.emit("updateTempLog", logs.temp)
 }
 
 function setValue(category, variable, value, client) {
@@ -194,6 +195,7 @@ function handleVariableChange(variable, client) {
         //write with gpio
         if (variable=="north_light") {
             NORTHLIGHT.writeSync(globals.Spots.north_light? 1:0);
+            mcp.digitalWrite(0, globals.Spots.north_light? mcp.LOW:mcp.HIGH);
         } else if (variable == "south_light") {
             SOUTHLIGHT.writeSync(globals.Spots.south_light? 1:0);
         }  else if (variable == "southeast_light") {
@@ -201,7 +203,9 @@ function handleVariableChange(variable, client) {
         } else if (variable == "is_on") {
             
         }  else if (variable == "freq") {
-
+            for (var i=1; i<7;i++) {
+                mcp.digitalWrite(i, i<=globals.Moteur.freq?mcp.LOW:mcp.HIGH)
+            }
         } else if (variable == "Filtre") {
             setTimeout(()=> io.emit('updateChangeFilterMode', false), 3000)
         } else {
