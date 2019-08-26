@@ -17,8 +17,10 @@ module.exports.setSpots = function(value) {
 module.exports.setStop = function(value) {
     mcp.digitalWrite(1, value?0:1)
 }
-module.exports.setStart = function(value) {
-    mcp.digitalWrite(2, value?0:1)
+module.exports.setStart = function(value, filtrationModeChanging) {
+    if (!filtrationModeChanging) {
+        mcp.digitalWrite(2, value?0:1)
+    }
 }
 module.exports.setFreqMinus = function(value) {
     mcp.digitalWrite(3, value?0:1)

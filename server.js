@@ -1,7 +1,7 @@
 const io = require('socket.io')();
 const fs = require('fs');
 const moment = require('moment');
-const mcp = import('./mcp')
+const mcp = require('./mcp')
 
 let ISRASPBERRY = true;
 
@@ -23,7 +23,7 @@ function WriteLogs() {
 
 
 let globals = JSON.parse(data.toString());
-mcpArray = [globals.Spots.north_light, globals.Moteur.stop, globals.Moteur.start, globals.Moteur.freq_minus, globals.moteur.freq_plus]
+mcpArray = [globals.Spots.north_light, globals.Moteur.stop, globals.Moteur.start, globals.Moteur.freq_minus, globals.Moteur.freq_plus]
 try {
     mcp.initializeMcp(mcpArray);
 } catch (error) {
@@ -195,10 +195,22 @@ function handleVariableChange(variable, oldVariableValue=null) {
             mcp.setSpots(globals.Spots.north_light);
         } else if (variable == "stop") {
             mcp.setStop(globals.Moteur.stop);                        
-        }  else if (variable == "freq_minus") {
+        } else if (variable=="start") {
+          mcp.setStart(globals.Moteur.start, globals.filtrationModeChanging);  
+        } else if (variable == "freq_minus") {
             mcp.setFreqMinus(globals.Moteur.freq_minus)
         } else if (variable == "freq_plus") {
             mcp.setFreqPlus(globals.Moteur.freq_plus)
+        } else if (variable=="Filtre") {
+            mcp.setStop(1)
+            globals.filtrationModeChanging = true;
+            Write();
+            setTimeout(()=>{
+                mcp.setStop(0);
+                globals.filtrationModeChanging = false;
+                mcp.setStart(1, globals.filtrationModeChanging);
+                setTimeout(()=>mcp.setStart(0, globals.filtrationModeChanging), 30);
+            }, 3000)
         } else {
             console.log("Unkown variable");
         }
