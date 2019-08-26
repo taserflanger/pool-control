@@ -1,6 +1,6 @@
 {
     "Spots": {
-        "north_light": true,
+        "north_light": false,
         "southeast_light": false,
         "south_light": false
     },
@@ -12,10 +12,11 @@
         "stop": false,
         "start": false
     },
-    "Filtre": 0,
+    "Filtre": 1,
+    "filtrationModeChanging": true,
     "Broadcast": {
-        "water_temp": 13.258017515504763,
-        "air_temp": 72.59308946189118,
+        "water_temp": 10.724281286300272,
+        "air_temp": 55.402009740215114,
         "ph": 7,
         "orp": 5
     },

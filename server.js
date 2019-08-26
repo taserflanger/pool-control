@@ -1,9 +1,10 @@
 const io = require('socket.io')();
 const fs = require('fs');
 const moment = require('moment');
-const mcp = import('./mcp')
+const mcp = require('./mcp')
 
 let ISRASPBERRY = true;
+let filtrationModeChanging = false;
 
 
 
@@ -23,7 +24,7 @@ function WriteLogs() {
 
 
 let globals = JSON.parse(data.toString());
-mcpArray = [globals.Spots.north_light, globals.Moteur.stop, globals.Moteur.start, globals.Moteur.freq_minus, globals.moteur.freq_plus]
+mcpArray = [globals.Spots.north_light, globals.Moteur.stop, globals.Moteur.start, globals.Moteur.freq_minus, globals.Moteur.freq_plus]
 try {
     mcp.initializeMcp(mcpArray);
 } catch (error) {
@@ -194,11 +195,28 @@ function handleVariableChange(variable, oldVariableValue=null) {
         if (variable=="north_light") {
             mcp.setSpots(globals.Spots.north_light);
         } else if (variable == "stop") {
-            mcp.setStop(globals.Moteur.stop);                        
-        }  else if (variable == "freq_minus") {
+            mcp.setStop(globals.Moteur.stop, filtrationModeChanging);                        
+        } else if (variable=="start") {
+          mcp.setStart(globals.Moteur.start, filtrationModeChanging);  
+        } else if (variable == "freq_minus") {
             mcp.setFreqMinus(globals.Moteur.freq_minus)
         } else if (variable == "freq_plus") {
             mcp.setFreqPlus(globals.Moteur.freq_plus)
+        } else if (variable=="Filtre") {
+            mcp.setStop(1)
+            filtrationModeChanging = true;
+            setTimeout(()=> {
+                mcp.setFiltrationMode(globals.Filtre);
+            }, 5000)
+            setTimeout(()=>{
+                mcp.setStop(0);
+                filtrationModeChanging = false;
+                setTimeout(()=> {
+                    mcp.setStart(1, filtrationModeChanging);
+                    setTimeout(()=>mcp.setStart(0, filtrationModeChanging), 300);
+                }, 1000)
+            }, 70000)
+            
         } else {
             console.log("Unkown variable");
         }
