@@ -13,7 +13,7 @@
         "start": false
     },
     "Filtre": 1,
-    "filtrationModeChanging": true,
+    "filtrationModeChanging": false,
     "Broadcast": {
         "water_temp": 11.78748368116349,
         "air_temp": 57.81516888587794,
