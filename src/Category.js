@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from './Button';
+import PushButton from './PushButton'
 import Title from './Title'
 import Slider from './Slider';
 import ValueBroadcast from './ValueBroadcast';
@@ -34,9 +35,14 @@ class Category extends Component {
 
     }
 
+    handlePushButton(variable, value) {
+        io.emit('setValue', this.props.title, variable, value);
+    }
+
     handleButtonClick(variable) {
         io.emit('toggle', this.props.title, variable);
     }
+    
     handleButtonGroup(key) {
         let index = this.props.names.indexOf(key);
         io.emit('setSingleValue', this.props.title, index);
@@ -77,11 +83,10 @@ class Category extends Component {
                         />
                     </div>);
                 } else {
-                    console.log(i);
                     result.push(
                     <div key={i}className={`col${colSize}`}>
                         <Button 
-                            onClick={(key)=>this.handleButtonClick(key)}
+                            onClick={(name)=>this.handleButtonClick(name)}
                             name={this.props.names[i]}
                             value={this.state.values[i]}
                             subtitles={[]}
@@ -89,7 +94,22 @@ class Category extends Component {
                         />
                     </div>);
                 }
-            } if (this.props.types[i]==="Slider" || type==="Slider") {
+            } if (this.props.types[i]=="PushButton") {
+                result.push(
+                    <div key={i} className={`col${colSize}`}>
+                        <PushButton
+                            onMouseDown={(name)=>this.handlePushButton(name, true)}
+                            onMouseUp={(name)=>this.handlePushButton(name, false)}
+                            name={this.props.names[i]}
+                            value={this.state.values[i]}
+                            subtitles={[]}
+                            title={(this.props.titles[i])? this.props.titles[i] : ""}
+                        />
+                    </div>
+                )
+            }
+            
+            if (this.props.types[i]==="Slider" || type==="Slider") {
                 result.push(
                     this.getSlider(i)
                     );

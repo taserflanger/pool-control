@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Title from './Title';
 import './css/Button.css';
 
-class Button extends Component {
+class PushButton extends Component {
 
     constructor(props) {
         super(props);
@@ -46,7 +46,12 @@ class Button extends Component {
             <div id={id} className={`Button-${this.props.value}`}>
                 {/* {this.getTitle()} */}
                 <a  className={`${this.props.square? "square" : ""} Button text-${align}`}>
-                    <div onClick={() => this.props.onClick(this.props.name)} className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p className="btn-text">{this.props.title}</p></div>
+                    <div 
+                    onMouseDown={() => this.props.onMouseDown(this.props.name)}
+                    onTouchStart={() => this.props.onMouseDown(this.props.name)}
+                    onMouseUp={()=>this.props.onMouseUp(this.props.name)}
+                    onTouchEnd={()=>this.props.onMouseUp(this.props.name)}
+                    className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p>{this.props.title}</p></div>
                 </a>
                 {this.getSubtitle()}
             </div>
@@ -55,4 +60,4 @@ class Button extends Component {
     }
 }
 
-export default Button
+export default PushButton
