@@ -215,7 +215,7 @@ function handleVariableChange(variable, oldVariableValue=null) {
                     mcp.setStart(1, filtrationModeChanging);
                     setTimeout(()=>mcp.setStart(0, filtrationModeChanging), 300);
                 }, 1000)
-            }, 70000)
+            }, 35000)
             
         } else {
             console.log("Unkown variable");
