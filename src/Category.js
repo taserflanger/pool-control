@@ -132,7 +132,7 @@ class Category extends Component {
         let result = []
         let alignedCenter = this.props.aligneCenter? "align-items-center" : "";
         result.push(
-            <div className={`row justify-content-around ${alignedCenter}`}>
+            <div key = {0} className={`row justify-content-around ${alignedCenter}`}>
                 {this.getCategoryContent(0, this.props.names.length)}
             </div>
         )
