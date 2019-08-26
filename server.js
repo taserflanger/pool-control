@@ -1,35 +1,10 @@
 const io = require('socket.io')();
 const fs = require('fs');
-// const moment = require('moment');
-// const Gpio = require('onoff').Gpio;
-// let NORTHLIGHT = new Gpio(18, 'out');
-// let SOUTHEASTLIGHT = new Gpio(23, 'out');
-// let SOUTHLIGHT = new Gpio(24, 'out');
-let NORTHLIGHT = {writeSync:(a)=>null};
-let SOUTHEASTLIGHT = {writeSync:(a)=>null};
-let SOUTHLIGHT = {writeSync:(a)=>null};
+const moment = require('moment');
+const mcp = import('./mcp')
+
 let ISRASPBERRY = true;
-try {
-    const Gpio = require('onoff').Gpio;
-    NORTHLIGHT = new Gpio(24, 'out');
-    SOUTHEASTLIGHT = new Gpio(23, 'out');
-    // const MCP23017 = require('node-mcp23017');
-    // var mcp = new MCP23017({
-    //     address: 0x20, //default: 0x20
-    //     device: '/dev/i2c-1', // '/dev/i2c-1' on model B | '/dev/i2c-0' on model A
-    //   });
-    //   mcp.pinMode(0, mcp.OUTPUT);
-    //   mcp.digitalWrite(mcp.HIGH);
-    // //   for (var i = 0; i < 16; i++) {
-    // //     mcp.pinMode(i, mcp.OUTPUT);
-    // //     mcp.digitalWrite(i, mcp.LOW);
-    // //     //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
-    // //     //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
-    // //   }
-    //   mcp.pinMode(8, mcp.INPUT);
-} catch (error) {
-    ISRASPBERRY = false;
-}
+
 
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
@@ -48,7 +23,14 @@ function WriteLogs() {
 
 
 let globals = JSON.parse(data.toString());
+mcpArray = [globals.Spots.north_light, globals.Moteur.stop, globals.Moteur.start, globals.Moteur.freq_minus, globals.moteur.freq_plus]
+try {
+    mcp.initializeMcp(mcpArray);
+} catch (error) {
+    ISRASPBERRY = false;
+}
 // let logs = JSON.parse(logsdata.toString());
+// initializeOutputs();
 
 io.on('connection', (client) => {
     console.log('client connected')
@@ -86,7 +68,7 @@ io.on('connection', (client) => {
     client.on('setIndividualValue', (index, variable, value) => {
         globals.individual[index][variable] = value;
         console.log("individual " + variable + ": " + value);
-        handleVariableChange("individual", client);
+        handleVariableChange("individual");
         client.emit("update_individual", globals.individual);
         Write();
     }) 
@@ -123,7 +105,7 @@ io.on('connection', (client) => {
 function setSingleValue(category, value, client) {
     globals[category] = value;
     console.log(category, globals[category]);
-    handleVariableChange(category, client);
+    handleVariableChange(category);
     client.emit("update_" + category, value);
     client.broadcast.emit("update_" + category, globals[category]);
 }
@@ -143,14 +125,14 @@ function setValue(category, variable, value, client) {
     }
     globals[category][variable] = value;
     console.log(variable, globals[category][variable]);
-    handleVariableChange(variable, client, oldVariableValue=oldValue);
+    handleVariableChange(variable, oldVariableValue=oldValue);
     io.emit("update_" + category, variable, globals[category][variable]);
 }
 
 function toggleVariable(category, variable, client) {
     globals[category][variable] = !globals[category][variable];
     console.log(variable, globals[category][variable]);
-    handleVariableChange(variable, client);
+    handleVariableChange(variable);
     io.emit("update_" + category, variable, globals[category][variable]);
 }
 
@@ -171,7 +153,7 @@ function toggleUseSequencer(client) {
                 console.log(key, lightValues[i]);
                 globals.Spots[key] = lightValues[i];
                 io.emit('update_Spots', key, lightValues[i]? true:false);
-                handleVariableChange(key, client);
+                handleVariableChange(key);
                 i++;
             });
             io.emit('tick', seq.tick);
@@ -193,38 +175,30 @@ function initializeCategory(category, client) {
         }, this);
     }
 }
+
+function initializeOutputs() {
+    Object.keys(globals).forEach((category) => {
+        if (typeof(category)=="object") {
+            Object.keys(category).forEach((variable)=> {
+                handleVariableChange(variable)
+            })
+        } else {
+            handleVariableChange(category);
+        }
+    })
+}
 // Programmation physique
-function handleVariableChange(variable, client, oldVariableValue) {
+function handleVariableChange(variable, oldVariableValue=null) {
     if(ISRASPBERRY) {
         //write with gpio
         if (variable=="north_light") {
-            NORTHLIGHT.writeSync(globals.Spots.north_light? 0:1);
-            // mcp.digitalWrite(0, globals.Spots.north_light? mcp.LOW:mcp.HIGH);
-        } else if (variable == "south_light") {
-            SOUTHLIGHT.writeSync(globals.Spots.south_light? 1:0);
-        }  else if (variable == "southeast_light") {
-            SOUTHEASTLIGHT.writeSync(globals.Spots.southeast_light? 1:0);        
-        } else if (variable == "is_on") {
-            
-        }  else if (variable == "freq") {
-            delta = globals.Moteur.freq - oldVariableValue;
-            if (delta == 0) {return}
-            else if (delta < 0) {
-                mcp.digitalWrite(3, 0);
-                setTimeout(()=> {
-                    mcp.digitalWrite(3, 1)
-                }, delta * 100);
-            } else {
-                mcp.digitalWrite(4, 0);
-                setTimeout(()=> {
-                    mcp.digitalWrite(3, 1)
-                }, delta * 100);
-            }
-            for (var i=1; i<7;i++) {
-                mcp.digitalWrite(i, i<=globals.Moteur.freq?mcp.LOW:mcp.HIGH)
-            }
-        } else if (variable == "Filtre") {
-            setTimeout(()=> io.emit('updateChangeFilterMode', false), 3000)
+            mcp.setSpots(globals.Spots.north_light);
+        } else if (variable == "stop") {
+            mcp.setStop(globals.Moteur.stop);                        
+        }  else if (variable == "freq_minus") {
+            mcp.setFreqMinus(globals.Moteur.freq_minus)
+        } else if (variable == "freq_plus") {
+            mcp.setFreqPlus(globals.Moteur.freq_plus)
         } else {
             console.log("Unkown variable");
         }

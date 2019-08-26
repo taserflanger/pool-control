@@ -2,7 +2,13 @@
 .Button {
   margin: 0 auto;
   >div {
-    display: inline-block;
+    >p {
+      font-size: 1.5em;
+      text-align: center;
+      vertical-align: middle;
+      display: table-cell;
+    }
+    display: table;
     padding: 2vw;
     cursor: pointer;
     text-align: center;
@@ -49,8 +55,4 @@ text-shadow: 0 0 10px rgb(19, 167, 0);
 
 .Button>p,.slidecontainer>p{
   text-align: center;
-}
-
-.btn-text {
-  font-size: 2em;
 }

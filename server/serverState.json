@@ -8,12 +8,14 @@
         "is_on": true,
         "freq": 3,
         "freq_minus": false,
-        "freq_plus": false
+        "freq_plus": false,
+        "stop": false,
+        "start": false
     },
-    "Filtre": 1,
+    "Filtre": 0,
     "Broadcast": {
-        "water_temp": 18.738997697316538,
-        "air_temp": 40.17990244759231,
+        "water_temp": 13.258017515504763,
+        "air_temp": 72.59308946189118,
         "ph": 7,
         "orp": 5
     },
@@ -23,7 +25,7 @@
         {
             "name": "Rat",
             "active": true,
-            "activity": 0,
+            "activity": 2,
             "sequences": [
                 {
                     "begin": "02:00",
@@ -39,7 +41,7 @@
         },
         {
             "name": "Jardinet",
-            "active": true,
+            "active": false,
             "activity": 1,
             "sequences": [
                 {

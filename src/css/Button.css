@@ -1,7 +1,7 @@
 .Button {
   margin: 0 auto; }
   .Button > div {
-    display: inline-block;
+    display: table;
     padding: 2vw;
     cursor: pointer;
     text-align: center;
@@ -15,6 +15,11 @@
     transition: background-color .1s;
     transition-timing-function: ease-in-out;
     border-radius: 20%; }
+    .Button > div > p {
+      font-size: 1.5em;
+      text-align: center;
+      vertical-align: middle;
+      display: table-cell; }
     @media screen and (max-width: 500px) {
       .Button > div {
         width: 20vw;
@@ -36,6 +41,3 @@
 
 .Button > p, .slidecontainer > p {
   text-align: center; }
-
-.btn-text {
-  font-size: 2em; }

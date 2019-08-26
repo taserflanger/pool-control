@@ -65,14 +65,13 @@ class Pool extends Component {
         />
         <Category
           title="Moteur" 
-          types={["Button", "PushButton", "PushButton"]} 
-          titles={["", "-", "+"]}
+          types={["PushButton", "PushButton", "PushButton", "PushButton"]} 
+          titles={["Stop", "Start", "-", "+"]}
           subtitles={[
-            ["OFF", "On"],
-            [], []
+            [],[], [], []
           ]}
-          names = {["is_on", "freq_minus", "freq_plus"]}
-          initialValues={[true, 0, 0]}
+          names = {["stop", "start", "freq_minus", "freq_plus"]}
+          initialValues={[false, false, false, false]}
         />
         <Category
           title="Filtre"
