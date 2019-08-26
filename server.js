@@ -1,6 +1,6 @@
 const io = require('socket.io')();
 const fs = require('fs');
-const moment = require('moment');
+// const moment = require('moment');
 // const Gpio = require('onoff').Gpio;
 // let NORTHLIGHT = new Gpio(18, 'out');
 // let SOUTHEASTLIGHT = new Gpio(23, 'out');
@@ -10,22 +10,23 @@ let SOUTHEASTLIGHT = {writeSync:(a)=>null};
 let SOUTHLIGHT = {writeSync:(a)=>null};
 let ISRASPBERRY = true;
 try {
-    const MCP23017 = require('node-mcp23017');
     const Gpio = require('onoff').Gpio;
-    NORTHLIGHT = new Gpio(18, 'out');
+    NORTHLIGHT = new Gpio(24, 'out');
     SOUTHEASTLIGHT = new Gpio(23, 'out');
-    SOUTHLIGHT = new Gpio(24, 'out');
-    var mcp = new MCP23017({
-        address: 0x20, //default: 0x20
-        device: '/dev/i2c-1', // '/dev/i2c-1' on model B | '/dev/i2c-0' on model A
-      });
-      for (var i = 0; i < 16; i++) {
-        mcp.pinMode(i, mcp.OUTPUT);
-        mcp.digitalWrite(i, mcp.HIGH);
-        //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
-        //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
-      }
-      mcp.pinMode(8, mcp.INPUT);
+    // const MCP23017 = require('node-mcp23017');
+    // var mcp = new MCP23017({
+    //     address: 0x20, //default: 0x20
+    //     device: '/dev/i2c-1', // '/dev/i2c-1' on model B | '/dev/i2c-0' on model A
+    //   });
+    //   mcp.pinMode(0, mcp.OUTPUT);
+    //   mcp.digitalWrite(mcp.HIGH);
+    // //   for (var i = 0; i < 16; i++) {
+    // //     mcp.pinMode(i, mcp.OUTPUT);
+    // //     mcp.digitalWrite(i, mcp.LOW);
+    // //     //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
+    // //     //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
+    // //   }
+    //   mcp.pinMode(8, mcp.INPUT);
 } catch (error) {
     ISRASPBERRY = false;
 }
@@ -136,18 +137,21 @@ function InitializeClient(client) {
 }
 
 function setValue(category, variable, value, client) {
+    let oldValue = null;
+    if (variable=="freq") {
+        oldValue = globals[category][variable];
+    }
     globals[category][variable] = value;
     console.log(variable, globals[category][variable]);
-    handleVariableChange(variable, client);
-    client.broadcast.emit("update_" + category, variable, globals[category][variable]);
+    handleVariableChange(variable, client, oldVariableValue=oldValue);
+    io.emit("update_" + category, variable, globals[category][variable]);
 }
 
 function toggleVariable(category, variable, client) {
     globals[category][variable] = !globals[category][variable];
     console.log(variable, globals[category][variable]);
     handleVariableChange(variable, client);
-    client.emit("update_" + category, variable, globals[category][variable]);
-    client.broadcast.emit("update_" + category, variable, globals[category][variable]);
+    io.emit("update_" + category, variable, globals[category][variable]);
 }
 
 function toggleSequenceSpotTick(index, spot, tick) {
@@ -190,12 +194,12 @@ function initializeCategory(category, client) {
     }
 }
 // Programmation physique
-function handleVariableChange(variable, client) {
+function handleVariableChange(variable, client, oldVariableValue) {
     if(ISRASPBERRY) {
         //write with gpio
         if (variable=="north_light") {
-            NORTHLIGHT.writeSync(globals.Spots.north_light? 1:0);
-            mcp.digitalWrite(0, globals.Spots.north_light? mcp.LOW:mcp.HIGH);
+            NORTHLIGHT.writeSync(globals.Spots.north_light? 0:1);
+            // mcp.digitalWrite(0, globals.Spots.north_light? mcp.LOW:mcp.HIGH);
         } else if (variable == "south_light") {
             SOUTHLIGHT.writeSync(globals.Spots.south_light? 1:0);
         }  else if (variable == "southeast_light") {
@@ -203,6 +207,19 @@ function handleVariableChange(variable, client) {
         } else if (variable == "is_on") {
             
         }  else if (variable == "freq") {
+            delta = globals.Moteur.freq - oldVariableValue;
+            if (delta == 0) {return}
+            else if (delta < 0) {
+                mcp.digitalWrite(3, 0);
+                setTimeout(()=> {
+                    mcp.digitalWrite(3, 1)
+                }, delta * 100);
+            } else {
+                mcp.digitalWrite(4, 0);
+                setTimeout(()=> {
+                    mcp.digitalWrite(3, 1)
+                }, delta * 100);
+            }
             for (var i=1; i<7;i++) {
                 mcp.digitalWrite(i, i<=globals.Moteur.freq?mcp.LOW:mcp.HIGH)
             }

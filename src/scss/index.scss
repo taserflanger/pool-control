@@ -19,17 +19,17 @@
     box-shadow: inset 0 0 15px rgb(78, 78, 78);
     &.blue {
       background-color: $blue;
-      &:hover {
-        background-color: $blue-hover;
-        color: black;
-      }
+      // &:hover {
+      //   background-color: $blue-hover;
+      //   color: black;
+      // }
   }
   &.green {
       background-color: $green;
-      &:hover {
-        background-color: $green-hover;
-        color: black;
-      }
+      // &:hover {
+      //   background-color: $green-hover;
+      //   color: black;
+      // }
   }
   color: rgb(109, 109, 109);
 }
