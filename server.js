@@ -4,8 +4,10 @@ const fs = require('fs');
 let ISRASPBERRY = true;
 let FILTRATIONMODECHANGING = false;
 
+let mcp = null;
+
 try {
-    const mcp = require('./mcp')
+    mcp = require('./mcp')
 } 
 catch (error) {
     ISRASPBERRY = false;
@@ -27,9 +29,8 @@ function WriteLogs() {
 
 
 let globals = JSON.parse(data.toString());
-mcpArray = [globals.Pool.Spots, globals.Pool.stop, globals.Pool.start, globals.Pool.freq_minus, globals.Pool.freq_plus]
 if (ISRASPBERRY) {
-    mcp.initializeMcp(mcpArray);
+    mcp.initializeMcp([globals.Pool.spots, globals.Pool.stop, globals.Pool.start, globals.Pool.freq_minus, globals.Pool.freq_plus]);
 }
 // let logs = JSON.parse(logsdata.toString());
 // initializeOutputs();
@@ -100,13 +101,16 @@ function timeout(ms, cb) {
 }
 
 // Programmation physique
-function handleVariableChange(variable, oldVariableValue=null) {
+function handleVariableChange(variable) {
     if(ISRASPBERRY) {
         //write with gpio
         if (variable=="spots") {
             mcp.setSpots(globals.Pool.spots);
         } else if (variable == "stop") {
-            mcp.setStop(globals.Pool.stop);                        
+            mcp.setStop(globals.Pool.stop, FILTRATIONMODECHANGING, emergency=true, ()=>{
+                FILTRATIONMODECHANGING=false;
+                // mcp.setStop(false, false)
+            });                        
         } else if (variable=="start") {
           mcp.setStart(globals.Pool.start, FILTRATIONMODECHANGING);  
         } else if (variable == "freq_minus") {
@@ -115,18 +119,20 @@ function handleVariableChange(variable, oldVariableValue=null) {
             mcp.setFreqPlus(globals.Pool.freq_plus)
         } else if (variable=="filtration_mode") {
             // éteindre la pompe
-            mcp.setStop(1);
+            mcp.setStop(1, FILTRATIONMODECHANGING);
+
             mcp.clearJobs();
-            // filtrationmodechanging est true si les vannes bougent
             FILTRATIONMODECHANGING = true;
+            // filtrationmodechanging est true si les vannes bougent
             // callback: action à effectuer après la fin du cycle de lavage/autre mode de filtration
             let callback = ()=>{return}; // 
-            if (globals.filtration_mode==1) {
+            if (globals.Pool.filtration_mode==1) {
                 // après le lavage, on retourne en filtration
                 callback = ()=> {
-                    globals.filtration_mode = 0;
-                    console.log("Filtre 0");
-                    handleVariableChange("Filtre")
+                    globals.Pool.filtration_mode = 0;
+                    Write();
+                    console.log("filtration_mode 0");
+                    handleVariableChange("filtration_mode")
                     io.emit("update_filtration_mode", 0);
                 }
             }
