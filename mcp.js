@@ -33,10 +33,50 @@ module.exports.setFreqPlus = function(value) {
 
 }
 
-module.exports.setFiltrationMode = function(value) {
+function goToMaxFreq(callback) {
+    mcp.digitalWrite(4, 0);
+    setTimeout(()=>{
+        mcp.digitalWrite(4, 1)
+        callback();
+    }, 5000);
+}
+
+function goToMinFreq(callback=()=>{return}) {
+    mcp.digitalWrite(3, 0);
+    setTimeout(()=>{
+        mcp.digitalWrite(3, 1)
+        callback();
+    }, 5000);
+}
+
+function timeout(ms, cb) {
+    return setTimeout(cb, ms);
+}
+
+function WashingCycle(cb) {
+    for (let i=0; i<5; i++) {
+        timeout(50000, cb);
+        // goToMaxFreq(()=>{
+        //     timeout(70000, ()=>goToMinFreq(()=> {
+        //         timeout(20000, ()=>goToMaxFreq(()=>cb()))
+        //     }))})
+    }
+}
+
+module.exports.setFiltrationMode = function(value, cb) {
     if (value == 0) {
-        mcp.digitalWrite(7, 0);
-    } else if (value == 1) {
         mcp.digitalWrite(7, 1);
+        mcp.digitalWrite(6, 1);
+        mcp.digitalWrite(5, 1);
+    } else if (value == 1) {
+        mcp.digitalWrite(7, 0);
+        mcp.digitalWrite(6, 0);
+        mcp.digitalWrite(5, 0);
+        WashingCycle(cb);
+    } else {
+        mcp.digitalWrite(7, 1);
+        mcp.digitalWrite(6, 1);
+        mcp.digitalWrite(5, 0);
+
     }
 }

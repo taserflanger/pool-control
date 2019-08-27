@@ -7,6 +7,9 @@
       text-align: center;
       vertical-align: middle;
       display: table-cell;
+      &.single {
+        font-size: 4em;
+      }
     }
     display: table;
     padding: 2vw;

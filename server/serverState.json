@@ -12,11 +12,11 @@
         "stop": false,
         "start": false
     },
-    "Filtre": 1,
+    "Filtre": 0,
     "filtrationModeChanging": false,
     "Broadcast": {
-        "water_temp": 11.78748368116349,
-        "air_temp": 57.81516888587794,
+        "water_temp": -4.6991574445259,
+        "air_temp": 51.54113601429396,
         "ph": 7,
         "orp": 5
     },

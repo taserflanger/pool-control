@@ -177,17 +177,6 @@ function initializeCategory(category, client) {
     }
 }
 
-function initializeOutputs() {
-    Object.keys(globals).forEach((category) => {
-        if (typeof(category)=="object") {
-            Object.keys(category).forEach((variable)=> {
-                handleVariableChange(variable)
-            })
-        } else {
-            handleVariableChange(category);
-        }
-    })
-}
 // Programmation physique
 function handleVariableChange(variable, oldVariableValue=null) {
     if(ISRASPBERRY) {
@@ -205,8 +194,17 @@ function handleVariableChange(variable, oldVariableValue=null) {
         } else if (variable=="Filtre") {
             mcp.setStop(1)
             filtrationModeChanging = true;
+            let cb = ()=>{return}
+            if (globals.Filtre==1) {
+                cb = ()=> {
+                    globals.Filtre = 0;
+                    console.log("Filtre 0");
+                    handleVariableChange("Filtre")
+                    io.emit("update_Filtre", 0);
+                }
+            }
             setTimeout(()=> {
-                mcp.setFiltrationMode(globals.Filtre);
+                mcp.setFiltrationMode(globals.Filtre, cb);
             }, 5000)
             setTimeout(()=>{
                 mcp.setStop(0);
