@@ -6,6 +6,7 @@
     "bootstrap": "^4.3.1",
     "jquery-mousewheel": "^3.1.13",
     "moment": "^2.24.0",
+    "node-mcp23017": "0.0.4",
     "plotly": "^1.0.6",
     "plotly.js": "^1.48.3",
     "react": "^16.5.2",

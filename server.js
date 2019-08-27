@@ -1,3 +1,5 @@
+const port = 8000;
+io.listen(port);
 const io = require('socket.io')();
 const fs = require('fs');
 const moment = require('moment');
@@ -112,8 +114,17 @@ function handleVariableChange(variable, oldVariableValue=null) {
         } else if (variable=="filtration_mode") {
             mcp.setStop(1)
             filtrationModeChanging = true;
+            let cb = ()=>{return}
+            if (globals.Filtre==1) {
+                cb = ()=> {
+                    globals.Filtre = 0;
+                    console.log("Filtre 0");
+                    handleVariableChange("Filtre")
+                    io.emit("update_Filtre", 0);
+                }
+            }
             setTimeout(()=> {
-                mcp.setFiltrationMode(globals.Pool.filtration_mode);
+                mcp.setFiltrationMode(globals.Filtre, cb);
             }, 5000)
             setTimeout(()=>{
                 mcp.setStop(0);

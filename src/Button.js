@@ -45,7 +45,7 @@ class Button extends Component {
         return (
             <div id={id} className={`Button-${this.props.value} ${this.props.square? "square" : ""} Button text-${align}`}>
 
-                    <div onClick={() => this.props.onClick(this.props.name)} className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p className="btn-text">{this.props.title}</p></div>
+                    <div onClick={() => this.props.onClick(this.props.name)} className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p className={this.props.title.lenght==1?"single":""}>{this.props.title}</p></div>
                 {this.getSubtitle()}
             </div>
             
