@@ -21,31 +21,33 @@ class Category extends Component {
 
     componentDidMount() {
         if (this.props.isToggleGroup) {
-            io.on(`update_${this.props.title}`, (val) => {
+            io.on(`update_${this.props.toggleGroupName}`, (val) => {
                 this.setState({toggleValue: val});
             });
         } else {
-            io.on(`update_${this.props.title}`, (variableName, val) => {
-                let index = this.props.names.indexOf(variableName);
-                let newValues = this.state.values.slice()
-                newValues[index] = val;
-                this.setState({values: newValues});
-            });
+            for (let i=0; i<this.props.names.length; i++) {
+                io.on(`update_${this.props.names[i]}`, (val)=> {
+                    let newValues = this.state.values.slice();
+                    newValues[i] = val;
+                    this.setState({values: newValues});
+                })
+            }
         }
 
     }
 
     handlePushButton(variable, value) {
-        io.emit('setValue', this.props.title, variable, value);
+        console.log("setValue", variable, value)
+        io.emit('setValue', variable, value);
     }
 
-    handleButtonClick(variable) {
-        io.emit('toggle', this.props.title, variable);
+    handleButtonClick(variable, value) {
+        io.emit('setValue', variable, !value);
     }
     
     handleButtonGroup(key) {
         let index = this.props.names.indexOf(key);
-        io.emit('setSingleValue', this.props.title, index);
+        io.emit('setValue', this.props.toggleGroupName, index);
     }
 
     handleSliderChange(i, value) {
@@ -54,12 +56,12 @@ class Category extends Component {
         let variable = this.props.names[i];
         this.setState({
             values: newValues
-        }, this.sendValueMessage(variable, value));
+        }, this.setValue(variable, value));
     }
 
 
-    sendValueMessage(variable, value) {
-        io.emit('setValue', this.props.title, variable, value);
+    setValue(variable, value) {
+        io.emit('setValue', variable, value);
     }
 
     getCategoryContent(begin, end) {
@@ -75,7 +77,7 @@ class Category extends Component {
                         <div key={i}className={`col${colSize}`}>
                         <Title size={1} align="center" text={this.props.titles[i]} />
                         <Button 
-                        onClick={(key)=>this.handleButtonGroup(key)}
+                        onClick={(name)=>this.handleButtonGroup(name)}
                         name={this.props.names[i]}
                         value={(this.state.toggleValue===i)}
                         subtitles={[]}
@@ -86,7 +88,7 @@ class Category extends Component {
                     result.push(
                     <div key={i}className={`col${colSize}`}>
                         <Button 
-                            onClick={(name)=>this.handleButtonClick(name)}
+                            onClick={(name)=>this.handleButtonClick(name, this.state.values[i])}
                             name={this.props.names[i]}
                             value={this.state.values[i]}
                             subtitles={[]}

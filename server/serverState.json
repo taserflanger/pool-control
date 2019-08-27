@@ -1,25 +1,15 @@
 {
-    "Spots": {
-        "north_light": true,
-        "southeast_light": false,
-        "south_light": false
-    },
-    "Moteur": {
-        "is_on": true,
-        "freq": 3,
+    "Pool": {
+        "spots": false,
+        "stop": false,
+        "start": false,
         "freq_minus": false,
         "freq_plus": false,
-        "stop": false,
-        "start": false
+        "filtration_mode": 0,
+        "water_temp": 20.716619707869203,
+        "air_temp": 19.67901717813229
     },
-    "Filtre": 0,
     "filtrationModeChanging": false,
-    "Broadcast": {
-        "water_temp": 13.258017515504763,
-        "air_temp": 72.59308946189118,
-        "ph": 7,
-        "orp": 5
-    },
     "password": "2909",
     "wateringMode": "individual",
     "individual": [
