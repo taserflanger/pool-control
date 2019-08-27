@@ -37,7 +37,6 @@ class Category extends Component {
     }
 
     handlePushButton(variable, value) {
-        console.log("setValue", variable, value)
         io.emit('setValue', variable, value);
     }
 

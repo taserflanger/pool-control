@@ -1,82 +1,149 @@
-const MCP23017=require('node-mcp23017');
+const MCP23017 = require('node-mcp23017');
 let mcp = new MCP23017({
     address: 0x20,
 });
-module.exports.initializeMcp = function(mcpArray) {
+
+JOBS = [];
+
+function initializeMcp (mcpArray) {
     for (var i = 0; i < 16; i++) {
         mcp.pinMode(i, mcp.OUTPUT);
-        mcp.digitalWrite(i, mcpArray[i]?0:1);
+        mcp.digitalWrite(i, mcpArray[i] ? 0 : 1);
         //mcp.pinMode(i, mcp.INPUT); //if you want them to be inputs
         //mcp.pinMode(i, mcp.INPUT_PULLUP); //if you want them to be pullup inputs
-      }
-}
-module.exports.setSpots = function(value) {
-    mcp.digitalWrite(0, value?0:1)
-}
-
-module.exports.setStop = function(value, filtrationModeChanging) {
-    if (!filtrationModeChanging) {
-        mcp.digitalWrite(1, value?0:1)
     }
 }
-module.exports.setStart = function(value, filtrationModeChanging) {
+function setSpots (value) {
+    mcp.digitalWrite(0, value ? 0 : 1)
+}
+
+function setStop (value, filtrationModeChanging) {
     if (!filtrationModeChanging) {
-        mcp.digitalWrite(2, value?0:1)
+        mcp.digitalWrite(1, value ? 0 : 1)
     }
 }
-module.exports.setFreqMinus = function(value) {
-    mcp.digitalWrite(3, value?0:1)
+function setStart (value, filtrationModeChanging) {
+    if (!filtrationModeChanging) {
+        mcp.digitalWrite(2, value ? 0 : 1)
+    }
+}
+function setFreqMinus (value) {
+    mcp.digitalWrite(3, value ? 0 : 1)
 
 }
-module.exports.setFreqPlus = function(value) {
-    mcp.digitalWrite(4, value?0:1)
+function setFreqPlus (value) {
+    mcp.digitalWrite(4, value ? 0 : 1)
 
+}
+
+function startPump (filtrationModeChanging, cb = () => {
+    return
+}) {
+    setStart(1, filtrationModeChanging);
+    timeout(300, () => {
+        mcp.setStart(0, filtrationModeChanging);
+        cb();
+    });
+}
+
+function stopPump (filtrationModeChanging, emergency=true, cb = () => {
+    return
+}) {
+    setStop(1, filtrationModeChanging);
+    timeout(300, () => {
+        mcp.setStop(0, filtrationModeChanging);
+        cb();
+    });
+    if (emergency) {
+        clearJobs;
+    }
 }
 
 function goToMaxFreq(callback) {
     mcp.digitalWrite(4, 0);
-    setTimeout(()=>{
+    timeout(5000, () => {
         mcp.digitalWrite(4, 1)
         callback();
-    }, 5000);
+    });
 }
 
-function goToMinFreq(callback=()=>{return}) {
+function goToMinFreq(callback = () => {
+    return
+}) {
     mcp.digitalWrite(3, 0);
-    setTimeout(()=>{
+    timeout(5000, () => {
         mcp.digitalWrite(3, 1)
         callback();
-    }, 5000);
+    });
 }
 
 function timeout(ms, cb) {
-    return setTimeout(cb, ms);
+    job = setTimeout(cb, ms);
+    JOBS.push(job);
+    return job;
 }
 
-function WashingCycle(cb) {
-    for (let i=0; i<5; i++) {
-        timeout(50000, cb);
-        // goToMaxFreq(()=>{
-        //     timeout(70000, ()=>goToMinFreq(()=> {
-        //         timeout(20000, ()=>goToMaxFreq(()=>cb()))
-        //     }))})
+function WashingCycle(cb, counter = 0) {
+    console.log("démarrage d'un nouveau cycle: cycle n° ", counter);
+    if (counter == 5) {
+        goToMinFreq();
+        cb()
+        return;
     }
+    startPump(false, emergency=false, cb=() => { //aller à la freq max et attendre 30+5 min de lavage
+        console.log("pompe démarrée, attente de 55s");
+        timeout(55000, () => stopPump(false, emergency=false, () => {
+            console.log("pompe arrêtée, attente de 5s");
+            timeout(5000, () => WashingCycle(cb, counter + 1))
+        }))
+    });
+
 }
 
-module.exports.setFiltrationMode = function(value, cb) {
+function clearJobs() {
+    for (job of JOBS) {
+        clearTimeout()
+    }
+
+}
+
+
+
+setFiltrationMode = function (value, cb) {
     if (value == 0) {
+        //vannes en mode filtration 111
         mcp.digitalWrite(7, 1);
         mcp.digitalWrite(6, 1);
         mcp.digitalWrite(5, 1);
     } else if (value == 1) {
+        // vannes en mode lavage 000
         mcp.digitalWrite(7, 0);
         mcp.digitalWrite(6, 0);
         mcp.digitalWrite(5, 0);
-        WashingCycle(cb);
+        // lancer le cycle de lavage moteur à fond, après que les vannes soient tournées
+        goToMaxFreq()
+        timeout(30000, ()=> {
+            startPump(false)
+            WashingCycle(cb)
+        });
+        
     } else {
-        mcp.digitalWrite(7, 1);
-        mcp.digitalWrite(6, 1);
+        // vannes en mode recirculation 011
         mcp.digitalWrite(5, 0);
+        mcp.digitalWrite(6, 1);
+        mcp.digitalWrite(7, 1);
 
     }
+}
+
+module.exports = {
+    setSpots: setSpots,
+    setStart: setStart,
+    setStop: setStop,
+    setFreqMinus: setFreqMinus,
+    setFreqPlus: setFreqPlus,
+    startPump: startPump,
+    stopPump: stopPump,
+    initializeMcp: initializeMcp,
+    clearJobs: clearJobs
 }

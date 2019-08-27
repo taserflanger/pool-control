@@ -1,10 +1,8 @@
-const port = 8000;
-io.listen(port);
 const io = require('socket.io')();
 const fs = require('fs');
-const moment = require('moment');
 
 let ISRASPBERRY = true;
+let FILTRATIONMODECHANGING = false;
 
 try {
     const mcp = require('./mcp')
@@ -97,43 +95,45 @@ function initializeCategory(category, client) {
     }
 }
 
+function timeout(ms, cb) {
+    return setTimeout(cb, ms);
+}
+
 // Programmation physique
 function handleVariableChange(variable, oldVariableValue=null) {
     if(ISRASPBERRY) {
         //write with gpio
         if (variable=="spots") {
-            mcp.setSpots(globals.Spots.north_light);
+            mcp.setSpots(globals.Pool.spots);
         } else if (variable == "stop") {
-            mcp.setStop(globals.Moteur.stop);                        
+            mcp.setStop(globals.Pool.stop);                        
         } else if (variable=="start") {
-          mcp.setStart(globals.Moteur.start, globals.filtrationModeChanging);  
+          mcp.setStart(globals.Pool.start, FILTRATIONMODECHANGING);  
         } else if (variable == "freq_minus") {
-            mcp.setFreqMinus(globals.Moteur.freq_minus)
+            mcp.setFreqMinus(globals.Pool.freq_minus)
         } else if (variable == "freq_plus") {
-            mcp.setFreqPlus(globals.Moteur.freq_plus)
+            mcp.setFreqPlus(globals.Pool.freq_plus)
         } else if (variable=="filtration_mode") {
-            mcp.setStop(1)
-            filtrationModeChanging = true;
-            let cb = ()=>{return}
-            if (globals.Filtre==1) {
-                cb = ()=> {
-                    globals.Filtre = 0;
+            // éteindre la pompe
+            mcp.setStop(1);
+            mcp.clearJobs();
+            // filtrationmodechanging est true si les vannes bougent
+            FILTRATIONMODECHANGING = true;
+            // callback: action à effectuer après la fin du cycle de lavage/autre mode de filtration
+            let callback = ()=>{return}; // 
+            if (globals.filtration_mode==1) {
+                // après le lavage, on retourne en filtration
+                callback = ()=> {
+                    globals.filtration_mode = 0;
                     console.log("Filtre 0");
                     handleVariableChange("Filtre")
-                    io.emit("update_Filtre", 0);
+                    io.emit("update_filtration_mode", 0);
                 }
             }
-            setTimeout(()=> {
-                mcp.setFiltrationMode(globals.Filtre, cb);
-            }, 5000)
-            setTimeout(()=>{
-                mcp.setStop(0);
-                filtrationModeChanging = false;
-                setTimeout(()=> {
-                    mcp.setStart(1, filtrationModeChanging);
-                    setTimeout(()=>mcp.setStart(0, filtrationModeChanging), 300);
-                }, 1000)
-            }, 35000)
+            // on attend 5 secondes avant de faire tourner les vannes pour l'arrêt de la pompe
+            timeout(5000, ()=> {
+                mcp.setFiltrationMode(globals.Pool.filtration_mode, callback);
+            })
         } else {
             console.log("Unknown variable, maybe " + variable + " is not implemented yet");
         }
