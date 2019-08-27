@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/.vscode
+vscode
 
 # testing
 /coverage
@@ -23,3 +23,57 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules
+.cache
+.config
+.dbus
+.gnupg
+.gvfs
+.idlerc
+.local
+.minecraft
+.nano
+.node-gyp
+.npm
+.oracle_jre_usage
+.pki
+.scratch
+.ssh
+.themes
+.thumbnails
+.vscode
+.vscode-oss-dev
+.vscode-server-insiders
+.Wolfram
+.WolframEngine
+.yarn
+Desktop
+Documents
+Downloads
+MagPi
+Music
+oldconffiles
+Pictures
+python_games
+Scratch
+src
+Templates
+thinclient_drives
+Videos
+.bash_history
+.bash_logout
+.bashrc
+.foreverignore
+.gitconfig
+.gtkrc-2.0
+.lesshst
+.node_repl_history
+.profile
+.test.js.swp
+.v8*
+.wget-hsts
+.Xauthority
+.xsess*
+.yarnrc
+known_hosts
+node_latest*

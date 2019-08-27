@@ -111,14 +111,18 @@ function handleVariableChange(variable, oldVariableValue=null) {
             mcp.setFreqPlus(globals.Moteur.freq_plus)
         } else if (variable=="filtration_mode") {
             mcp.setStop(1)
-            globals.filtrationModeChanging = true;
-            Write();
+            filtrationModeChanging = true;
+            setTimeout(()=> {
+                mcp.setFiltrationMode(globals.Pool.filtration_mode);
+            }, 5000)
             setTimeout(()=>{
                 mcp.setStop(0);
-                globals.filtrationModeChanging = false;
-                mcp.setStart(1, globals.filtrationModeChanging);
-                setTimeout(()=>mcp.setStart(0, globals.filtrationModeChanging), 30);
-            }, 3000)
+                filtrationModeChanging = false;
+                setTimeout(()=> {
+                    mcp.setStart(1, filtrationModeChanging);
+                    setTimeout(()=>mcp.setStart(0, filtrationModeChanging), 300);
+                }, 1000)
+            }, 35000)
         } else {
             console.log("Unknown variable, maybe " + variable + " is not implemented yet");
         }
