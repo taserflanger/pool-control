@@ -41,7 +41,6 @@ node_modules
 .ssh
 .themes
 .thumbnails
-.vscode
 .vscode-oss-dev
 .vscode-server-insiders
 .Wolfram
