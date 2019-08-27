@@ -42,17 +42,14 @@ class Pool extends Component {
         <div id="Piscine">
         <Category
           title="Spots"
-          types={["Button"]}
-          names={["north_light"]}
+          types={["PushButton"]}
+          names={["spots"]}
           titles={[""]}
-          initialValues={[false, false, false]}
+          initialValues={[false]}
           aligns={["center"]}
           sizes={[3]}
          
         />
-        {/* Sequence editor props*/}
-            {/* {this.getSequencerContent()} */}
-        {/* Broadcast category */}
         <Category
           title="Broadcast"
           types={["ValueBroadcast", "ValueBroadcast", "ValueBroadcast", "ValueBroadcast"]}
@@ -74,13 +71,14 @@ class Pool extends Component {
           initialValues={[false, false, false, false]}
         />
         <Category
-          title="Filtre"
+          title="Mode de Filtration"
           types={["Button", "Button", "Button"]}
           names = {["normal", "backwash", "recirculation"]}
           titles={["Filtration", "Lavage", "Recirculation"]}
           initialToggleValue={1}
           initialValues={null}
           isToggleGroup={true}
+          toggleGroupName="filtration_mode"
           toggleIndices={[0, 1, 2]}
           alignCenter={true}
         />

@@ -5,19 +5,7 @@ import CustomForm from './CustomForm.js';
 import './css/App.css';
 import {io} from './index';
 
-  Array.prototype.rotate = (function() {
-    var unshift = Array.prototype.unshift,
-        splice = Array.prototype.splice;
 
-    return function(count) {
-        var len = this.length >>> 0,
-            count = count >> 0;
-
-        unshift.apply(this, splice.call(this, count % len, len));
-        return this;
-    };
-})();
-// import DropdownSelector from './DropdownSelector';
 
 class App extends Component {
 

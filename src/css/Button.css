@@ -16,7 +16,7 @@
     transition-timing-function: ease-in-out;
     border-radius: 20%; }
     .Button > div > p {
-      font-size: 1.5em;
+      font-size: 7vw;
       text-align: center;
       vertical-align: middle;
       display: table-cell; }
