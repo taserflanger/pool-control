@@ -4,6 +4,7 @@ import PushButton from './PushButton'
 import Title from './Title'
 import Slider from './Slider';
 import ValueBroadcast from './ValueBroadcast';
+import Console from './Console';
 import './css/Category.css';
 import {io} from './index';
 
@@ -124,6 +125,12 @@ class Category extends Component {
                         />
                     </div>
                 );
+            } if (this.props.types[i]==="Console" || type==="Console") {
+                result.push(
+                    <Console
+                    lastLine={this.state.values[i]}
+                    />
+                )
             }
         }
         return result;

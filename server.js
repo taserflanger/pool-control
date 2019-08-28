@@ -27,6 +27,11 @@ function WriteLogs() {
     })
 }
 
+function log(str) {
+    console.log(str);
+    io.emit("update_console", str);
+}
+
 
 let globals = JSON.parse(data.toString());
 if (ISRASPBERRY) {
@@ -36,10 +41,10 @@ if (ISRASPBERRY) {
 // initializeOutputs();
 
 io.on('connection', (client) => {
-    console.log('client connected')
+    log('client connected')
     InitializeClient(client);
     client.on('loginAdmin', password => {
-        console.log(client.toString() + " trying to connect width passwd " + password);
+        log(client.toString() + " trying to connect width passwd " + password);
         if (password==globals.password) {
             client.emit('loginAdmin', true);
         } else {
@@ -80,7 +85,7 @@ function InitializeClient(client) {
 
 function setValue(variable, value) {
     globals.Pool[variable] = value;
-    console.log(variable, globals.Pool[variable]);
+    log(`${variable} ${globals.Pool[variable]}`);
     handleVariableChange(variable);
     io.emit("update_" + variable, globals.Pool[variable]);
 }
@@ -131,7 +136,7 @@ function handleVariableChange(variable) {
                 callback = ()=> {
                     globals.Pool.filtration_mode = 0;
                     Write();
-                    console.log("filtration_mode 0");
+                    log("filtration_mode 0");
                     handleVariableChange("filtration_mode")
                     io.emit("update_filtration_mode", 0);
                 }
@@ -141,11 +146,11 @@ function handleVariableChange(variable) {
                 mcp.setFiltrationMode(globals.Pool.filtration_mode, callback);
             })
         } else {
-            console.log("Unknown variable, maybe " + variable + " is not implemented yet");
+            log("Unknown variable, maybe " + variable + " is not implemented yet");
         }
     }
 }
 
 const port = 8000;
 io.listen(port);
-console.log('listening on port', port);
+log('listening on port '+ port);

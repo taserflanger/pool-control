@@ -20,6 +20,8 @@
       text-align: center;
       vertical-align: middle;
       display: table-cell; }
+      .Button > div > p.single {
+        font-size: 4em; }
     @media screen and (max-width: 500px) {
       .Button > div {
         width: 20vw;

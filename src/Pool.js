@@ -82,6 +82,12 @@ class Pool extends Component {
           toggleIndices={[0, 1, 2]}
           alignCenter={true}
         />
+        <Category
+          title="Console"
+          types={["Console"]}
+          names={["console"]}
+          initialValues={[""]}
+        />
         {this.getAdminContent()}
       </div>
       );
