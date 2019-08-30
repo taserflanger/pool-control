@@ -13,9 +13,11 @@ class Category extends Component {
 
     constructor(props) {
         super(props)
-        
+        let loading=new Array(this.props.names.length);
+        loading.fill(false);
         this.state = {
             values: this.props.initialValues,
+            loading: loading,
             toggleValue: (this.props.initialToggleValue)? this.props.initialToggleValue : null
         }
     }
@@ -81,6 +83,7 @@ class Category extends Component {
                         name={this.props.names[i]}
                         value={(this.state.toggleValue===i)}
                         subtitles={[]}
+                        loading={this.state.loading[i]}
                         title=""
                         />
                     </div>);
@@ -93,6 +96,7 @@ class Category extends Component {
                             value={this.state.values[i]}
                             subtitles={[]}
                             title={(this.props.titles[i])? this.props.titles[i] : ""}
+                            loading={this.state.loading[i]}
                         />
                     </div>);
                 }
@@ -106,6 +110,7 @@ class Category extends Component {
                             value={this.state.values[i]}
                             subtitles={[]}
                             title={(this.props.titles[i])? this.props.titles[i] : ""}
+                            loading={this.state.loading[i]}
                         />
                     </div>
                 )

@@ -50,7 +50,11 @@ class PushButton extends Component {
                     onTouchStart={() => this.props.onMouseDown(this.props.name)}
                     onMouseUp={()=>this.props.onMouseUp(this.props.name)}
                     onTouchEnd={()=>this.props.onMouseUp(this.props.name)}
-                    className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p>{this.props.title}</p></div>
+                    className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}>
+                        <div className={`lds-ring ${this.props.loading?"":"invisible"}`}>
+                    <div></div><div></div><div></div><div></div>
+                </div>
+                        <p>{this.props.title}</p></div>
                 {this.getSubtitle()}
             </div>
             
