@@ -1,3 +1,5 @@
+console.log("J'ai laissé quelques erreurs...");
+
 const io = require('socket.io')();
 const fs = require('fs');
 
@@ -6,12 +8,7 @@ let FILTRATIONMODECHANGING = false;
 
 let mcp = null;
 
-try {
-    mcp = require('./mcp')
-} 
-catch (error) {
-    ISRASPBERRY = false;
-}
+mcp=require('./mcp');
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
 logsdata = fs.readFileSync("server/log.json", 'utf8');
@@ -27,7 +24,7 @@ function WriteLogs() {
     })
 }
 
-function log(str) {
+module.exports.log = function(str) {
     console.log(str);
     io.emit("update_console", str);
 }
