@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./css/Console.css"
 let justChangedLine=false
 
 class Console extends Component {
