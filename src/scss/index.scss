@@ -3,15 +3,14 @@
   position: relative;
 }
 
-@media screen and (max-width: 500px) {
-  p, h1, h2, h3, h4, a, div {
+
+p, h1, h2, h3, h4, a, div {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  }
 }
 
 
@@ -31,7 +30,7 @@
       //   color: black;
       // }
   }
-  color: rgb(109, 109, 109);
+  color: rgb(73, 73, 73);
 }
 
 body, html {

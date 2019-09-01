@@ -1,4 +1,4 @@
-let log = require('./server').log;
+const {log} = require('./server');
 
 let ISRASPBERRY = true;
 try {
@@ -23,6 +23,7 @@ function initializeMcp (mcpArray) {
     }
 }
 function setSpots (value) {
+    log("setSpots " + value);
     if (ISRASPBERRY) {
         mcp.digitalWrite(0, value ? 0 : 1)
     }
@@ -30,7 +31,7 @@ function setSpots (value) {
 
 function setStop (value, filtrationModeChanging, emergency=false, resetFiltrationChanging=()=>{return}) {
     log(`setStop: ${value}, filtrationModeChanging: ${filtrationModeChanging}`);
-    if (!filtrationModeChanging ||(emergency) && ISRASPBERRY) {
+    if ((!filtrationModeChanging ||(emergency) )&& ISRASPBERRY) {
         mcp.digitalWrite(1, value ? 0 : 1)
         clearJobs()
         resetFiltrationChanging();
@@ -43,12 +44,14 @@ function setStart (value, filtrationModeChanging) {
     }
 }
 function setFreqMinus (value) {
+    log("setFreqMinus", value);
     if (ISRASPBERRY) {
         mcp.digitalWrite(3, value ? 0 : 1)
     }
 
 }
 function setFreqPlus (value) {
+    log("setFreqPlus", value);
     if (ISRASPBERRY) {
         mcp.digitalWrite(4, value ? 0 : 1)
     }
@@ -56,6 +59,7 @@ function setFreqPlus (value) {
 }
 
 function startPump (filtrationModeChanging, cb = () => {return;}) {
+    log("starting pump");
     if (ISRASPBERRY) {
         setStart(1, filtrationModeChanging);
         timeout(300, () => {
@@ -68,6 +72,7 @@ function startPump (filtrationModeChanging, cb = () => {return;}) {
 function stopPump (filtrationModeChanging, emergency=true, cb = () => {
     return
 }) {
+    log("stopping pump")
     if (ISRASPBERRY) {
         setStop(1, filtrationModeChanging);
         timeout(300, () => {
@@ -103,24 +108,25 @@ function goToMinFreq(callback = () => {
 }
 
 function timeout(ms, cb) {
+    log("timeout " + ms);
     job = setTimeout(cb, ms);
     JOBS.push(job);
     return job;
 }
 
-function WashingCycle(cb, counter = 0) {
-    log("démarrage d'un nouveau cycle: cycle n° ", counter);
-    if (counter == 1) {
+function WashingCycle(cb, count, counter = 0) {
+    log("démarrage d'un nouveau cycle: cycle n° " + counter);
+    if (counter == count) {
         log("launching callback");
         goToMinFreq();
         cb()
         return;
     }
-    startPump(false, function() { //aller à la freq max et attendre 30+5 min de lavage
-        log("pompe démarrée, attente de 10s");
-        timeout(10000, () => stopPump(false, false, function() {
+    startPump(false, ()=> { //aller à la freq max et attendre 30+5 min de lavage
+        log("pompe démarrée, attente de 55s");
+        timeout(55000, () => stopPump(false, false, function() {
             log("pompe arrêtée, attente de 5s");
-            timeout(5000, () => WashingCycle(cb, counter + 1));
+            timeout(5000, () => WashingCycle(cb, count, counter + 1));
         }))
     });
 
@@ -136,7 +142,7 @@ function clearJobs() {
 
 
 
-setFiltrationMode = function (value, cb) {
+setFiltrationMode = function (value, washing_cycles_count, cb) {
     if (value == 0) {
         //vannes en mode filtration 111
         if (ISRASPBERRY) {
@@ -160,7 +166,7 @@ setFiltrationMode = function (value, cb) {
         // goToMaxFreq() (à remettre)
         timeout(30000, ()=> {
             setStop(0, false);
-            timeout(300, ()=>WashingCycle(cb)) // attente pour allumage possible
+            timeout(300, ()=>WashingCycle(cb, washing_cycles_count)) // attente pour allumage possible
         });
         
     } else {
@@ -187,5 +193,7 @@ module.exports = {
     stopPump: ( ... args)=>stopPump( ... args),
     initializeMcp: ( ... args)=>initializeMcp( ... args),
     clearJobs: ( ... args)=>clearJobs( ... args),
-    setFiltrationMode: setFiltrationMode
+    setFiltrationMode: setFiltrationMode,
+    goToMaxFreq: goToMaxFreq,
+    goToMinFreq: goToMinFreq
 }

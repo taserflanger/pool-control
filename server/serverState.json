@@ -5,9 +5,18 @@
         "start": false,
         "freq_minus": false,
         "freq_plus": false,
-        "filtration_mode": 0,
-        "water_temp": 58.37461529732183,
-        "air_temp": 12.393977712107263
+        "filtration_mode": 1,
+        "water_temp": 59.60682210519169,
+        "air_temp": 33.039135641449505,
+        "massage": {
+            "isOn": false,
+            "value": 16
+        },
+        "washing_period": 7,
+        "washing_auto": true,
+        "washing_hour": 3,
+        "washing_cycles_count": 5,
+        "next_washing_cycle": 1567959372113
     },
     "password": "2909",
     "wateringMode": "individual",

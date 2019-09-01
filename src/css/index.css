@@ -1,18 +1,17 @@
 .container {
   position: relative; }
 
-@media screen and (max-width: 500px) {
-  p, h1, h2, h3, h4, a, div {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; } }
+p, h1, h2, h3, h4, a, div {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .active, .true {
   box-shadow: inset 0 0 15px #4e4e4e;
-  color: #6d6d6d; }
+  color: #494949; }
   .active.blue, .true.blue {
     background-color: #52d1dc; }
   .active.green, .true.green {

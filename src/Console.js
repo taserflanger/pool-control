@@ -11,20 +11,16 @@ class Console extends Component {
         }
     }
 
-    componentDidUpdate() {
-        if (justChangedLine) {
-            justChangedLine=false;
-            return;
-        } else {
+    componentDidMount() {
+        this.props.io.on(`update_console`, (newLine)=> {
             let newLines = this.state.lines.slice();
-            newLines.splice(0, 0, (this.props.lastLine));
+            newLines.splice(0, 0, (newLine));
             this.setState({lines:newLines});
-            justChangedLine = true;
-        }
+        });
     }
     GetLines() {
         let result = [];
-        for (let i=0; i<this.state.lines.length-1; i++) {
+        for (let i=0; i<this.state.lines.length; i++) {
             result.push(
                 <div key={i} className="console_line">
                 <p>{this.state.lines[i]}</p></div>
