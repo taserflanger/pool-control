@@ -43,15 +43,21 @@ class PushButton extends Component {
         let align = this.props.align || "left";
         let id = this.props.id || "";
         return (
-            <div id={id} className={`Button-${this.props.value} ${this.props.square? "square" : ""} Button text-${align}`}>
+            <div className={`btn-border ${this.props.loading?"loading":""} ${this.props.round?"round":""}`}>
+            <div id={id} className={`Button-${this.props.value}} Button text-${align}`}>
                 {/* {this.getTitle()} */}
                     <div 
                     onMouseDown={() => this.props.onMouseDown(this.props.name)}
                     onTouchStart={() => this.props.onMouseDown(this.props.name)}
                     onMouseUp={()=>this.props.onMouseUp(this.props.name)}
                     onTouchEnd={()=>this.props.onMouseUp(this.props.name)}
-                    className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}><p>{this.props.title}</p></div>
+                    className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"} ${this.props.round? "round" : ""}`}>
+                        {/* <div className={`lds-ring ${this.props.loading?"":"invisible"}`}>
+                    <div></div><div></div><div></div><div></div>
+                </div> */}
+                        <p>{this.props.title}</p></div>
                 {this.getSubtitle()}
+            </div>
             </div>
             
         );

@@ -1,17 +1,22 @@
+console.log("J'ai laissé quelques erreurs...");
+
 const io = require('socket.io')();
 const fs = require('fs');
+const moment = require('moment');
 
 let ISRASPBERRY = true;
 let FILTRATIONMODECHANGING = false;
+let massageJobs = [];
+let washingJobs = []
 
-let mcp = null;
-
-try {
-    mcp = require('./mcp')
-} 
-catch (error) {
-    ISRASPBERRY = false;
+function log (str) {
+    console.log(str);
+    io.emit("update_console", str);
 }
+
+module.exports = {log: log};
+
+mcp=require('./mcp');
 
 data = fs.readFileSync("server/serverState.json", 'utf8');
 logsdata = fs.readFileSync("server/log.json", 'utf8');
@@ -28,6 +33,7 @@ function WriteLogs() {
 }
 
 
+
 let globals = JSON.parse(data.toString());
 if (ISRASPBERRY) {
     mcp.initializeMcp([globals.Pool.spots, globals.Pool.stop, globals.Pool.start, globals.Pool.freq_minus, globals.Pool.freq_plus]);
@@ -36,10 +42,10 @@ if (ISRASPBERRY) {
 // initializeOutputs();
 
 io.on('connection', (client) => {
-    console.log('client connected')
+    log('client connected')
     InitializeClient(client);
     client.on('loginAdmin', password => {
-        console.log(client.toString() + " trying to connect width passwd " + password);
+        log(client.toString() + " trying to connect width passwd " + password);
         if (password==globals.password) {
             client.emit('loginAdmin', true);
         } else {
@@ -50,6 +56,7 @@ io.on('connection', (client) => {
         client.emit("update_" + variable, globals.Pool[variable]);
     });
     client.on('setValue', (variable, value) => {
+        log("setValueRequest: "+ variable + " " + value);
         setValue(variable, value, client);
         Write();
     });
@@ -79,9 +86,10 @@ function InitializeClient(client) {
 }
 
 function setValue(variable, value) {
+    let oldValue=globals.Pool[variable]
     globals.Pool[variable] = value;
-    console.log(variable, globals.Pool[variable]);
-    handleVariableChange(variable);
+    log(`${variable} ${globals.Pool[variable]}`);
+    handleVariableChange(variable, oldValue);
     io.emit("update_" + variable, globals.Pool[variable]);
 }
 
@@ -97,11 +105,12 @@ function initializeCategory(category, client) {
 }
 
 function timeout(ms, cb) {
+    log("setting timeout: " + ms);
     return setTimeout(cb, ms);
 }
 
 // Programmation physique
-function handleVariableChange(variable) {
+function handleVariableChange(variable, oldValue=null) {
     if(ISRASPBERRY) {
         //write with gpio
         if (variable=="spots") {
@@ -131,21 +140,78 @@ function handleVariableChange(variable) {
                 callback = ()=> {
                     globals.Pool.filtration_mode = 0;
                     Write();
-                    console.log("filtration_mode 0");
+                    log("filtration_mode 0");
                     handleVariableChange("filtration_mode")
                     io.emit("update_filtration_mode", 0);
                 }
             }
             // on attend 5 secondes avant de faire tourner les vannes pour l'arrêt de la pompe
             timeout(5000, ()=> {
-                mcp.setFiltrationMode(globals.Pool.filtration_mode, callback);
+                mcp.setFiltrationMode(globals.Pool.filtration_mode, globals.Pool.washing_cycles_count, callback);
             })
-        } else {
-            console.log("Unknown variable, maybe " + variable + " is not implemented yet");
+        } else if (variable==="massage") {
+            if (globals.Pool.massage.isOn && oldValue.isOn==false) {
+                let oldTimingValue=globals.Pool.massage.value;
+                mcp.startPump();
+                mcp.goToMaxFreq();
+                let interv = setInterval(()=> {
+                    globals.Pool.massage.value-=1
+                    Write();
+                    io.emit("update_massage", globals.Pool.massage);
+                    // log("massage: " + globals.Pool.massage.value + " min remaining")
+                    if (globals.Pool.massage.value==0) {
+                        globals.Pool.massage.isOn=false;
+                        globals.Pool.massage.value=oldTimingValue;
+                        Write();
+                        mcp.goToMinFreq();
+                        io.emit("update_massage", globals.Pool.massage);
+                        clearInterval(interv);
+                    }
+                }, 2000);
+                massageJobs.push(interv);
+            } else if (!globals.Pool.massage.isOn) {
+                clearJobs(massageJobs);
+                massageJobs=[];
+            }
+        } else if (variable==="washing_auto") {
+            if (globals.Pool.washing_auto) {
+                washingJobs.push(
+                    setInterval(()=>{
+                        if (Math.abs(moment.now()-globals.Pool.next_washing_cycle)<=3600000) {
+                            log("yeah!!!");
+                            globals.Pool.filtration_mode = 1;
+                            Write();
+                            log("filtration_mode 1");
+                            handleVariableChange("filtration_mode")
+                            io.emit("update_filtration_mode", 1);
+                            globals.Pool.next_washing_cycle+=globals.Pool.washing_period*24*3600*1000;
+                        }
+                    }, 1800)
+                )
+            } else {
+                clearJobs(washingJobs);
+                washingJobs=[];
+            }
+        }
+        
+        else {
+            log("Unknown variable, maybe " + variable + " is not implemented yet");
         }
     }
 }
 
 const port = 8000;
 io.listen(port);
-console.log('listening on port', port);
+log('listening on port '+ port);
+
+function clearJobs(jobs) {
+    log(jobs.length + " job(s) cleared!")
+    for (let i = 0; i < massageJobs.length; i++) {
+        try {
+            clearInterval(jobs[i]);
+        } catch (error) {
+            clearTimeout(jobs[i]);
+        }
+        jobs.pop(i);
+    }
+}

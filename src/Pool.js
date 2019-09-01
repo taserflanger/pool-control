@@ -41,16 +41,6 @@ class Pool extends Component {
       return (
         <div id="Piscine">
         <Category
-          title="Spots"
-          types={["PushButton"]}
-          names={["spots"]}
-          titles={[""]}
-          initialValues={[false]}
-          aligns={["center"]}
-          sizes={[3]}
-         
-        />
-        <Category
           title="Broadcast"
           types={["ValueBroadcast", "ValueBroadcast", "ValueBroadcast", "ValueBroadcast"]}
           titles={["Air", "Eau", "pH", "ORP"]}
@@ -59,6 +49,20 @@ class Pool extends Component {
           isBroadcast={true}
           boradcastSuffixes={[" °C", " °C", "", ""]}
           colSize={"-3"}
+          defaultVisible={true}
+        />
+        <Category
+          title="Bien-être"
+          types={["PushButton", "ToggleAdjustButton"]}
+          names={["spots", "massage"]}
+          titles={["Spots", "Massage"]}
+          initialValues={[false, {"isOn": false, "value": 15}]}
+          aligns={["center", "center"]}
+          sizes={[3, 3]}
+          suffixes={["", "min"]}
+          upperTitles={[true, ""]}
+          defaultVisible={true}
+         
         />
         <Category
           title="Moteur" 
@@ -69,6 +73,7 @@ class Pool extends Component {
           ]}
           names = {["stop", "start", "freq_minus", "freq_plus"]}
           initialValues={[false, false, false, false]}
+          defaultVisible={false}
         />
         <Category
           title="Mode de Filtration"
@@ -81,6 +86,24 @@ class Pool extends Component {
           toggleGroupName="filtration_mode"
           toggleIndices={[0, 1, 2]}
           alignCenter={true}
+          defaultVisible={false}
+        />
+        <Category 
+          title="Paramètres de lavage"
+          types={["Button", "AdjustButton", "AdjustButton", "AdjustButton"]}
+          names={["washing_auto", "washing_period", "washing_hour", "washing_cycles_count"]}
+          titles={["Lavage Automatique", "Tous les", "Horaire", "Durée de lavage"]}
+          initialValues={[true, 7, 3, 5]}
+          upperTitles={[true, true, true, true]}
+          suffixes={["", " jours", "h", "min"]}
+          defaultVisible={false}
+        />
+        <Category
+          title="Console"
+          types={["Console"]}
+          names={["console"]}
+          initialValues={[""]}
+          defaultVisible={false}
         />
         {this.getAdminContent()}
       </div>
