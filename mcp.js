@@ -64,7 +64,7 @@ function stopPump (filtrationModeChanging, emergency=true, cb = () => {
 
 function goToMaxFreq(callback=()=>{return}) {
     mcp.digitalWrite(4, 0);
-    timeout(5000, () => {
+    timeout(6000, () => {
         mcp.digitalWrite(4, 1)
         callback();
     });
@@ -74,7 +74,7 @@ function goToMinFreq(callback = () => {
     return
 }) {
     mcp.digitalWrite(3, 0);
-    timeout(5000, () => {
+    timeout(6000, () => {
         mcp.digitalWrite(3, 1)
         callback();
     });
@@ -151,12 +151,12 @@ setFiltrationMode = function (value, cb) {
 module.exports = {
     setSpots: ( ... args)=>setSpots( ... args ),
     setStart: setStart,
-    setStop: ( ... args)=>setStop( ... args),
-    setFreqMinus: ( ... args)=>setFreqMinus( ... args),
-    setFreqPlus: ( ... args)=>setFreqPlus( ... args),
-    startPump: ( ... args)=>startPump( ... args),
-    stopPump: ( ... args)=>stopPump( ... args),
-    initializeMcp: ( ... args)=>initializeMcp( ... args),
-    clearJobs: ( ... args)=>clearJobs( ... args),
+    setStop: setStop,
+    setFreqMinus: setFreqMinus,
+    setFreqPlus: setFreqPlus,
+    startPump: startPump,
+    stopPump: stopPump,
+    initializeMcp: initializeMcp,
+    clearJobs: clearJobs,
     setFiltrationMode: setFiltrationMode
 }
