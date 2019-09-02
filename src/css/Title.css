@@ -6,7 +6,8 @@
   color: white;
   text-shadow: 0 0 1px white;
   box-shadow: 0 2.5px 5px #292f36;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  cursor: pointer; }
   @media screen and (max-width: 500px) {
     .title-2 {
       font-size: 7vw; } }

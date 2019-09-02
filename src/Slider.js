@@ -15,7 +15,7 @@ class Slider extends Component {
                     className="slider"
                     onChange= {(e) => this.props.onChange(e)}
                 />
-                <p>{this.props.value} {this.props.suffix}</p>
+                <p>{this.props.value} {this.props.unit}</p>
             </div>
         );
     }

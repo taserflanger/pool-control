@@ -2,3 +2,9 @@
   margin: .5rem 0 .5rem 0;
   padding-bottom: .5rem;
   box-shadow: 0 2px 4px #bbbbbb; }
+
+.category-item {
+  margin-bottom: 1em; }
+
+.row {
+  margin: 0 2em; }
