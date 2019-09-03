@@ -39,137 +39,6 @@ class Pool extends Component {
         } return;
       }
     render() {
-      let startup_interface={
-        "Infos": {
-          air_temp: {
-            type: "Display",
-            value: 25,
-            title: "Air",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          water_temp: {
-            type: "Display",
-            value: 25,
-            title: "Eau",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          ph: {
-            type: "Display",
-            value: 25,
-            title: "pH",
-            unit:"",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          orp: {
-            type: "Display",
-            value: 25,
-            title: "Air",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          visible: true,
-        },
-        "Bien-être": {
-          spots: {
-            type: "PushButton",
-            title: "Spots",
-            value: 0,
-            mcp:{
-              address: 0x20,
-              pinMode: "output",
-              pin: 0
-            },
-          massage: {
-            type: "ToggleAdjustButton",
-            title: "Massage",
-            value: {isOn: false, value: 15},
-          }
-          },
-          visible: true
-        },
-        "Pompe": {
-          stop: {
-            type: "PushButton",
-            inner: "Stop",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 1
-            }
-          },
-          start: {
-            type: "PushButton",
-            inner: "Start",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 2
-            }
-          },
-          freq_minus: {
-            type: "PushButton",
-            inner: "-",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 3
-            }
-          },
-          freq_plus: {
-            type: "PushButton",
-            inner: "+",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 3
-            }
-          }
-        },
-        "Mode de Filtration": {
-          value: 0, //index
-          filtration: {
-            type: "ToggleGroupButton",
-          },
-          lavage : {
-            type: "ToggleGroupButton",
-          },
-          recirculation: {
-            type: "ToggleGroupButton",
-          }
-        },
-        "Paramètres de Lavage": {
-          washing_auto: {
-            type: "Button",
-            value: true
-          }
-        }
-      }
       return (
         <div id="Piscine">
         <Category
@@ -179,7 +48,7 @@ class Pool extends Component {
           names={["air_temp", "water_temp", "ph", "orp"]}
           initialValues = {[25, 20, 7, 0]}
           isBroadcast={true}
-          boradcastSuffixes={[" °C", " °C", "", ""]}
+          units={[" °C", " °C", "", ""]}
           colSize={"-3"}
           defaultVisible={true}
         />
@@ -218,16 +87,6 @@ class Pool extends Component {
           toggleGroupName="filtration_mode"
           toggleIndices={[0, 1, 2]}
           alignCenter={true}
-          defaultVisible={false}
-        />
-        <Category 
-          title="Paramètres de lavage"
-          types={["Button", "AdjustButton", "AdjustButton", "AdjustButton"]}
-          names={["washing_auto", "washing_period", "washing_hour", "washing_cycles_count"]}
-          titles={["Lavage Automatique", "Tous les", "Horaire", "Durée de lavage"]}
-          initialValues={[true, 7, 3, 5]}
-          upperTitles={[true, true, true, true]}
-          unites={["", " jours", "h", "min"]}
           defaultVisible={false}
         />
         <Category
