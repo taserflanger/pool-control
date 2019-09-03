@@ -38,136 +38,227 @@ class Pool extends Component {
           );
         } return;
       }
+
+
+    parseInterface(obj) {
+      let categories = Object.keys(obj);
+      let result = []
+      for (let title of categories) {
+        let category = obj.title;
+        if (category.class.includes("ToggleGroup")) {
+          let titles = [];
+          let names = [];
+          let types = [];
+          for (let name of category.items) {
+            let item = category.items[name]
+            names.push(name);
+            titles.push(item.title);
+            types.push(item.type);
+
+          }
+          result.push(
+            <Category
+              title={title}
+              types={types}
+              names = {names}
+              titles={titles}
+              initialToggleValue={category.value}
+              initialValues={null}
+              isToggleGroup={true}
+              toggleGroupName={title}
+              toggleIndices={[0, 1, 2, 3, 4, 5, 6, 7, 8]}
+              defaultVisible={false}
+        />
+          )
+        } else {
+          let titles = [];
+          let names = [];
+          let types = [];
+          let initialValues = [];
+          let units = []
+          for (let name of category.items) {
+            let item = category.items[name]
+            names.push(name);
+            titles.push(item.title);
+            types.push(item.type);
+            initialValues.push(item.value);
+            if (item.suffix) {
+              units.push(item.suffix)
+            } else {
+              units.push("")
+            }
+          }
+        }
+      }
+    }
+
     render() {
       let startup_interface={
         "Infos": {
-          air_temp: {
-            type: "Display",
-            value: 25,
-            title: "Air",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          water_temp: {
-            type: "Display",
-            value: 25,
-            title: "Eau",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          ph: {
-            type: "Display",
-            value: 25,
-            title: "pH",
-            unit:"",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
-            }
-          },
-          orp: {
-            type: "Display",
-            value: 25,
-            title: "Air",
-            unit:" °C",
-            mcp:{
-              address: 0x20,
-              pinMode: "input",
-              pin: 9
-
+          items: {
+            air_temp: {
+              type: "Display",
+              value: 25,
+              title: "Air",
+              unit:" °C",
+              mcp:{
+                address: 0x20,
+                pinMode: "input",
+                pin: 9
+              }
+            },
+            water_temp: {
+              type: "Display",
+              value: 25,
+              title: "Eau",
+              unit:" °C",
+              mcp:{
+                address: 0x20,
+                pinMode: "input",
+                pin: 9
+              }
+            },
+            ph: {
+              type: "Display",
+              value: 25,
+              title: "pH",
+              unit:"",
+              mcp:{
+                address: 0x20,
+                pinMode: "input",
+                pin: 9
+              }
+            },
+            orp: {
+              type: "Display",
+              value: 25,
+              title: "Air",
+              unit:" °C",
+              mcp:{
+                address: 0x20,
+                pinMode: "input",
+                pin: 9
+              }
             }
           },
           visible: true,
         },
         "Bien-être": {
-          spots: {
-            type: "PushButton",
-            title: "Spots",
-            value: 0,
-            mcp:{
-              address: 0x20,
-              pinMode: "output",
-              pin: 0
+          items: {
+            spots: {
+              type: "PushButton",
+              title: "Spots",
+              value: 0,
+              mcp:{
+                address: 0x20,
+                pinMode: "output",
+                pin: 0
+              },
             },
-          massage: {
-            type: "ToggleAdjustButton",
-            title: "Massage",
-            value: {isOn: false, value: 15},
-          }
+            massage: {
+              type: "ToggleAdjustButton",
+              title: "Massage",
+              value: {isOn: false, value: 15},
+            }
           },
           visible: true
         },
         "Pompe": {
-          stop: {
-            type: "PushButton",
-            inner: "Stop",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 1
+          items: {
+            stop: {
+              type: "PushButton",
+              inner: "Stop",
+              value: 0,
+              mcp: {
+                address: 0x20,
+                pinMode: "output",
+                pin: 1
+              }
+            },
+            start: {
+              type: "PushButton",
+              inner: "Start",
+              value: 0,
+              mcp: {
+                address: 0x20,
+                pinMode: "output",
+                pin: 2
+              }
+            },
+            freq_minus: {
+              type: "PushButton",
+              inner: "-",
+              value: 0,
+              mcp: {
+                address: 0x20,
+                pinMode: "output",
+                pin: 3
+              }
+            },
+            freq_plus: {
+              type: "PushButton",
+              inner: "+",
+              value: 0,
+              mcp: {
+                address: 0x20,
+                pinMode: "output",
+                pin: 3
+              }
             }
           },
-          start: {
-            type: "PushButton",
-            inner: "Start",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 2
-            }
-          },
-          freq_minus: {
-            type: "PushButton",
-            inner: "-",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 3
-            }
-          },
-          freq_plus: {
-            type: "PushButton",
-            inner: "+",
-            value: 0,
-            mcp: {
-              address: 0x20,
-              pinMode: "output",
-              pin: 3
-            }
-          }
+          visible: false
         },
         "Mode de Filtration": {
+          class: ["ToggleGroup"],
           value: 0, //index
-          filtration: {
-            type: "ToggleGroupButton",
+          items: {
+            filtration: {
+              type: "Button",
+            },
+            lavage : {
+              type: "Button",
+            },
+            recirculation: {
+              type: "Button",
+            }
           },
-          lavage : {
-            type: "ToggleGroupButton",
-          },
-          recirculation: {
-            type: "ToggleGroupButton",
-          }
+          visible: false
         },
         "Paramètres de Lavage": {
-          washing_auto: {
-            type: "Button",
-            value: true
-          }
+          items: {
+            washing_auto: {
+              type: "Button",
+              value: true,
+              title: "Lavage Automatique",
+            },
+            washing_period: {
+              type: "AdjustButton",
+              value: 7,
+              title: "Tous les",
+              suffix: "jours",
+            },
+            washing_hour: {
+              type: "AdjustButton",
+              value: 3,
+              title: "Heure de lavage",
+              suffix: "h"
+            },
+            washing_cycles_count: {
+              type: "AdjustButton",
+              value: 5,
+              title: "Durée de lavage",
+              suffix: "min"
+            }
+          },
+          visible: false
+        },
+        "Console": {
+          items: {
+            console: {
+              type: "Console"
+            }
+          },
+          visible: false
         }
       }
       return (
@@ -178,9 +269,7 @@ class Pool extends Component {
           titles={["Air", "Eau", "pH", "ORP"]}
           names={["air_temp", "water_temp", "ph", "orp"]}
           initialValues = {[25, 20, 7, 0]}
-          isBroadcast={true}
-          boradcastSuffixes={[" °C", " °C", "", ""]}
-          colSize={"-3"}
+          units={[" °C", " °C", "", ""]}
           defaultVisible={true}
         />
         <Category
@@ -189,9 +278,7 @@ class Pool extends Component {
           names={["spots", "massage"]}
           titles={["Spots", "Massage"]}
           initialValues={[false, {"isOn": false, "value": 15}]}
-          aligns={["center", "center"]}
-          sizes={[3, 3]}
-          unites={["", "min"]}
+          units={["", "min"]}
           upperTitles={[true, ""]}
           defaultVisible={true}
          
@@ -217,7 +304,6 @@ class Pool extends Component {
           isToggleGroup={true}
           toggleGroupName="filtration_mode"
           toggleIndices={[0, 1, 2]}
-          alignCenter={true}
           defaultVisible={false}
         />
         <Category 
@@ -227,7 +313,7 @@ class Pool extends Component {
           titles={["Lavage Automatique", "Tous les", "Horaire", "Durée de lavage"]}
           initialValues={[true, 7, 3, 5]}
           upperTitles={[true, true, true, true]}
-          unites={["", " jours", "h", "min"]}
+          units={["", " jours", "h", "min"]}
           defaultVisible={false}
         />
         <Category
@@ -236,6 +322,7 @@ class Pool extends Component {
           names={["console"]}
           initialValues={[""]}
           defaultVisible={false}
+          titles={["console"]}
         />
         {this.getAdminContent()}
       </div>

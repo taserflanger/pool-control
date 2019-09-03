@@ -141,7 +141,7 @@ class Category extends Component {
                         <Title size={1} align="center" text={this.props.titles[i]} />
                         <Display
                             value={this.state.values[i]}
-                            suffix={this.props.boradcastSuffixes?this.props.boradcastSuffixes[i]:""}
+                            unit={this.props.units?this.props.units[i]:""}
                         />
                     </div>),
                 "Console": (<Console
@@ -160,7 +160,7 @@ class Category extends Component {
                         title={this.props.titles[i]}
                         name={this.props.names[i]}
                         loading={this.state.loading[i]}
-                        suffix={this.props.suffixes?this.props.suffixes[i]:""}
+                        unit={this.props.units?this.props.units[i]:""}
                     />
                     </div>
                 ),
@@ -172,7 +172,7 @@ class Category extends Component {
                             value={this.state.values[i]}
                             title={this.props.titles[i]}
                             name={this.props.names[i]}
-                            suffix={this.props.suffixes?this.props.suffixes[i]:""}
+                            unit={this.props.units?this.props.units[i]:""}
                         />
                     </div>
                 )
