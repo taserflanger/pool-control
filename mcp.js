@@ -186,14 +186,12 @@ setFiltrationMode = function (value, washing_cycles_count, cb) {
 module.exports = {
     setSpots: ( ... args)=>setSpots( ... args ),
     setStart: setStart,
-    setStop: ( ... args)=>setStop( ... args),
-    setFreqMinus: ( ... args)=>setFreqMinus( ... args),
-    setFreqPlus: ( ... args)=>setFreqPlus( ... args),
-    startPump: ( ... args)=>startPump( ... args),
-    stopPump: ( ... args)=>stopPump( ... args),
-    initializeMcp: ( ... args)=>initializeMcp( ... args),
-    clearJobs: ( ... args)=>clearJobs( ... args),
-    setFiltrationMode: setFiltrationMode,
-    goToMaxFreq: goToMaxFreq,
-    goToMinFreq: goToMinFreq
+    setStop: setStop,
+    setFreqMinus: setFreqMinus,
+    setFreqPlus: setFreqPlus,
+    startPump: startPump,
+    stopPump: stopPump,
+    initializeMcp: initializeMcp,
+    clearJobs: clearJobs,
+    setFiltrationMode: setFiltrationMode
 }
