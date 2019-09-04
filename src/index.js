@@ -5,13 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css' // very important to load bootstrap fi
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './css/index.css'
-const adress="localhost"
+// const adress="localhost"
 //ordi pascal
 // const adress = "192.168.0.100"
 //ordi région
 // const adress = "192.168.0.161"
 //raspberry
-// const adress = "192.168.0.10"
+const adress = "192.168.0.10"
 const io = openSocket(`http://${adress}:8000`);
 ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
