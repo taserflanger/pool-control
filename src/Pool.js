@@ -38,6 +38,7 @@ class Pool extends Component {
           );
         } return;
       }
+<<<<<<< HEAD
 
 
     parseInterface(obj) {
@@ -261,6 +262,9 @@ class Pool extends Component {
           visible: false
         }
       }
+=======
+    render() {
+>>>>>>> old
       return (
         <div id="Piscine">
         <Category
@@ -269,7 +273,13 @@ class Pool extends Component {
           titles={["Air", "Eau", "pH", "ORP"]}
           names={["air_temp", "water_temp", "ph", "orp"]}
           initialValues = {[25, 20, 7, 0]}
+<<<<<<< HEAD
           units={[" °C", " °C", "", ""]}
+=======
+          isBroadcast={true}
+          units={[" °C", " °C", "", ""]}
+          colSize={"-3"}
+>>>>>>> old
           defaultVisible={true}
         />
         <Category
@@ -306,6 +316,7 @@ class Pool extends Component {
           toggleIndices={[0, 1, 2]}
           defaultVisible={false}
         />
+<<<<<<< HEAD
         <Category 
           title="Paramètres de lavage"
           types={["Button", "AdjustButton", "AdjustButton", "AdjustButton"]}
@@ -316,6 +327,8 @@ class Pool extends Component {
           units={["", " jours", "h", "min"]}
           defaultVisible={false}
         />
+=======
+>>>>>>> old
         <Category
           title="Console"
           types={["Console"]}
