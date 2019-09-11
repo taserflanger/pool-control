@@ -15,8 +15,6 @@ class ToggleAdjustButton extends Component {
 
     render() {
         return(
-            <div className="category-item">
-                <Title size={1}text={this.props.title}/>
             <div className="ToggleAdjustButton">
                 <PushButton
                     onMouseDown={()=>this.setState({minus:true})}
@@ -24,7 +22,7 @@ class ToggleAdjustButton extends Component {
                         this.setState({minus: false});
                         this.props.onChangeValue(this.props.name, -1);
                     }}
-                    title="-"
+                    inner="-"
                     name={this.props.name+"_minus"}
                     value={this.state.minus}
                 />
@@ -39,11 +37,10 @@ class ToggleAdjustButton extends Component {
                         this.setState({plus: false});
                         this.props.onChangeValue(this.props.name, 1);
                     }}
-                    title="+"
+                    inner="+"
                     name={this.props.name+"_plus"}
                     value={this.state.plus}
                 />
-            </div>
             </div>
         );
     }

@@ -22,7 +22,7 @@ class ToggleAdjustButton extends Component {
                         this.setState({minus: false});
                         this.props.onChangeValue(this.props.name, -1);
                     }}
-                    title="-"
+                    inner="-"
                     name={this.props.name+"_minus"}
                     value={this.state.minus}
                 />
@@ -31,7 +31,7 @@ class ToggleAdjustButton extends Component {
                     name={this.props.name}
                     value={this.props.isOn}
                     subtitles={[]}
-                    title={`${this.props.value}${this.props.unit||""}`}
+                    inner={`${this.props.value}${this.props.unit||""}`}
                     loading={this.props.loading}
                 />
                 <PushButton
@@ -40,7 +40,7 @@ class ToggleAdjustButton extends Component {
                         this.setState({plus: false});
                         this.props.onChangeValue(this.props.name, 1);
                     }}
-                    title="+"
+                    inner="+"
                     name={this.props.name+"_plus"}
                     value={this.state.plus}
                 />

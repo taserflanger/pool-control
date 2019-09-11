@@ -1,64 +1,42 @@
 @import "colors";
 .Button {
   // position: absolute;
-  >div {
-    >p {
-      font-size: 1.5em;
-      text-align: center;
-      vertical-align: middle;
-      display: table-cell;
-      &.single {
-        font-size: 4em;
-      }
-    }
-    // animation-timing-function: 
-    display: table;
-    padding: 1em;
-    cursor: pointer;
-    text-align: center;
     width: 4em;
     height: 4em;
-    transition: background-color .1s;
-    transition-timing-function: ease-in-out;
-    border-radius: 15px;
-    &.round {
-        border-radius: 20px;
+    margin: 0 auto;
+    >div {
+        >p {
+        font-size: 1.5em;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        &.single {
+            font-size: 4em;
+        }
+        }
+        // animation-timing-function: 
+        display: table;
+        padding: 1em;
+        width: 4em;
+        height: 4em;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color .1s;
+        transition-timing-function: ease-in-out;
+        border-radius: 15px;
+        &.round {
+            border-radius: 20px;
+        }
+        &.false {
+        background-color: $black;
+        color: lightgray;
+        // &:hover {
+        //   background-color: $black-hover;
+        //   color: white;
+        // }
+        }
+        
     }
-    &.false {
-      background-color: $black;
-      color: lightgray;
-      // &:hover {
-      //   background-color: $black-hover;
-      //   color: white;
-      // }
-    }
-    
-  }
-}
-
-.btn-border-container{
-    &.special {
-        margin: 0 auto;
-        width: 4.39em;
-        height: 4.4em;
-        max-width: 4.4em;
-    }
-}
-
-.btn-border {
-  border-radius: 15px;
-  margin: 0 auto;
-  width: 0 auto;
-  height: 0 auto;
-  padding: 3px;
-  background-color: rgba(0, 0, 0, 0);
-  
-  &.loading {
-    animation: btn 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite;
-  }
-  &.round {
-      border-radius: 20px
-  }
 }
 
 @keyframes btn {

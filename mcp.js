@@ -193,5 +193,7 @@ module.exports = {
     stopPump: stopPump,
     initializeMcp: initializeMcp,
     clearJobs: clearJobs,
-    setFiltrationMode: setFiltrationMode
+    setFiltrationMode: setFiltrationMode,
+    goToMaxFreq: goToMaxFreq,
+    goToMinFreq: goToMinFreq
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from './Button';
-import PushButton from './PushButton'
+import PushButton from './PushButton';
+import ToggleAdjustButton from './ToggleAdjustButton';
+import AdjustButton from './AdjustButton';
 import Title from './Title'
 import Slider from './Slider';
 import Display from './Display';
@@ -13,30 +15,70 @@ class Category extends Component {
 
     constructor(props) {
         super(props)
-        let loading=new Array(this.props.names.length);
-        loading.fill(false);
+        let names = Object.keys(this.props.items)
+        let loading={}
+        let initialValues = {}
+        if (this.props.meta.toggleGroup) {
+            initialValues = this.props.meta.value
+        } else {
+            for (let i=0; i<names.length; i++) {
+                initialValues[names[i]] = this.props.items[names[i]].value;
+            }
+        }
+        console.log(`for category ${this.props.title}, initialValues: ${JSON.stringify(initialValues)}`)
+        for (let i=0; i<names.length; i++) {
+            loading[names[i]]=false
+        }
         this.state = {
-            values: this.props.initialValues,
+            values: initialValues,
             loading: loading,
-            toggleValue: (this.props.initialToggleValue)? this.props.initialToggleValue : null
         }
     }
 
     componentDidMount() {
-        if (this.props.isToggleGroup) {
-            io.on(`update_${this.props.toggleGroupName}`, (val) => {
-                this.setState({toggleValue: val});
+        let names = Object.keys(this.props.items)
+        if (this.props.meta.toggleGroup) {
+            io.on(`update_${this.props.meta.name}`, (val) => {
+                this.setState({values: val});
+                this.setVariableLoading(names[val], false);
             });
         } else {
-            for (let i=0; i<this.props.names.length; i++) {
-                io.on(`update_${this.props.names[i]}`, (val)=> {
-                    let newValues = this.state.values.slice();
-                    newValues[i] = val;
+            for (let i=0; i<names.length; i++) {
+                io.on(`update_${names[i]}`, (val)=> {
+                    let newValues = this.copyObj(this.state.values)
+                    newValues[names[i]] = val;
                     this.setState({values: newValues});
+                    this.setVariableLoading(names[i], false)
                 })
             }
         }
 
+    }
+
+    setVariableLoading(variable, bool) {
+        let newLoading = this.copyObj(this.state.loading);
+        newLoading[variable] = bool
+        this.setState({loading: newLoading});
+    }
+
+    copyObj(obj) {
+        let newobj = {}
+        for (let key of Object.keys(obj)) {
+            newobj[key]=obj[key]
+        }
+        return newobj
+    }
+
+    handleAdjustButtonValue(variable, value) {
+        io.emit('setValue', variable, this.state[variable]+value);
+    }
+
+    handleToggleAdjustButtonValue(variable, increment) {
+
+        io.emit('setValue', variable, {'isOn': this.state.values[variable].isOn, 'value': this.state.values[variable].value + increment})
+    }
+    handleToggleAdjustButtonIsOn(variable, increment) {
+        io.emit('setValue', variable, {'isOn': !this.state.values[variable].isOn, 'value': this.state.values[variable].value});
     }
 
     handlePushButton(variable, value) {
@@ -44,21 +86,18 @@ class Category extends Component {
     }
 
     handleButtonClick(variable, value) {
-        io.emit('setValue', variable, !value);
+        if (this.props.meta.toggleGroup) {
+            let index = Object.keys(this.props.items).indexOf(variable);
+            io.emit('setValue', this.props.meta.name, index);
+        } else {
+            io.emit('setValue', variable, !value);
+        }
+        this.setVariableLoading(variable, true);
     }
     
     handleButtonGroup(key) {
-        let index = this.props.names.indexOf(key);
-        io.emit('setValue', this.props.toggleGroupName, index);
-    }
-
-    handleSliderChange(i, value) {
-        const newValues = this.state.values.slice()
-        newValues[i] = value;
-        let variable = this.props.names[i];
-        this.setState({
-            values: newValues
-        }, this.setValue(variable, value));
+        io.emit('setValue', this.props.meta.name, key);
+        this.setVariableLoading(key, true)
     }
 
 
@@ -66,145 +105,101 @@ class Category extends Component {
         io.emit('setValue', variable, value);
     }
 
-    getCategoryContent(begin, end) {
-        let result = [];
-        let singleType = this.props.types.length === 1
-        let type = singleType? this.props.types[0] : null;
-        let isToggleGroup = this.props.isToggleGroup | false;
-        let colSize = this.props.colSize | ""
-        for (var i=begin; i<end; i++) {
-            if (this.props.types[i]==="Button" || type==="Button") {
-                if (isToggleGroup && this.props.toggleIndices.includes(i)) {
-                    result.push(
-                        <div key={i}className={`col${colSize}`}>
-                        <Title size={1} align="center" text={this.props.titles[i]} />
-                        <Button 
-                        onClick={(name)=>this.handleButtonGroup(name)}
-                        name={this.props.names[i]}
-                        value={(this.state.toggleValue===i)}
-                        subtitles={[]}
-                        loading={this.state.loading[i]}
-                        title=""
-                        />
-                    </div>);
-                } else {
-                    result.push(
-                    <div key={i}className={`col${colSize}`}>
-                        <Button 
-                            onClick={(name)=>this.handleButtonClick(name, this.state.values[i])}
-                            name={this.props.names[i]}
-                            value={this.state.values[i]}
-                            subtitles={[]}
-                            title={(this.props.titles[i])? this.props.titles[i] : ""}
-                            loading={this.state.loading[i]}
-                        />
-                    </div>);
-                }
-            } if (this.props.types[i]=="PushButton") {
-                result.push(
-                    <div key={i} className={`col${colSize}`}>
-                        <PushButton
-                            onMouseDown={(name)=>this.handlePushButton(name, true)}
-                            onMouseUp={(name)=>this.handlePushButton(name, false)}
-                            name={this.props.names[i]}
-                            value={this.state.values[i]}
-                            subtitles={[]}
-                            title={(this.props.titles[i])? this.props.titles[i] : ""}
-                            loading={this.state.loading[i]}
-                        />
-                    </div>
-                )
+    getCategoryContent() {
+        let names = Object.keys(this.props.items)
+        let result = []
+
+        let typeMap = {
+                "Button": this.getButton,
+                "PushButton": this.getPushButton,
+                "Slider": this.getSlider,
+                "Display": this.getDisplay,
+                "Console": this.getConsole,
+                "ToggleAdjustButton": this.getToggleAdjustButton,
+                "AdjustButton": this.getAdjustButton
             }
-            
-            if (this.props.types[i]==="Slider" || type==="Slider") {
-                result.push(
-                    this.getSlider(i)
-                    );
-            } if (this.props.types[i]==="Display" || type==="ValueBroadcast") {
-                result.push(
-                    <div key={i} className={`col${colSize}`}>
-                        <Title size={1} align="center" text={this.props.titles[i]} />
-                        <Display
-                            value={this.state.values[i]}
-<<<<<<< HEAD
-                            unit={this.props.units?this.props.units[i]:""}
-                        />
-                    </div>),
-                "Console": (<Console
-                                key={i}
-                                io={io}
-                            />),
-                "ToggleAdjustButton": (
-                    <div className="category-item">
-                        <Title size={1}text={this.props.titles[i]}/>
-                        <ToggleAdjustButton
-                        key={i}
-                        isOn={this.state.values[i].isOn}
-                        onChangeValue={(name, val)=>this.handleToggleAdjustButtonValue(name, val)}
-                        value={this.state.values[i].value}
-                        onClick={(name)=>this.handleToggleAdjustButtonIsOn(name)}
-                        title={this.props.titles[i]}
-                        name={this.props.names[i]}
-                        loading={this.state.loading[i]}
-                        unit={this.props.units?this.props.units[i]:""}
-                    />
-                    </div>
-                ),
-                "AdjustButton": (
-                    <div className="category-item">
-                        <AdjustButton 
-                            key={i}
-                            onChangeValue={(name, val)=>this.handleAdjustButtonValue(name, val)}
-                            value={this.state.values[i]}
-                            title={this.props.titles[i]}
-                            name={this.props.names[i]}
-                            unit={this.props.units?this.props.units[i]:""}
-=======
-                            unit={this.props.units[i]}
->>>>>>> old
-                        />
-                    </div>
-                );
-            } if (this.props.types[i]==="Console" || type==="Console") {
-                result.push(
-                    <Console
-                        io={io}
-                    />
-                )
-            }
+
+        for (let i=0; i<Object.keys(this.props.items).length; i++) {
+            let name = names[i]
+            let item = this.props.items[name]
+            item.name = name
+            result.push(typeMap[item.type].bind(this)(i, item)) // call function associated with type
         }
+        
         return result;
     }
 
-    getSlider(i) {
-        let cl_name= this.props.disabled? "col-8 disabled" : "col-8";
-        return <div key={i} className= {cl_name}>
-            <Slider
-                onChange={(e) => {
-                    if (this.props.disabled) {
-                        return;
-                    }
-                    this.handleSliderChange(i, parseInt(e.target.value, 10))
-                }}
-                value={this.state.values[i]}
-                name={this.props.names[i]}
-                align={this.props.align} 
-                title={this.props.titles[i]}
-                min="1" max="5"
-                suffix={<a>m<sup>3</sup>/h</a>}
+    getConsole(i, params) {
+        //params useless for console
+        return <Console key={i} io={io} />;
+    }
+
+    getAdjustButton(i, {title, name, unit}) {
+        return <div className="category-item">
+            <Title size={1} text={title} />
+            <AdjustButton 
+                key={i} 
+                onChangeValue={(name, val) => this.handleAdjustButtonValue(name, val)} 
+                value={this.state.values[name]} 
+                name={name} 
+                unit={unit ? unit : ""} />
+        </div>;
+    }
+
+    getToggleAdjustButton(i, {title, name, unit}) {
+        return (
+            <div className="category-item">
+                <Title size={1} text={title} />
+                <ToggleAdjustButton 
+                    key={i} 
+                    isOn={this.state.values[name].isOn}
+                    onChangeValue={(name, val) => this.handleToggleAdjustButtonValue(name, val)} 
+                    value={this.state.values[name].value} 
+                    onClick={(name) => this.handleToggleAdjustButtonIsOn(name)} 
+                    name={name} loading={this.state.loading[i]} 
+                    unit={unit ? unit : ""} />
+            </div>
+        );
+    }
+
+    getDisplay(i, {title, value, unit}) {
+        return <div key={i} className={`category-item`}>
+            <Title 
+                size={1} 
+                text={title} />
+            <Display 
+                value={value}
+                unit={unit ? unit : ""}
             />
         </div>;
     }
 
-    getRows() {
-        let result = []
-        let alignedCenter = this.props.aligneCenter? "align-items-center" : "";
-        result.push(
-            <div key = {0} className={`row justify-content-around ${alignedCenter}`}>
-                {this.getCategoryContent(0, this.props.names.length)}
-            </div>
-        )
-        return result
+    getPushButton(i, {title, inner, name}) {
+        return <div key={i} className={`category-item`}>
+            {title? (<Title size={1} text={title}/>) : ""}
+            <PushButton 
+                onMouseDown={(name) => this.handlePushButton(name, true)} 
+                onMouseUp={(name) => this.handlePushButton(name, false)} 
+                name={name}
+                value={this.state.values[name]}
+                inner={inner?inner:" "}
+                loading={this.state.loading[i]} 
+            />
+        </div>;
+    }
+
+    getButton(i, {title, inner, name}) {
+        return <div key={i} className={`category-item`}>
+            {title?<Title size={1} text={title}/> : ""}
+            <Button 
+                onClick={(name) => this.handleButtonClick(name)} 
+                name={name}
+                inner={inner?inner:""}
+                value={this.props.meta.toggleGroup?this.state.values===i:this.state.values[name]} 
+                loading={this.state.loading[i]}
+                title={title?title:""}
+            />
+        </div>;
     }
 
     render() {
@@ -215,9 +210,8 @@ class Category extends Component {
             >
             
             <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
-
-            <div className="container">
-                { this.getRows() }
+            <div key = {0} className={`row justify-content-around`}>
+                { this.getCategoryContent() }
             </div>
             </div>
         );

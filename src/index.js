@@ -9,9 +9,9 @@ import './css/index.css'
 //ordi pascal
 // const adress = "192.168.0.100"
 //ordi région
-// const adress = "192.168.0.161"
+const adress = "192.168.1.10"
 //raspberry
-const adress = "192.168.0.10"
+// const adress = "192.168.0.10"
 const io = openSocket(`http://${adress}:8000`);
 ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();

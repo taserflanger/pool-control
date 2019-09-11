@@ -56,7 +56,6 @@ io.on('connection', (client) => {
         client.emit("update_" + variable, globals.Pool[variable]);
     });
     client.on('setValue', (variable, value) => {
-        log("setValueRequest: "+ variable + " " + value);
         setValue(variable, value, client);
         Write();
     });
@@ -88,7 +87,10 @@ function InitializeClient(client) {
 function setValue(variable, value) {
     let oldValue=globals.Pool[variable]
     globals.Pool[variable] = value;
-    log(`${variable} ${globals.Pool[variable]}`);
+    if (typeof(value)=="object") {
+        value = JSON.stringify(value);
+    }
+    log(`${variable} ${value}`);
     handleVariableChange(variable, oldValue);
     io.emit("update_" + variable, globals.Pool[variable]);
 }
@@ -150,8 +152,9 @@ function handleVariableChange(variable, oldValue=null) {
                 mcp.setFiltrationMode(globals.Pool.filtration_mode, globals.Pool.washing_cycles_count, callback);
             })
         } else if (variable==="massage") {
+            let oldTimingValue=globals.Pool.massage.value;
             if (globals.Pool.massage.isOn && oldValue.isOn==false) {
-                let oldTimingValue=globals.Pool.massage.value;
+                // when you swich on launch timer
                 mcp.startPump();
                 mcp.goToMaxFreq();
                 let interv = setInterval(()=> {
@@ -170,8 +173,15 @@ function handleVariableChange(variable, oldValue=null) {
                 }, 2000);
                 massageJobs.push(interv);
             } else if (!globals.Pool.massage.isOn) {
+                // when you switch off stop timer and go to old value
                 clearJobs(massageJobs);
                 massageJobs=[];
+                if (oldValue.isOn) {
+                    globals.Pool.massage.value=oldTimingValue;
+                    mcp.goToMinFreq();
+                    io.emit("update_massage", globals.Pool.massage);
+                    Write();
+                }
             }
         } else if (variable==="washing_auto") {
             if (globals.Pool.washing_auto) {

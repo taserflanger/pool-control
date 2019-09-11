@@ -43,8 +43,6 @@ class Button extends Component {
         let align = this.props.align || "left";
         let id = this.props.id || "";
         return (
-            <div className={`btn-border-container ${this.props.class ||""}`}>
-            <div className={`btn-border ${this.props.loading?"loading":""}`}>
             <div id={id} className={`${this.props.square? "square" : ""} Button`}>
 
                 <div
@@ -54,10 +52,8 @@ class Button extends Component {
                 {/* <div className={`lds-ring ${this.props.loading?"":"invisible"}`}>
                     <div></div><div></div><div></div><div></div>
                 </div> */}
-                <p className={this.props.title.lenght==1?"single":""}>{this.props.title}</p></div>
+                <p>{this.props.inner}</p></div>
                 {this.getSubtitle()}
-            </div>
-            </div>
             </div>
             
         );

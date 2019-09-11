@@ -1,43 +1,29 @@
-.Button > div {
-  display: table;
-  padding: 1em;
-  cursor: pointer;
-  text-align: center;
+.Button {
   width: 4em;
   height: 4em;
-  transition: background-color .1s;
-  transition-timing-function: ease-in-out;
-  border-radius: 15px; }
-  .Button > div > p {
-    font-size: 1.5em;
+  margin: 0 auto; }
+  .Button > div {
+    display: table;
+    padding: 1em;
+    width: 4em;
+    height: 4em;
+    cursor: pointer;
     text-align: center;
-    vertical-align: middle;
-    display: table-cell; }
-    .Button > div > p.single {
-      font-size: 4em; }
-  .Button > div.round {
-    border-radius: 20px; }
-  .Button > div.false {
-    background-color: #292f36;
-    color: lightgray; }
-
-.btn-border-container.special {
-  margin: 0 auto;
-  width: 4.39em;
-  height: 4.4em;
-  max-width: 4.4em; }
-
-.btn-border {
-  border-radius: 15px;
-  margin: 0 auto;
-  width: 0 auto;
-  height: 0 auto;
-  padding: 3px;
-  background-color: rgba(0, 0, 0, 0); }
-  .btn-border.loading {
-    animation: btn 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite; }
-  .btn-border.round {
-    border-radius: 20px; }
+    transition: background-color .1s;
+    transition-timing-function: ease-in-out;
+    border-radius: 15px; }
+    .Button > div > p {
+      font-size: 1.5em;
+      text-align: center;
+      vertical-align: middle;
+      display: table-cell; }
+      .Button > div > p.single {
+        font-size: 4em; }
+    .Button > div.round {
+      border-radius: 20px; }
+    .Button > div.false {
+      background-color: #292f36;
+      color: lightgray; }
 
 @keyframes btn {
   0% {

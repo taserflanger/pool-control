@@ -38,7 +38,6 @@ class Pool extends Component {
           );
         } return;
       }
-<<<<<<< HEAD
 
 
     parseInterface(obj) {
@@ -94,6 +93,17 @@ class Pool extends Component {
     }
 
     render() {
+      /*
+        model: (default necessary, parenthethis optional, 
+        respect order for readability)
+        -------------------------------------------------
+          display: title, value, (unit), (mcp)
+          PushButton: (title), (inner), value, (mcp)
+          Button: (title), (inner), value, (mcp)
+          ToggleAdjustButton: title, value: {isOn, value}, (unit)
+          AdjustButton: title, value, (unit)
+
+      */
       let startup_interface={
         "Infos": {
           items: {
@@ -110,7 +120,7 @@ class Pool extends Component {
             },
             water_temp: {
               type: "Display",
-              value: 25,
+              value: 20,
               title: "Eau",
               unit:" °C",
               mcp:{
@@ -121,7 +131,7 @@ class Pool extends Component {
             },
             ph: {
               type: "Display",
-              value: 25,
+              value: 7,
               title: "pH",
               unit:"",
               mcp:{
@@ -132,9 +142,9 @@ class Pool extends Component {
             },
             orp: {
               type: "Display",
-              value: 25,
+              value: 400,
               title: "Air",
-              unit:" °C",
+              unit:" mV",
               mcp:{
                 address: 0x20,
                 pinMode: "input",
@@ -149,7 +159,7 @@ class Pool extends Component {
             spots: {
               type: "PushButton",
               title: "Spots",
-              value: 0,
+              value: false,
               mcp:{
                 address: 0x20,
                 pinMode: "output",
@@ -169,7 +179,7 @@ class Pool extends Component {
             stop: {
               type: "PushButton",
               inner: "Stop",
-              value: 0,
+              value: false,
               mcp: {
                 address: 0x20,
                 pinMode: "output",
@@ -179,7 +189,7 @@ class Pool extends Component {
             start: {
               type: "PushButton",
               inner: "Start",
-              value: 0,
+              value: false,
               mcp: {
                 address: 0x20,
                 pinMode: "output",
@@ -189,7 +199,7 @@ class Pool extends Component {
             freq_minus: {
               type: "PushButton",
               inner: "-",
-              value: 0,
+              value: false,
               mcp: {
                 address: 0x20,
                 pinMode: "output",
@@ -199,7 +209,7 @@ class Pool extends Component {
             freq_plus: {
               type: "PushButton",
               inner: "+",
-              value: 0,
+              value: false,
               mcp: {
                 address: 0x20,
                 pinMode: "output",
@@ -210,17 +220,21 @@ class Pool extends Component {
           visible: false
         },
         "Mode de Filtration": {
-          class: ["ToggleGroup"],
-          value: 0, //index
+          toggleGroup: true,
+          name: "filtration_mode",
+          value: 0, // index
           items: {
             filtration: {
               type: "Button",
+              name: "filtration"
             },
             lavage : {
               type: "Button",
+              name: "lavage",
             },
             recirculation: {
               type: "Button",
+              name: "recirculation"
             }
           },
           visible: false
@@ -253,94 +267,39 @@ class Pool extends Component {
           },
           visible: false
         },
-        "Console": {
-          items: {
-            console: {
-              type: "Console"
-            }
-          },
-          visible: false
-        }
+        // "Console": {
+        //   items: {
+        //     console: {
+        //       type: "Console"
+        //     }
+        //   },
+        //   visible: false
+        // }
       }
-=======
-    render() {
->>>>>>> old
-      return (
-        <div id="Piscine">
-        <Category
-          title="Infos"
-          types={["Display", "Display", "Display", "Display"]}
-          titles={["Air", "Eau", "pH", "ORP"]}
-          names={["air_temp", "water_temp", "ph", "orp"]}
-          initialValues = {[25, 20, 7, 0]}
-<<<<<<< HEAD
-          units={[" °C", " °C", "", ""]}
-=======
-          isBroadcast={true}
-          units={[" °C", " °C", "", ""]}
-          colSize={"-3"}
->>>>>>> old
-          defaultVisible={true}
-        />
-        <Category
-          title="Bien-être"
-          types={["PushButton", "ToggleAdjustButton"]}
-          names={["spots", "massage"]}
-          titles={["Spots", "Massage"]}
-          initialValues={[false, {"isOn": false, "value": 15}]}
-          units={["", "min"]}
-          upperTitles={[true, ""]}
-          defaultVisible={true}
-         
-        />
-        <Category
-          title="Pompe" 
-          types={["PushButton", "PushButton", "PushButton", "PushButton"]} 
-          titles={["Stop", "Start", "-", "+"]}
-          subtitles={[
-            [],[], [], []
-          ]}
-          names = {["stop", "start", "freq_minus", "freq_plus"]}
-          initialValues={[false, false, false, false]}
-          defaultVisible={false}
-        />
-        <Category
-          title="Mode de Filtration"
-          types={["Button", "Button", "Button"]}
-          names = {["normal", "backwash", "recirculation"]}
-          titles={["Filtration", "Lavage", "Recirculation"]}
-          initialToggleValue={0}
-          initialValues={null}
-          isToggleGroup={true}
-          toggleGroupName="filtration_mode"
-          toggleIndices={[0, 1, 2]}
-          defaultVisible={false}
-        />
-<<<<<<< HEAD
-        <Category 
-          title="Paramètres de lavage"
-          types={["Button", "AdjustButton", "AdjustButton", "AdjustButton"]}
-          names={["washing_auto", "washing_period", "washing_hour", "washing_cycles_count"]}
-          titles={["Lavage Automatique", "Tous les", "Horaire", "Durée de lavage"]}
-          initialValues={[true, 7, 3, 5]}
-          upperTitles={[true, true, true, true]}
-          units={["", " jours", "h", "min"]}
-          defaultVisible={false}
-        />
-=======
->>>>>>> old
-        <Category
-          title="Console"
-          types={["Console"]}
-          names={["console"]}
-          initialValues={[""]}
-          defaultVisible={false}
-          titles={["console"]}
-        />
-        {this.getAdminContent()}
-      </div>
-      );
+
+      let result = []
+      let titles = Object.keys(startup_interface) // array of str
+      for (let i=0; i<titles.length; i++) {
+        let category = startup_interface[titles[i]]
+        let meta = {}
+        for (let prop of Object.keys(category)) {
+          if (!(prop=="items" || prop=="visible")) {
+            meta[prop] = category[prop];
+          }
+        }
+        result.push(
+          <Category
+            title={titles[i]}
+            items = {category.items}
+            visible={category.visible}
+            meta={meta}
+          />
+        )
+
     }
+
+    return result;
+  }
 }
 
 export default Pool
