@@ -5,20 +5,22 @@
         "start": false,
         "freq_minus": false,
         "freq_plus": false,
-        "filtration_mode": 1,
-        "water_temp": 180.59100899110814,
-        "air_temp": 129.08294331224897,
+        "filtration_mode": 0,
+        "water_temp": 105.72202157795356,
+        "air_temp": 142.5866938177947,
         "massage": {
             "isOn": false,
-            "value": 16
+            "value": 10
         },
-        "washing_period": 7,
+        "washing_period": null,
         "washing_auto": true,
-        "washing_hour": 6,
-        "washing_cycles_count": 5,
-        "next_washing_cycle": 1567959372113,
-        "filtration": true,
-        "lavage": 1
+        "washing_hour": null,
+        "washing_cycle_duration": null,
+        "washing_cycle_count": 5,
+        "washing_cycle_spacing": 2,
+        "flags": {
+            "rotating_valve": false
+        }
     },
     "password": "2909",
     "wateringMode": "individual",
@@ -94,5 +96,7 @@
             10
         ],
         "time-reference": "beginning"
-    }
+    },
+    "spots": false,
+    "filtration_mode": 0
 }

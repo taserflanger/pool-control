@@ -74,11 +74,10 @@ class Category extends Component {
     }
 
     handleToggleAdjustButtonValue(variable, increment) {
-
-        io.emit('setValue', variable, {'isOn': this.state.values[variable].isOn, 'value': this.state.values[variable].value + increment})
+        io.emit('adjustValue', variable, increment)
     }
-    handleToggleAdjustButtonIsOn(variable, increment) {
-        io.emit('setValue', variable, {'isOn': !this.state.values[variable].isOn, 'value': this.state.values[variable].value});
+    handleToggleAdjustButtonIsOn(variable) {
+        io.emit('toggle', variable);
     }
 
     handlePushButton(variable, value) {
@@ -146,7 +145,7 @@ class Category extends Component {
         </div>;
     }
 
-    getToggleAdjustButton(i, {title, name, unit}) {
+    getToggleAdjustButton(i, {title, name, unit, suffix}) {
         return (
             <div className="category-item">
                 <Title size={1} text={title} />
@@ -156,7 +155,8 @@ class Category extends Component {
                     onChangeValue={(name, val) => this.handleToggleAdjustButtonValue(name, val)} 
                     value={this.state.values[name].value} 
                     onClick={(name) => this.handleToggleAdjustButtonIsOn(name)} 
-                    name={name} loading={this.state.loading[i]} 
+                    name={name}
+                    loading={this.state.loading[i]}
                     unit={unit ? unit : ""} />
             </div>
         );
@@ -188,7 +188,7 @@ class Category extends Component {
         </div>;
     }
 
-    getButton(i, {title, inner, name}) {
+        getButton(i, {title, inner, name}) {
         return <div key={i} className={`category-item`}>
             {title?<Title size={1} text={title}/> : ""}
             <Button 
@@ -209,7 +209,7 @@ class Category extends Component {
             id={this.props.title.toLowerCase()}
             >
             
-            <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{return}}/>
+            <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{}}/>
             <div key = {0} className={`row justify-content-around`}>
                 { this.getCategoryContent() }
             </div>

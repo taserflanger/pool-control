@@ -36,7 +36,7 @@ class Pool extends Component {
               />
             </div>
           );
-        } return;
+        }
       }
 
 
@@ -226,14 +226,17 @@ class Pool extends Component {
           items: {
             filtration: {
               type: "Button",
+              title: "Filtration",
               name: "filtration"
             },
             lavage : {
               type: "Button",
+              title: "Lavage",
               name: "lavage",
             },
             recirculation: {
               type: "Button",
+              title: "Recirculation",
               name: "recirculation"
             }
           },
@@ -250,19 +253,30 @@ class Pool extends Component {
               type: "AdjustButton",
               value: 7,
               title: "Tous les",
-              suffix: "jours",
+              unit: " jours",
             },
             washing_hour: {
               type: "AdjustButton",
               value: 3,
               title: "Heure de lavage",
-              suffix: "h"
+              unit: "h"
             },
-            washing_cycles_count: {
+            washing_cycle_duration: {
               type: "AdjustButton",
               value: 5,
               title: "Durée de lavage",
-              suffix: "min"
+              unit: "min"
+            },
+            washing_cycle_count: {
+              type: "AdjustButton",
+              value: 5,
+              title: "Répétitions",
+            },
+            washing_cycle_spacing: {
+              type: "AdjustButton",
+              value: 2,
+              title: "Espacement",
+              unit: "min"
             }
           },
           visible: false
