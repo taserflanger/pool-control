@@ -4,13 +4,13 @@
 /node_modules
 /.vscode
 .vscode/extensions
-/.idea
+.idea
 
 # testing
 /coverage
 
 # production
-
+/build
 
 #data
 /server/poolState.json
