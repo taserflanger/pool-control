@@ -2,19 +2,17 @@ const {timeout, Write} = require('./utils');
 
 async function filtrationCycleInMode(mode) {
     console.log(`Launching filtration cycle in mode ${mode}`)
-    mcp.setStop(1);
+    mcp_api.setStop(1);
     async function return_to_filtration() {
-        if (mode==0) {return;}
+        if (mode===0) {return;}
         await timeout(POOL.washing_cycle_duration*60*1000*TIME_SCALE);
-        await mcp.setFiltrationMode(0);
+        await mcp_api.setFiltrationMode(0);
         POOL.filtration_mode=0;
         Write();
         io.emit("update_filtration_mode", 0)
     }
     //retourne en filtration après un temps washing_cycle_duration (sauf si on veut de base retourner en filtration)
-    await timeout(50000*TIME_SCALE)
-    // on attend 5 secondes avant de faire tourner les vannes pour l'arrêt de la pompe
-    await mcp.setFiltrationMode(POOL.filtration_mode);
+    await mcp_api.setFiltrationMode(POOL.filtration_mode);
     await return_to_filtration();
 }
 

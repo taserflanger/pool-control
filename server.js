@@ -1,16 +1,15 @@
 const io = require('socket.io')();
 global.io = io;
-const mcp = require('./mcp');
-global.mcp = mcp;
+const mcp_api = require('./mcp_api');
+global.mcp_api = mcp_api
 
 const {listener} = require('./listener');
 const {log, parseData, Write} = require('./utils');
 
 parseData();
 if (ISRASPBERRY) {
-    mcp.initializeMcp([POOL.spots, POOL.stop, POOL.start, POOL.freq_minus, POOL.freq_plus]);
-    if (POOL.washing_auto) {
-
+    mcp_api.initializeMcp([POOL.spots, POOL.stop, POOL.start, POOL.freq_minus, POOL.freq_plus]);
+        if (POOL.washing_auto) {
     }
 }
 

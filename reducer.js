@@ -1,26 +1,25 @@
 const {filtrationCycleInMode, RepeatWashingCycle} = require('./washing_auto');
 const later = require('later');
 
-
 global.WASHING_AUTO_SCHED = {clear: ()=>{}};
 
 
 function handleVariableChange(variable, value) {
     switch (variable) {
         case "spots":
-            mcp.setSpots(value);
+            mcp_api.setSpots(value);
             break;
         case "stop":
-            mcp.setStop(value);
+            mcp_api.setStop(value);
             break;
         case "start":
-            mcp.setStart(value);
+            mcp_api.setStart(value);
             break;
         case "freq_minus":
-            mcp.setFreqMinus(value);
+            mcp_api.setFreqMinus(value);
             break;
         case "freq_plus":
-            mcp.setFreqPlus(value);
+            mcp_api.setFreqPlus(value);
             break;
         case "filtration_mode":
             filtrationCycleInMode(value)

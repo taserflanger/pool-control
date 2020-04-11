@@ -13,7 +13,6 @@ function write() {
   client.writeRegister(0x2001, 0x07cf);
   console.log("written");
 }
-
 function read() {
   console.log("test");
   // read the 2 registers starting at address 5

@@ -29,4 +29,3 @@ const listener = {
 module.exports = {
     listener: listener
 }
-
