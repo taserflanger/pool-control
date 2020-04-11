@@ -10,8 +10,7 @@ class Pool extends Component {
         super(props);
     }
     
-      getAdminContent() {
-        if (this.props.isAdmin) {
+      getPlot() {
           return (
             <div id="adminContent">
               <div class="category">
@@ -24,19 +23,12 @@ class Pool extends Component {
                       type: "scatter"
                     }
                   ]}
-                  layout={ {autosize: true, title: 'Température'} }
+                  layout={ {width: "auto", height: 400, title: 'Température'} }
                   graphOptions = {{filename: "date-axes", fileopt: "overwrite"}}
                 />
               </div>
-              <Category
-              title="Vannes individuelles"
-              types={[]}
-              names={[]}
-              titles={[]}
-              />
             </div>
           );
-        }
       }
 
 
@@ -310,9 +302,8 @@ class Pool extends Component {
             meta={meta}
           />
         )
-
     }
-
+    result.push(this.getPlot());
     return result;
   }
 }
