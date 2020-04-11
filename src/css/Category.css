@@ -1,10 +1,21 @@
 .category {
-  margin: .5rem 0 .5rem 0;
-  padding-bottom: .5rem;
-  box-shadow: 0 2px 4px #bbbbbb; }
+  margin: 0.5rem 0 0.5rem 0;
+  padding-bottom: 0.5rem;
+  box-shadow: 0 2px 4px #bbbbbb;
+}
 
 .category-item {
-  margin-bottom: 1em; }
+  margin: 0 1rem;
+}
 
 .row {
-  margin: 0 2em; }
+  margin: 0 2em;
+}
+
+.category-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=Category.css.map */

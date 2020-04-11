@@ -4,9 +4,7 @@ import PushButton from './PushButton';
 import ToggleAdjustButton from './ToggleAdjustButton';
 import AdjustButton from './AdjustButton';
 import Title from './Title'
-import Slider from './Slider';
 import Display from './Display';
-import Console from './Console';
 import './css/Category.css';
 import {io} from './index';
 
@@ -113,7 +111,6 @@ class Category extends Component {
                 "PushButton": this.getPushButton,
                 "Slider": this.getSlider,
                 "Display": this.getDisplay,
-                "Console": this.getConsole,
                 "ToggleAdjustButton": this.getToggleAdjustButton,
                 "AdjustButton": this.getAdjustButton
             }
@@ -128,11 +125,6 @@ class Category extends Component {
         return result;
     }
 
-    getConsole(i, params) {
-        //params useless for console
-        return <Console key={i} io={io} />;
-    }
-
     getAdjustButton(i, {title, name, unit}) {
         return <div className="category-item">
             <Title size={1} text={title} />
@@ -145,7 +137,7 @@ class Category extends Component {
         </div>;
     }
 
-    getToggleAdjustButton(i, {title, name, unit, suffix}) {
+    getToggleAdjustButton(i, {title, name, unit}) {
         return (
             <div className="category-item">
                 <Title size={1} text={title} />
@@ -169,6 +161,7 @@ class Category extends Component {
                 text={title} />
             <Display 
                 value={value}
+                class="only-text"
                 unit={unit ? unit : ""}
             />
         </div>;
@@ -188,11 +181,11 @@ class Category extends Component {
         </div>;
     }
 
-        getButton(i, {title, inner, name}) {
+    getButton(i, {title, inner, name}) {
         let v = this.props.meta.toggleGroup?this.state.values===i:this.state.values[name];
         return <div key={i} className={`category-item`}>
             {title?<Title size={1} text={title}/> : ""}
-            <Button 
+            <Button
                 onClick={() => this.handleButtonClick(name, v)}
                 name={name}
                 inner={inner?inner:""}
@@ -211,7 +204,7 @@ class Category extends Component {
             >
             
             <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{}}/>
-            <div key = {0} className={`row justify-content-around`}>
+            <div key = {0} className={`category-content`}>
                 { this.getCategoryContent() }
             </div>
             </div>

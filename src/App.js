@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
 import Pool from './Pool.js';
 import Watering from './Watering.js'
-import CustomForm from './CustomForm.js';
 import './css/App.css';
 import {io} from './index';
 

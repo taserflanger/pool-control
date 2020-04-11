@@ -2,14 +2,15 @@
 
 # dependencies
 /node_modules
-vscode
+/.vscode
 .vscode/extensions
+/.idea
 
 # testing
 /coverage
 
 # production
-/build
+
 
 #data
 /server/poolState.json

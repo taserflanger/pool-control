@@ -4,8 +4,8 @@ import './css/Display.css';
 class Display extends Component {
     render() {
         return (
-            <div className={`Display ${this.props.class?this.props.class:""}`}>
-                <h2>{`${Math.round(this.props.value, 4)}${this.props.unit}`}</h2>
+            <div className={`button ${this.props.class?this.props.class:""}`}>
+                <span>{`${Math.round(this.props.value, 4)}${this.props.unit}`}</span>
             </div>
         );
     }

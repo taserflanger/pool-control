@@ -8,10 +8,10 @@
     "water_temp": 105.72202157795356,
     "air_temp": 142.5866938177947,
     "massage": {
-        "isOn": false,
-        "value": 15
+        "isOn": true,
+        "value": 14
     },
-    "washing_period": 12,
+    "washing_period": 11,
     "washing_auto": true,
     "washing_hour": 1,
     "washing_cycle_duration": 1,
@@ -94,5 +94,6 @@
             10
         ],
         "time-reference": "beginning"
-    }
+    },
+    "filtration_mode": 0
 }

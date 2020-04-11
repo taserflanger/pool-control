@@ -6,9 +6,16 @@
 }
 
 .category-item {
-  margin-bottom: 1em;
+  margin: 0 1rem;
 }
 
 .row {
   margin: 0 2em;
+}
+
+.category-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  //place-content: center;
 }

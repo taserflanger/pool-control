@@ -1,3 +1,5 @@
+@import "colors";
+
 .nav-item {
   padding-top: 1vw;
   padding-bottom: 1vw;
@@ -5,7 +7,7 @@
 
 .navbar {
   padding: 0 1em;
-  box-shadow: 0 0 2px #cdcdcd;
+  box-shadow: 0 0 2px $box-shadow;
 }
 
 .navbar-brand {
@@ -15,5 +17,3 @@
 .nav-link {
   cursor: pointer;
 }
-
-/*# sourceMappingURL=App.css.map */

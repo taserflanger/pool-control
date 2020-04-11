@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PushButton from './PushButton';
-import Title from './Title';
 import Display from './Display';
 import './css/ToggleAdjustButton.css';
 
@@ -29,7 +28,7 @@ class ToggleAdjustButton extends Component {
                 <Display
                     value={this.props.value}
                     unit={this.props.unit}
-                    class="blue"
+                    class="blue active"
                 />
                 <PushButton
                     onMouseDown={()=>this.setState({plus:true})}
