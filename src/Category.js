@@ -69,8 +69,8 @@ class Category extends Component {
         return newobj
     }
 
-    handleAdjustButtonValue(variable, value) {
-        io.emit('setValue', variable, this.state[variable]+value);
+    handleAdjustButtonValue(variable, increment) {
+        io.emit('incrementValue', variable, increment);
     }
 
     handleToggleAdjustButtonValue(variable, increment) {
@@ -138,7 +138,7 @@ class Category extends Component {
             <Title size={1} text={title} />
             <AdjustButton 
                 key={i} 
-                onChangeValue={(name, val) => this.handleAdjustButtonValue(name, val)} 
+                onChangeValue={val => this.handleAdjustButtonValue(name, val)}
                 value={this.state.values[name]} 
                 name={name} 
                 unit={unit ? unit : ""} />
@@ -150,11 +150,11 @@ class Category extends Component {
             <div className="category-item">
                 <Title size={1} text={title} />
                 <ToggleAdjustButton 
-                    key={i} 
+                    key={i}
                     isOn={this.state.values[name].isOn}
-                    onChangeValue={(name, val) => this.handleToggleAdjustButtonValue(name, val)} 
+                    onChangeValue={(val) => this.handleToggleAdjustButtonValue(name, val)}
                     value={this.state.values[name].value} 
-                    onClick={(name) => this.handleToggleAdjustButtonIsOn(name)} 
+                    onClick={() => this.handleToggleAdjustButtonIsOn(name)}
                     name={name}
                     loading={this.state.loading[i]}
                     unit={unit ? unit : ""} />
@@ -189,13 +189,14 @@ class Category extends Component {
     }
 
         getButton(i, {title, inner, name}) {
+        let v = this.props.meta.toggleGroup?this.state.values===i:this.state.values[name];
         return <div key={i} className={`category-item`}>
             {title?<Title size={1} text={title}/> : ""}
             <Button 
-                onClick={(name) => this.handleButtonClick(name)} 
+                onClick={() => this.handleButtonClick(name, v)}
                 name={name}
                 inner={inner?inner:""}
-                value={this.props.meta.toggleGroup?this.state.values===i:this.state.values[name]} 
+                value={v}
                 loading={this.state.loading[i]}
                 title={title?title:""}
             />

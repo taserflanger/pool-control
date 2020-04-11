@@ -20,7 +20,7 @@ class ToggleAdjustButton extends Component {
                     onMouseDown={()=>this.setState({minus:true})}
                     onMouseUp={()=>{
                         this.setState({minus: false});
-                        this.props.onChangeValue(this.props.name, -1);
+                        this.props.onChangeValue(-1);
                     }}
                     inner="-"
                     name={this.props.name+"_minus"}
@@ -35,7 +35,7 @@ class ToggleAdjustButton extends Component {
                     onMouseDown={()=>this.setState({plus:true})}
                     onMouseUp={()=>{
                         this.setState({plus: false});
-                        this.props.onChangeValue(this.props.name, 1);
+                        this.props.onChangeValue(1);
                     }}
                     inner="+"
                     name={this.props.name+"_plus"}

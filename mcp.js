@@ -1,6 +1,7 @@
 const {log, timeout} = require('./utils');
 
 global.ISRASPBERRY = true;
+global.TIME_SCALE = 1;
 let mcp;
 try {
     const MCP23017 = require('node-mcp23017');
@@ -9,6 +10,7 @@ try {
     });
 } catch (error) {
     global.ISRASPBERRY = false;
+    TIME_SCALE = .01;
     mcp = {
         digitalWrite: (pin, value) => {
             //console.log(`Writing ${value} on pin ${pin}`);
@@ -46,79 +48,62 @@ function setFreqPlus (value) {
     mcp.digitalWrite(4, value ? 0 : 1)
 }
 
-function startPump () {
-    return new Promise((resolve, reject)=> {
-        setStart(1);
-        timeout(300)
-            .then(setStart(0))
-            .then(resolve())
-            .catch(reject());
-    });
+async function startPump () {
+    setStart(1);
+    await timeout(300);
+    setStart(0);
 }
 
-function stopPump () {
-    return new Promise((resolve, reject) => {
-        setStop(1);
-        timeout(300)
-            .then(setStop(0))
-            .then(resolve())
-            .catch(reject);
-    })
+async function stopPump () {
+    setStop(1);
+    await timeout(300)
+    setStop(0)
 }
 
-function goToMaxFreq() {
-    return new Promise((resolve, reject) => {
-        setFreqPlus(true)
-        timeout(50000)
-            .then(setFreqPlus(false))
-            .then(resolve())
-            .catch(reject())
-    })
+async function goToMaxFreq() {
+    setFreqPlus(true);
+    await timeout(5000)
+    setFreqPlus(false);
 }
 
-function goToMinFreq() {
-    return new Promise((resolve, reject) => {
-        setFreqMinus(true);
-        timeout(5000)
-            .then(setFreqMinus(false))
-            .then(resolve())
-            .catch(reject());
-        })
+async function goToMinFreq() {
+    setFreqMinus(true);
+    await timeout(5000)
+    setFreqMinus(false);
 }
 
 
+async function setFiltrationMode (mode) {
 
-setFiltrationMode = function (mode) {
-    return new Promise((resolve, reject) => {
-        switch (mode) {
-            case 0:
-                mcp.digitalWrite(7, 1);
-                mcp.digitalWrite(6, 1);
-                mcp.digitalWrite(5, 1);
-            case 1:
-                mcp.digitalWrite(7, 0);
-                mcp.digitalWrite(6, 0);
-                mcp.digitalWrite(5, 0);
-            case 2:
-                mcp.digitalWrite(5, 0);
-                mcp.digitalWrite(6, 1);
-                mcp.digitalWrite(7, 1);
-            default:
-                console.warn(`Unknown filtration mode: ${mode}`);
-        }
+    switch (mode) {
+        case 0:
+            mcp.digitalWrite(7, 1);
+            mcp.digitalWrite(6, 1);
+            mcp.digitalWrite(5, 1);
+            break;
+        case 1:
+            mcp.digitalWrite(7, 0);
+            mcp.digitalWrite(6, 0);
+            mcp.digitalWrite(5, 0);
+            break;
+        case 2:
+            mcp.digitalWrite(5, 0);
+            mcp.digitalWrite(6, 1);
+            mcp.digitalWrite(7, 1);
+            break;
+        default:
+            console.warn(`Unknown filtration mode: ${mode}`);
+    }
 
-        timeout(30000)
-            //attendre que les vannes soient tournées
-            .then(setStop(false))
-            //débloquer le moteur
-            .then(goToMaxFreq())
-            // aller a la vitesse max
-            .then(timeout(300))
-            .then(startPump())
-            // démarrer le moteur
-            .then(resolve())
-            .catch(reject());
-        });
+    await timeout(30*60*1000*TIME_SCALE);
+    //attendre que les vannes soient tournées
+    setStop(false)
+    //débloquer le moteur
+    goToMaxFreq();
+    // aller a la vitesse max
+    await timeout(300)
+    await startPump()
+    // démarrer le moteur
 }
 
 module.exports = {
@@ -132,5 +117,6 @@ module.exports = {
     initializeMcp: initializeMcp,
     setFiltrationMode: setFiltrationMode,
     goToMaxFreq: goToMaxFreq,
-    goToMinFreq: goToMinFreq
+    goToMinFreq: goToMinFreq,
+    mcp: mcp
 }

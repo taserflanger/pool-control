@@ -20,7 +20,7 @@ class Button extends Component {
                     </div>
                 </div>
             );
-        } return;
+        }
     }
 
     getSubtitle() {
@@ -30,7 +30,7 @@ class Button extends Component {
                 {this.props.value? "ON" : "OFF"}
             </p>
             );
-        } return;
+        }
     }
 
     hover(b) {
@@ -46,7 +46,7 @@ class Button extends Component {
             <div id={id} className={`${this.props.square? "square" : ""} Button`}>
 
                 <div
-                    onClick={() => this.props.onClick(this.props.name)}
+                    onClick={this.props.onClick}
                     className={`${this.props.value.toString()} ${this.props.color=="green"?"green": "blue"}`}
                 >
                 {/* <div className={`lds-ring ${this.props.loading?"":"invisible"}`}>

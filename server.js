@@ -1,8 +1,10 @@
 const io = require('socket.io')();
 global.io = io;
+const mcp = require('./mcp');
+global.mcp = mcp;
 
 const {listener} = require('./listener');
-const {log, parseData} = require('./utils');
+const {log, parseData, Write} = require('./utils');
 
 parseData();
 if (ISRASPBERRY) {
@@ -15,11 +17,11 @@ if (ISRASPBERRY) {
 io.on('connection', (client) => {
     log('client connected')
     InitializeClient(client);
-    for (let [variable, f] of Object.entries(listener)) {
-        client.on(variable, (...args) => {
-            let obj;
-            [variable, obj] = f(...args); // potentially multiple arguments to f
-            client.emit(variable, obj);
+    for (let [l, f] of Object.entries(listener)) {
+        client.on(l, (variable, ...args) => {
+            f(variable, ...args); // potentially multiple arguments to f
+            Write();
+            io.emit('update_'+variable, POOL[variable]) //update state
         })
     }
     //initialize all listeners

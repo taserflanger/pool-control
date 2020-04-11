@@ -11,7 +11,7 @@
     text-align: center;
     transition: background-color .1s;
     transition-timing-function: ease-in-out;
-    border-radius: 15px; }
+    border-radius: 0px; }
     .Button > div > p {
       font-size: 1.5em;
       text-align: center;
@@ -20,7 +20,7 @@
       .Button > div > p.single {
         font-size: 4em; }
     .Button > div.round {
-      border-radius: 20px; }
+      border-radius: 0px; }
     .Button > div.false {
       background-color: #292f36;
       color: lightgray; }

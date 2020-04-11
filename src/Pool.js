@@ -143,7 +143,7 @@ class Pool extends Component {
             orp: {
               type: "Display",
               value: 400,
-              title: "Air",
+              title: "ORP",
               unit:" mV",
               mcp:{
                 address: 0x20,
@@ -169,7 +169,8 @@ class Pool extends Component {
             massage: {
               type: "ToggleAdjustButton",
               title: "Massage",
-              value: {isOn: false, value: 15},
+              value: {isOn: false, value: 30},
+              unit: "min"//TODO: copier css de toggleadjustbutton dans le display du adjustbutton (pour pas que ça déborde)
             }
           },
           visible: true
@@ -259,7 +260,7 @@ class Pool extends Component {
               type: "AdjustButton",
               value: 3,
               title: "Heure de lavage",
-              unit: "h"
+              unit: "h00"
             },
             washing_cycle_duration: {
               type: "AdjustButton",
@@ -272,7 +273,7 @@ class Pool extends Component {
               value: 5,
               title: "Répétitions",
             },
-            washing_cycle_spacing: {
+            washing_cycle_delay: {
               type: "AdjustButton",
               value: 2,
               title: "Espacement",

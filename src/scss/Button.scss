@@ -23,9 +23,9 @@
         text-align: center;
         transition: background-color .1s;
         transition-timing-function: ease-in-out;
-        border-radius: 15px;
+        border-radius: 0px;
         &.round {
-            border-radius: 20px;
+            border-radius: 0px;
         }
         &.false {
         background-color: $black;

@@ -17,14 +17,8 @@ function parseData() {
     global.POOL = JSON.parse(data.toString());
 }
 
-function Write(globals) {
+function Write() {
     fs.writeFile("server/serverState.json", JSON.stringify(POOL, null, 4), (err)=> {
-        if (err) throw err;
-    })
-}
-function WriteLogs(logs) {
-    return
-    fs.writeFile("server/log.json", JSON.stringify(logs, null, 4), (err)=> {
         if (err) throw err;
     })
 }

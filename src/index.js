@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css' // very important to load bootstrap fi
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './css/index.css'
-const adress="localhost"
+const adress="192.168.29.30"
 //ordi pascal
 // const adress = "192.168.0.100"
 //ordi région

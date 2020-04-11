@@ -1,6 +1,9 @@
+const {filtrationCycleInMode, RepeatWashingCycle} = require('./washing_auto');
 const later = require('later');
-const mcp=require('./mcp');
-const {timeout, Write} = require('./utils')
+
+
+global.WASHING_AUTO_SCHED = {clear: ()=>{}};
+
 
 function handleVariableChange(variable, value) {
     switch (variable) {
@@ -20,37 +23,16 @@ function handleVariableChange(variable, value) {
             mcp.setFreqPlus(value);
             break;
         case "filtration_mode":
-            // éteindre la pompe
-            mcp.setStop(1);
-
-            let return_to_filtration = ()=> {
-                if (value==0) {
-                    return Promise.resolve();
-                }
-                return new Promise((resolve, reject) => {
-                    timeout(POOL.washing_cycle_duration)
-                        .then(mcp.setFiltrationMode(0))
-                        .then(()=> {
-                            POOL.filtration_mode=0;
-                            Write();
-                            io.emit("update_filtration_mode", 0)
-                            resolve()
-                        })
-                        .catch(reject());
-                })
-            }
-            //retourne en filtration après un temps washing_cycle_duration (sauf si on vuet de base retourner en filtration
-
-            // on attend 5 secondes avant de faire tourner les vannes pour l'arrêt de la pompe
-            timeout(5000)
-                .then(mcp.setFiltrationMode(POOL.filtration_mode))
-                .then(return_to_filtration)
+            filtrationCycleInMode(value)
             break;
         case "washing_auto":
             if (value) {
-                    console.log("Here I wanna get auto_washing");
+                let sched = later.parse.recur().every(POOL.washing_period).dayOfMonth().on(POOL.washing_hour).hour();
+                WASHING_AUTO_SCHED = later.setInterval(RepeatWashingCycle, sched)
+                //console.log(WASHING_AUTO_SCHED);
+                RepeatWashingCycle();
             } else {
-                //clearJobs(washingJobs);
+                WASHING_AUTO_SCHED.clear();
             }
             break;
 
