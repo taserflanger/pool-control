@@ -11,6 +11,7 @@ const listener = {
     "incrementValue": (variable, increment) => {
         console.log(`Incrementing ${variable} of ${increment}`);
         POOL[variable] = POOL[variable] + increment;
+        handleVariableChange(variable, increment);
         //Dont handle variable change because adjustement is only for parameters and should not have physical impact.
     },
     "adjustValue": (variable, value) => {

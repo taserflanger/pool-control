@@ -11,10 +11,10 @@
         "isOn": false,
         "value": 18
     },
-    "washing_period": 11,
+    "washing_period": 6,
     "washing_auto": true,
-    "washing_hour": 1,
-    "washing_cycle_duration": 1,
+    "washing_hour": 4,
+    "washing_cycle_duration": 2,
     "washing_cycle_count": 3,
     "washing_cycle_delay": 1,
     "flags": {
@@ -23,5 +23,23 @@
     "watering_period": 4,
     "watering_auto": false,
     "watering_hour": 3,
-    "watering_duration": 20
+    "watering_duration": 20,
+    "washing_shed": {
+        "schedules": [
+            {
+                "D": [
+                    1,
+                    7,
+                    13,
+                    19,
+                    25,
+                    31
+                ],
+                "h": [
+                    2
+                ]
+            }
+        ],
+        "exceptions": []
+    }
 }

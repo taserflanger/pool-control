@@ -1,5 +1,7 @@
 const {doWashingCycle, RepeatWashingCycle, goToFiltration, goToRecirculation} = require('./washing_auto');
+const {nextOccurrences} = require('./utils');
 const later = require('later');
+const moment = require('moment');
 
 global.WASHING_AUTO_SCHED = {clear: ()=>{}};
 
@@ -37,14 +39,17 @@ async function handleVariableChange(variable, value) {
             break;
         case "washing_auto":
             if (value) {
-                let sched = later.parse.recur().every(POOL.washing_period).dayOfMonth().on(POOL.washing_hour).hour();
-                WASHING_AUTO_SCHED = later.setInterval(RepeatWashingCycle, sched)
-                //console.log(WASHING_AUTO_SCHED);
+                //WASHING_AUTO_JOB = later.setInterval(RepeatWashingCycle, POOL[ewashing_sched]);
                 await RepeatWashingCycle();
             } else {
                 WASHING_AUTO_SCHED.clear();
             }
             break;
+        case "washing_period":
+        case "washing_hour":
+            POOL["washing_shed"] = later.parse.recur().every(POOL.washing_period).dayOfMonth().on(POOL.washing_hour-2).hour();
+            console.log(POOL.washing_hour);
+            console.log([...nextOccurrences(4, POOL["washing_shed"])]);
 
         default:
             console.warn(`${variable} handling not implemented yet`);

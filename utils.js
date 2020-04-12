@@ -1,5 +1,8 @@
 const io = global.io;
 const fs = require('fs');
+const moment = require('moment');
+moment.locale('fr');
+const later = require('later');
 
 const timeout = milliseconds => new Promise (resolve =>
     setTimeout(() => resolve(), milliseconds)
@@ -23,10 +26,19 @@ function Write() {
     })
 }
 
+function* nextOccurrences(nb, sched) {
+    sched = later.schedule(sched);
+    let occurrences = sched.next(nb);
+    for (const d of occurrences) {
+        yield moment(d).calendar();
+    }
+}
+
 
 module.exports = {
     log: log,
     Write: Write,
     parseData: parseData,
-    timeout: timeout
+    timeout: timeout,
+    nextOccurrences: nextOccurrences
 };
