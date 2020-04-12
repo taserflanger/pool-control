@@ -105,8 +105,6 @@ async function setFiltrationMode (mode) {
     //attendre que les vannes soient tournées
     setStop(false)
     //débloquer le moteur
-    goToMaxFreq();
-    // aller a la vitesse max
     await timeout(300)
     await startPump()
     // démarrer le moteur
