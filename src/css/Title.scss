@@ -22,7 +22,7 @@
   font-family: 'Slabo 27px', serif;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: .5rem;
+  margin-top: .5rem;
   box-shadow: 0 0 5px gray;
   &.green {
     @include title(1, $green)

@@ -7,6 +7,7 @@ import Title from './Title'
 import Display from './Display';
 import './css/Category.css';
 import {io} from './index';
+import Plot from "react-plotly.js";
 
 
 class Category extends Component {
@@ -112,7 +113,8 @@ class Category extends Component {
                 "Slider": this.getSlider,
                 "Display": this.getDisplay,
                 "ToggleAdjustButton": this.getToggleAdjustButton,
-                "AdjustButton": this.getAdjustButton
+                "AdjustButton": this.getAdjustButton,
+                "Plot": this.getPlot
             }
 
         for (let i=0; i<Object.keys(this.props.items).length; i++) {
@@ -123,6 +125,26 @@ class Category extends Component {
         }
         
         return result;
+    }
+
+    getPlot(i, {title}) {
+        return (
+            <div className="category-item">
+                <Title size={1} text={title}/>
+                <Plot
+                    data={[
+                        {
+                            x: [],
+                            y: [],
+                            type: "scatter"
+                        }
+                    ]}
+                    layout={ {autosize: true}}
+                    graphOptions = {{filename: "date-axes", fileopt: "overwrite"}}
+                />
+            </div>
+
+        );
     }
 
     getAdjustButton(i, {title, name, unit}) {

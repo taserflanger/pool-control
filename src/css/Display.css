@@ -1,7 +1,8 @@
 .only-text {
-  background-color: white;
-  color: black;
+  background-color: white !important;
+  color: black !important;
   cursor: default;
+  font-size: 1rem !important;
 }
 
 /*# sourceMappingURL=Display.css.map */

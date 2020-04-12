@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Title from './Title'
-import WateringSlot from './WateringSlot';
-import IndividualEditor from './IndividualEditor';
 import "./css/Watering.css"
-import {io} from './index'
+import Page from "./Page";
+import {ThemeContext} from "./ThemeContext";
 
 class Watering extends Component {
     constructor(props){
