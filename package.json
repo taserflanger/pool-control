@@ -12,6 +12,7 @@
     "react-fittext": "^1.0.0",
     "react-plotly": "^1.0.0",
     "react-plotly.js": "^2.3.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "1.1.5",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1"

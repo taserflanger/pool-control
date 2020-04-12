@@ -76,7 +76,7 @@ class Pool extends Component {
                         type: "ToggleAdjustButton",
                         title: "Massage",
                         value: {isOn: false, value: 30},
-                        unit: "min"//TODO: copier css de toggleadjustbutton dans le display du adjustbutton (pour pas que ça déborde)
+                        unit: "min"
                     }
                 },
                 visible: true

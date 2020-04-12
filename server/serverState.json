@@ -20,80 +20,8 @@
     "flags": {
         "rotating_valve": false
     },
-    "password": "2909",
-    "wateringMode": "individual",
-    "individual": [
-        {
-            "name": "Rat",
-            "active": true,
-            "activity": 2,
-            "sequences": [
-                {
-                    "begin": "02:00",
-                    "duration": 60
-                }
-            ],
-            "exceptions": [
-                "14/05/2002"
-            ],
-            "forced": [
-                "14/05/2002"
-            ]
-        },
-        {
-            "name": "Jardinet",
-            "active": false,
-            "activity": 1,
-            "sequences": [
-                {
-                    "begin": "02:00",
-                    "duration": 10
-                }
-            ],
-            "exceptions": [
-                "14/05/2002"
-            ],
-            "forced": [
-                "14/05/2002"
-            ]
-        },
-        {
-            "name": "Jardinet",
-            "active": true,
-            "activity": 0,
-            "sequences": [
-                {
-                    "begin": "02:00",
-                    "duration": 10
-                }
-            ],
-            "exceptions": [
-                "14/05/2002"
-            ],
-            "forced": [
-                "14/05/2002"
-            ]
-        }
-    ],
-    "sequential": {
-        "activity": 2,
-        "exceptions": [
-            "01/02/2003"
-        ],
-        "forced": [],
-        "order": [
-            0,
-            1,
-            1
-        ],
-        "beginning": "03:00",
-        "end": "03:30",
-        "duration": [
-            10,
-            5,
-            10
-        ],
-        "time-reference": "beginning"
-    },
-    "watering_period": null
+    "watering_period": 4,
+    "watering_auto": false,
+    "watering_hour": 3,
+    "watering_duration": 20
 }
