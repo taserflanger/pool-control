@@ -1,22 +1,25 @@
 @import "colors";
+
 .button {
-    margin: 0 auto;
-    font-size: 1rem;
-    display: table;
-    width: 5rem;
-    height: 5rem;
-    cursor: pointer;
-    transition: background-color .1s;
-    transition-timing-function: ease-in-out;
-    background-color: $black;
-    color: lightgray;
-     &:hover {
-       background-color: $black-hover;
-       color: white;
-     }
-    > span {
-        vertical-align: middle;
-        display: table-cell;
-        height: fit-content;
-    }
+  margin: 0 auto;
+  font-size: 1rem;
+  display: table;
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+  transition: background-color .1s;
+  transition-timing-function: ease-in-out;
+  background-color: $black;
+  color: lightgray;
+
+  &:hover {
+    background-color: $black-hover;
+    color: white;
+  }
+
+  > h3 {
+    vertical-align: middle;
+    display: table-cell;
+    height: fit-content;
+  }
 }

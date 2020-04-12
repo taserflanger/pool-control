@@ -4,12 +4,12 @@
     "start": false,
     "freq_minus": false,
     "freq_plus": false,
-    "       filtration_mode": 0,
+    "filtration_mode": 0,
     "water_temp": 105.72202157795356,
     "air_temp": 142.5866938177947,
     "massage": {
         "isOn": false,
-        "value": 19
+        "value": 18
     },
     "washing_period": 11,
     "washing_auto": true,
@@ -95,5 +95,5 @@
         ],
         "time-reference": "beginning"
     },
-    "filtration_mode": 0
+    "watering_period": null
 }

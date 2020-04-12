@@ -13,7 +13,7 @@
   font-family: 'Slabo 27px', serif;
   color: white;
   text-shadow: 0 0 1px white;
-  box-shadow: 0 2.5px 5px $black;
+  box-shadow: 0 2.5px 5px $box-shadow;
   margin-bottom: 1rem;
   cursor: pointer;
 }
@@ -23,11 +23,10 @@
   width: 100%;
   margin: 0 auto;
   margin-top: .5rem;
-  box-shadow: 0 0 5px gray;
   &.green {
     @include title(1, $green)
   }
-  &:not(.green) {
+  &.blue {
     @include title(1, $blue);
   }
 }

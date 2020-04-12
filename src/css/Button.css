@@ -14,7 +14,7 @@
   background-color: #3e4752;
   color: white;
 }
-.button > span {
+.button > h3 {
   vertical-align: middle;
   display: table-cell;
   height: fit-content;

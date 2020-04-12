@@ -1,6 +1,5 @@
 .nav-item {
-  padding-top: 1vw;
-  padding-bottom: 1vw;
+  padding: 1em 2em;
 }
 
 .navbar {
@@ -14,6 +13,10 @@
 
 .nav-link {
   cursor: pointer;
+}
+
+.navbar-nav {
+  width: fit-content;
 }
 
 /*# sourceMappingURL=App.css.map */
