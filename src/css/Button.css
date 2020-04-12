@@ -1,13 +1,9 @@
 .button {
   margin: 0 auto;
-  font-size: 3vw;
+  font-size: 1rem;
   display: table;
-  width: 10vw;
-  height: 10vw;
-  max-width: 5em;
-  max-height: 5em;
-  min-width: 1em;
-  min-height: 1em;
+  width: 5rem;
+  height: 5rem;
   cursor: pointer;
   transition: background-color 0.1s;
   transition-timing-function: ease-in-out;
@@ -18,7 +14,7 @@
   background-color: #3e4752;
   color: white;
 }
-.button > span {
+.button > h3 {
   vertical-align: middle;
   display: table-cell;
   height: fit-content;

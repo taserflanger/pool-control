@@ -5,7 +5,7 @@
   font-family: "Slabo 27px", serif;
   color: white;
   text-shadow: 0 0 1px white;
-  box-shadow: 0 2.5px 5px #292f36;
+  box-shadow: 0 2.5px 5px #cdcdcd;
   margin-bottom: 1rem;
   cursor: pointer;
 }
@@ -20,8 +20,7 @@
   font-family: "Slabo 27px", serif;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 0 5px gray;
+  margin-top: 0.5rem;
 }
 .item-title.green {
   font-size: 1.5rem;
@@ -32,12 +31,12 @@
     font-size: 4vw;
   }
 }
-.item-title:not(.green) {
+.item-title.blue {
   font-size: 1.5rem;
   background-color: #52d1dc;
 }
 @media screen and (max-width: 500px) {
-  .item-title:not(.green) {
+  .item-title.blue {
     font-size: 4vw;
   }
 }

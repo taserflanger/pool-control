@@ -28,7 +28,7 @@ class ToggleAdjustButton extends Component {
                 <Display
                     value={this.props.value}
                     unit={this.props.unit}
-                    class="blue active"
+                    class="active cursor-default"
                 />
                 <PushButton
                     onMouseDown={()=>this.setState({plus:true})}

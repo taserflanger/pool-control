@@ -1,8 +1,8 @@
 @import "colors";
 .category {
-  margin: .5rem 0 .5rem 0;
+  //margin: .5rem 0 .5rem 0;
   padding-bottom: .5rem;
-  box-shadow: 0 2px 4px rgb(187, 187, 187);
+  box-shadow: 0 2px 5px $box-shadow;
 }
 
 .category-item {
@@ -17,5 +17,4 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  //place-content: center;
 }

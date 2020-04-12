@@ -38,8 +38,12 @@ body, html {
   max-width: 100%;
 }
 
-.pointer {
+.cursor-pointer {
   cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
 }
 
 /*# sourceMappingURL=index.css.map */

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/Title.css';
+import {ThemeContext} from "./ThemeContext";
 
 class Title extends Component {
 
@@ -15,9 +16,14 @@ class Title extends Component {
         */
        let handleClick = this.props.onClick? this.props.onClick : function() {}
         return (
-            <div style={this.props.style} onClick={() => handleClick()} className={`${this.props.size===1?"item-title":"category-title"}` }>
-                {this.props.text}
-            </div>
+            <ThemeContext.Consumer>
+                {({color})=> (
+                    <div onClick={() => handleClick()} className={`${this.props.size===1?"item-title":"category-title"} ${color}` }>
+                        {this.props.text}
+                    </div>
+                )}
+            </ThemeContext.Consumer>
+
         );
     }
 }
