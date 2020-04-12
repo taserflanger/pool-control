@@ -4,10 +4,9 @@ const {handleVariableChange} = require('./reducer');
 // broadcasting the update to the clients is done in server.js
 
 const listener = {
-    "setValue": (variable, value) => {
-        console.log(`Setting ${variable} to ${value}`);
+    "setValue": async (variable, value) => {
+        handleVariableChange(variable, value)
         POOL[variable] = value;
-        handleVariableChange(variable, POOL[variable])
     },
     "incrementValue": (variable, increment) => {
         console.log(`Incrementing ${variable} of ${increment}`);
@@ -20,7 +19,6 @@ const listener = {
         //Dont handle variable change because adjustement is only for parameters and should not have physical impact.
     },
     "toggle": (variable) => {
-        console.log(`Toggling ${variable}`);
         POOL[variable]["isOn"] = !POOL[variable]["isOn"];
         handleVariableChange(variable, POOL[variable]);
     }

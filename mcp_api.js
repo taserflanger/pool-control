@@ -14,7 +14,7 @@ try {
     TIME_SCALE = .001;
     mcp = {
         digitalWrite: (pin, value) => {
-            console.log(`Writing ${value} on pin ${pin}`);
+            //console.log(`Writing ${value} on pin ${pin}`);
         }
     }
 }    
@@ -80,7 +80,7 @@ async function goToMinFreq() {
 
 
 async function setFiltrationMode (mode) {
-
+    setStop(1);
     switch (mode) {
         case 0:
             mcp.digitalWrite(7, 1);
@@ -93,9 +93,9 @@ async function setFiltrationMode (mode) {
             mcp.digitalWrite(5, 0);
             break;
         case 2:
-            mcp.digitalWrite(5, 0);
-            mcp.digitalWrite(6, 1);
             mcp.digitalWrite(7, 1);
+            mcp.digitalWrite(6, 1);
+            mcp.digitalWrite(5, 0);
             break;
         default:
             console.warn(`Unknown filtration mode: ${mode}`);
