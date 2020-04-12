@@ -14,7 +14,7 @@ try {
     TIME_SCALE = .001;
     mcp = {
         digitalWrite: (pin, value) => {
-            //console.log(`Writing ${value} on pin ${pin}`);
+            console.log(`Writing ${value} on pin ${pin}`);
         }
     }
 }    

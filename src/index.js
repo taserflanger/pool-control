@@ -5,13 +5,13 @@ import openSocket from 'socket.io-client';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './css/index.css'
-const adress="192.168.29.30"
+//const adress="192.168.29.30"
 //ordi pascal
 // const adress = "192.168.0.100"
 //ordi région
 //const adress = "192.168.1.10"
 //raspberry
-// const adress = "192.168.29.251"
+const adress = "192.168.29.251"
 const io = openSocket(`http://${adress}:8000`);
 ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
