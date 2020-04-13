@@ -9,19 +9,19 @@
     "water_temp": 105.72202157795356,
     "massage": {
         "isOn": false,
-        "value": 16
+        "value": 1
     },
     "washing_period": 1,
     "washing_auto": true,
-    "washing_hour": 4,
-    "washing_cycle_duration": 2,
-    "washing_cycle_count": 3,
-    "washing_cycle_delay": 1,
+    "washing_hour": 13,
+    "washing_cycle_duration": 4,
+    "washing_cycle_count": 1,
+    "washing_cycle_delay": 3,
     "flags": {
         "rotating_valve": false
     },
     "watering_period": 4,
-    "watering_auto": false,
+    "watering_auto": true,
     "watering_hour": 3,
     "watering_duration": 20,
     "washing_sched": {
@@ -61,7 +61,7 @@
                     31
                 ],
                 "h": [
-                    2
+                    13
                 ]
             }
         ],

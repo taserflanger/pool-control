@@ -19,6 +19,10 @@ const listener = {
         POOL[variable]["value"] += value;
         //Dont handle variable change because adjustement is only for parameters and should not have physical impact.
     },
+    "setAdjustValue": (variable, value) => {
+        console.log(`setting ${variable} to ${value} (adjust)`);
+        POOL[variable]["value"] = value;
+    },
     "toggle": (variable) => {
         POOL[variable]["isOn"] = !POOL[variable]["isOn"];
         handleVariableChange(variable, POOL[variable]);

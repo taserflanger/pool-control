@@ -1,6 +1,5 @@
 const {doWashingCycle, RepeatWashingCycle, goToFiltration, goToRecirculation} = require('./washing_auto');
 const {nextOccurrences, clearTimeouts} = require('./utils');
-const later = require('later');
 
 global.WASHING_AUTO_SCHED = {clear: ()=>{}};
 
@@ -24,7 +23,7 @@ async function handleVariableChange(variable, value) {
             break;
         case "filtration_mode":
             clearTimeouts();
-            if (POOL.filtration_mode != value) {
+            if (POOL.filtration_mode !== value) {
                 switch (value) {
                     case 0:
                         await goToFiltration();
@@ -47,12 +46,15 @@ async function handleVariableChange(variable, value) {
             }
             break;
         case "washing_period":
-        case "washing_hour":
-            POOL["washing_sched"] = later.parse.recur().every(POOL.washing_period).dayOfMonth().on(POOL.washing_hour-2).hour();
-            console.log(POOL.washing_hour);
+            POOL["washing_sched"] = later.parse.recur().every(value).dayOfMonth().on(POOL.washing_hour).hour();
             POOL["next_washing_occurrences"] =[...nextOccurrences(3, POOL["washing_sched"])].join(", ")
             io.emit("update_next_washing_occurrences", POOL["next_washing_occurrences"]);
-
+            break;
+        case "washing_hour":
+            POOL["washing_sched"] = later.parse.recur().every(POOL.washing_period).dayOfMonth().on(value).hour();
+            POOL["next_washing_occurrences"] =[...nextOccurrences(3, POOL["washing_sched"])].join(", ")
+            io.emit("update_next_washing_occurrences", POOL["next_washing_occurrences"]);
+            break;
         default:
             console.warn(`${variable} handling not implemented yet`);
     }
