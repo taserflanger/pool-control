@@ -185,10 +185,11 @@ class Pool extends Component {
                         title: "Espacement",
                         unit: "min"
                     },
-                    next_occurrences: {
+                    next_washing_occurrences: {
                         type: "Display",
                         value: "Demain à 4:00, vendredi à 04:00",
-                        title: "Prochains lavages"
+                        title: "Prochains lavages",
+                        css_class: "full-width"
                     }
                 }
             },
