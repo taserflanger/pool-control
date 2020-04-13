@@ -26,7 +26,7 @@ async function RepeatWashingCycle() {
     await doWashingCycle()
     for (let i=0; i<POOL.washing_cycle_count-1; i++) {
         if (!POOL.washing_auto) {return;}
-        await timeout(POOL.washing_cycle_delay*60*1000*TIME_SCALE);
+        JOBS.push(await timeout(POOL.washing_cycle_delay*60*1000*TIME_SCALE));
         io.emit("update_filtration_mode", 1);
         await doWashingCycle();
     }
