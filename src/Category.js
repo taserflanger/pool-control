@@ -31,6 +31,7 @@ class Category extends Component {
         this.state = {
             values: initialValues,
             loading: loading,
+            visible: true
         }
     }
 
@@ -68,12 +69,34 @@ class Category extends Component {
         return newobj
     }
 
-    handleAdjustButtonValue(variable, increment) {
-        io.emit('incrementValue', variable, increment);
+    handleAdjustButtonValue(variable, increment, min, max, modulo) {
+        let newValue = parseInt(this.state.values[variable]) + increment;
+        if (modulo) {
+            newValue = (newValue+modulo)%modulo;
+        }
+        if (min!==undefined) {
+            newValue = Math.max(min, newValue);
+        }
+        if (max) {
+            newValue=Math.min(max, newValue);
+        }
+
+        io.emit('setValue', variable, newValue)
     }
 
-    handleToggleAdjustButtonValue(variable, increment) {
-        io.emit('adjustValue', variable, increment)
+    handleToggleAdjustButtonValue(variable, increment, min, max, modulo) {
+        let newValue = parseInt(this.state.values[variable]["value"]) + increment;
+        if (modulo) {
+            newValue = (newValue+modulo)%modulo;//to get the negativs add modulo;
+        }
+        if (min!==undefined) {
+            newValue = Math.max(min, newValue);
+        }
+        if (max) {
+            newValue=Math.min(max, newValue);
+        }
+
+        io.emit('setAdjustValue', variable, newValue)
     }
     handleToggleAdjustButtonIsOn(variable) {
         io.emit('toggle', variable);
@@ -110,7 +133,6 @@ class Category extends Component {
         let typeMap = {
                 "Button": this.getButton,
                 "PushButton": this.getPushButton,
-                "Slider": this.getSlider,
                 "Display": this.getDisplay,
                 "ToggleAdjustButton": this.getToggleAdjustButton,
                 "AdjustButton": this.getAdjustButton,
@@ -147,26 +169,28 @@ class Category extends Component {
         );
     }
 
-    getAdjustButton(i, {title, name, unit}) {
+    getAdjustButton(i, {title, name, unit, max, modulo, min}) {
+        min=min||0;
         return <div className="category-item">
             <Title size={1} text={title} />
             <AdjustButton 
                 key={i} 
-                onChangeValue={val => this.handleAdjustButtonValue(name, val)}
+                onChangeValue={val => this.handleAdjustButtonValue(name, val, min, max, modulo)}
                 value={this.state.values[name]} 
                 name={name} 
                 unit={unit ? unit : ""} />
         </div>;
     }
 
-    getToggleAdjustButton(i, {title, name, unit}) {
+    getToggleAdjustButton(i, {title, name, unit, max, min, modulo}) {
+        min=min||0;
         return (
             <div className="category-item">
                 <Title size={1} text={title} />
                 <ToggleAdjustButton 
                     key={i}
                     isOn={this.state.values[name].isOn}
-                    onChangeValue={(val) => this.handleToggleAdjustButtonValue(name, val)}
+                    onChangeValue={(val) => this.handleToggleAdjustButtonValue(name, val, min, max, modulo)}
                     value={this.state.values[name].value} 
                     onClick={() => this.handleToggleAdjustButtonIsOn(name)}
                     name={name}
@@ -176,14 +200,14 @@ class Category extends Component {
         );
     }
 
-    getDisplay(i, {title, value, unit}) {
-        return <div key={i} className={`category-item`}>
-            <Title 
+    getDisplay(i, {title, name, unit, css_class}) {
+        return <div key={i} className={`category-item ${css_class}`}>
+            {css_class==="full-width"?"":(<Title
                 size={1} 
-                text={title} />
+                text={title} />)}
             <Display 
-                value={value}
-                class="only-text"
+                value={this.state.values[name]}
+                class={`only-text ${css_class}`}
                 unit={unit ? unit : ""}
             />
         </div>;
@@ -221,14 +245,18 @@ class Category extends Component {
     render() {
         return (
             <div 
-            className="category"
+            className={`category ${this.props.meta.class?this.props.meta.class:""}`}
             id={this.props.title.toLowerCase()}
             >
-            
-            <Title size="2" text={this.props.title} align={this.props.align} onClick={()=>{}}/>
-            <div key = {0} className={`category-content`}>
-                { this.getCategoryContent() }
-            </div>
+                <Title
+                    size="2"
+                    text={this.props.title}
+                    align={this.props.align}
+                    onClick={()=>this.setState({visible: !this.state.visible})}
+                />
+                <div key = {0} className={`category-content ${this.state.visible?"":"hide"}`}>
+                    { this.getCategoryContent() }
+                </div>
             </div>
         );
     }

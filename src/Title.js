@@ -16,13 +16,16 @@ class Title extends Component {
         */
        let handleClick = this.props.onClick? this.props.onClick : function() {}
         return (
+
             <ThemeContext.Consumer>
                 {({color})=> (
-                    <div onClick={() => handleClick()} className={`${this.props.size===1?"item-title":"category-title"} ${color}` }>
-                        {this.props.text}
-                    </div>
+                        <div onClick={handleClick} className={`${this.props.size===1?"item-title":"category-title"} ${color}` }>
+                            {this.props.text}
+                        </div>
                 )}
             </ThemeContext.Consumer>
+
+
 
         );
     }

@@ -7,6 +7,9 @@
 
 .category-item {
   margin: 0 1rem;
+  &.full-width {
+    width: 100%;
+  }
 }
 
 .row {
@@ -17,4 +20,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  &.hide {
+    display: none;
+  }
 }

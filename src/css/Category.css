@@ -6,6 +6,9 @@
 .category-item {
   margin: 0 1rem;
 }
+.category-item.full-width {
+  width: 100%;
+}
 
 .row {
   margin: 0 2em;
@@ -15,6 +18,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.category-content.hide {
+  display: none;
 }
 
 /*# sourceMappingURL=Category.css.map */

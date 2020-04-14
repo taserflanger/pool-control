@@ -76,7 +76,8 @@ class Pool extends Component {
                         type: "ToggleAdjustButton",
                         title: "Massage",
                         value: {isOn: false, value: 30},
-                        unit: "min"
+                        unit: "min",
+                        min: 1
                     }
                 },
                 visible: true
@@ -161,34 +162,40 @@ class Pool extends Component {
                         value: 7,
                         title: "Tous les",
                         unit: " jours",
+                        min: 1
                     },
                     washing_hour: {
                         type: "AdjustButton",
                         value: 3,
                         title: "Heure de lavage",
-                        unit: "h00"
+                        unit: "h00",
+                        modulo: 24,
                     },
                     washing_cycle_duration: {
                         type: "AdjustButton",
                         value: 5,
                         title: "Durée de lavage",
-                        unit: "min"
+                        unit: "min",
+                        min: 1
                     },
                     washing_cycle_count: {
                         type: "AdjustButton",
                         value: 5,
                         title: "Répétitions",
+                        min: 1
                     },
                     washing_cycle_delay: {
                         type: "AdjustButton",
                         value: 2,
                         title: "Espacement",
-                        unit: "min"
+                        unit: "min",
+                        min: 1
                     },
-                    next_occurrences: {
+                    next_washing_occurrences: {
                         type: "Display",
                         value: "Demain à 4:00, vendredi à 04:00",
-                        title: "Prochains lavages"
+                        title: "Prochains lavages",
+                        css_class: "full-width"
                     }
                 }
             },
