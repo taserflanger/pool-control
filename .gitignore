@@ -5,12 +5,15 @@
 /.vscode
 .vscode/extensions
 .idea
+.vscode-server
 
 # testing
 /coverage
 
 # production
 /build
+vscode
+.webstorm_nodejs_helpers
 
 #data
 /server/poolState.json
