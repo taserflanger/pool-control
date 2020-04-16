@@ -1,0 +1,13 @@
+#!/bin/bash
+cd /home/pi
+killall node
+killall chromium-browser
+echo "Lancement interface du build"
+serve ./build > interface.log 2>&1 &
+echo "Lancement du server"
+node server > server.log 2>&1 &
+echo "lancement browser"
+#chromium-browser --app --start-fullscreen 127.0.0.1:5000 &
+chromium-browser --app 127.0.0.1:5000 &
+tail -f server.log
+
