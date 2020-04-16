@@ -5,7 +5,7 @@ import openSocket from 'socket.io-client';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './css/index.css'
-const adress="192.168.29.30"
+//const adress="192.168.29.30"
 //ordi pascal
 // const adress = "192.168.0.100"
 //ordi région
