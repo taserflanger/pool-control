@@ -114,6 +114,11 @@ class Pool extends Component {
                             pin: 3
                         }
                     },
+                    motor_freq: {
+                        type: "Display",
+                        value: "0",
+                        unit: "Hz"
+                    },
                     freq_plus: {
                         type: "PushButton",
                         inner: "+",

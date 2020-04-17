@@ -27,6 +27,7 @@
     "node-sass": "^4.12.0"
   },
   "optionalDependencies": {
-    "node-mcp23017": "0.0.4"
+    "node-mcp23017": "0.0.4",
+    "modbus-serial": "^7.8.1"
   }
 }
