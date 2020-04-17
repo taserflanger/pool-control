@@ -25,6 +25,7 @@ if (ISRASPBERRY) {
 
 io.on('connection', (client) => {
     log('client connected')
+    broadcastValues();
     InitializeClient(client);
     for (let [l, f] of Object.entries(listener)) {
         client.on(l, (variable, ...args) => {
@@ -40,20 +41,26 @@ io.on('connection', (client) => {
 //broadcast values
 // motor_freq: 2
 async function broadcastValues() {
+    await client.connectRTUBuffered(
+        "/dev/ttyUSB0",
+        {
+            baudRate: 2410, 
+            dataBits:8,
+            parity:"even",
+            stopBits:1
+        });
     while (true) {
-        await timeout(1000);
-        await client.connectRTUBuffered(
-            "/dev/ttyUSB0",
-            {
-                baudRate: 2410, 
-                dataBits:8,
-                parity:"even",
-                stopBits:1
-            })
-        io.emit("update_motor_freq", client.readHoldingRegisters(0xD000+2, 1).data);
+        await timeout(500);
+        try {
+            let x = await client.readHoldingRegisters(0xD000+2, 1);
+            console.log(x)
+            io.emit("update_motor_freq", x.data[0]/100);
+        } catch (err) {
+            
+        }
+            
     }
 }
-broadcastValues();
 
 function InitializeClient(client) {
     //update variables on Connection
@@ -62,6 +69,6 @@ function InitializeClient(client) {
     }
 }
 
-const port = 8000;
+const port = 7999;
 io.listen(port);
 log('listening on port '+ port);
