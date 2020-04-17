@@ -4,7 +4,17 @@ const mcp_api = require('./mcp_api');
 global.mcp_api = mcp_api
 
 const {listener} = require('./listener');
-const {log, parseData, Write} = require('./utils');
+const {log, parseData, Write, timeout} = require('./utils');
+
+const ModbusRTU = require('modbus-serial')
+const client = new ModbusRTU()
+
+//slave ID - can be changed in the inverter settings
+client.setID(1)
+
+// 50ms is too much, 100ms is also too much at 2400bps but 100ms is OK at 4800bps
+// 200ms is safe 8*8
+client.setTimeout(400)
 
 parseData();
 if (ISRASPBERRY) {
@@ -26,6 +36,24 @@ io.on('connection', (client) => {
     //initialize all listeners
 
 });
+
+//broadcast values
+// motor_freq: 2
+async function broadcastValues() {
+    while (true) {
+        await timeout(1000);
+        await client.connectRTUBuffered(
+            "/dev/ttyUSB0",
+            {
+                baudRate: 2410, 
+                dataBits:8,
+                parity:"even",
+                stopBits:1
+            })
+        io.emit("update_motor_freq", client.readHoldingRegisters(0xD000+2, 1).data);
+    }
+}
+broadcastValues();
 
 function InitializeClient(client) {
     //update variables on Connection
