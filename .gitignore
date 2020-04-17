@@ -14,6 +14,7 @@
 
 #data
 /server/poolState.json
+*.css
 
 # misc
 .DS_Store
