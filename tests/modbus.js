@@ -4,8 +4,8 @@ var client = new ModbusRTU()
 //slave ID - can be changed in the inverter settings
 client.setID(1)
 
-//recommended time between requests
-client.setTimeout(2000)
+//recommended time between requests :330
+client.setTimeout(500)
 
 
 
@@ -52,7 +52,9 @@ client.connectRTUBuffered(
 
 
         //client.write(0x2000, 1)
-        client.readHoldingRegisters(0xD000, 1).then(console.log);
+        setInterval(()=> {
+            client.readHoldingRegisters(0xD000, 1).then(console.log);
+        }, 1000);
 
         //read 33049 register. This will return the realtime value for DCVoltage1
         // client.readInputRegisters (33049, 1, (error, data) => {
