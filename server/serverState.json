@@ -9,7 +9,7 @@
     "water_temp": 105.72202157795356,
     "massage": {
         "isOn": false,
-        "value": 1
+        "value": 30
     },
     "washing_period": 1,
     "washing_auto": true,
