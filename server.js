@@ -44,7 +44,7 @@ async function broadcastValues() {
     await client.connectRTUBuffered(
         "/dev/ttyUSB0",
         {
-            baudRate: 2410, 
+            baudRate: 2400, 
             dataBits:8,
             parity:"even",
             stopBits:1
