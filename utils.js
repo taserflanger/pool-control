@@ -2,9 +2,9 @@ const io = global.io;
 const fs = require('fs');
 const moment = require('moment');
 moment.locale('fr');
-global.later = require('later');
+later = require('later');
 later.date.localTime();
-global.TIMEOUTS = [];
+TIMEOUTS = [];
 
 const timeout = milliseconds => new Promise (resolve => {
     TIMEOUTS.push(setTimeout(resolve, milliseconds));

@@ -1,7 +1,7 @@
 const {doWashingCycle, RepeatWashingCycle, goToFiltration, goToRecirculation} = require('./washing_auto');
 const {nextOccurrences, clearTimeouts} = require('./utils');
 
-global.WASHING_AUTO_SCHED = {clear: ()=>{}};
+WASHING_AUTO_SCHED = {clear: ()=>{}};
 
 
 async function handleVariableChange(variable, value) {

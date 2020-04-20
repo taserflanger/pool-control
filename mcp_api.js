@@ -1,7 +1,7 @@
 const {log, timeout} = require('./utils');
 
-global.ISRASPBERRY = true;
-global.TIME_SCALE = 1;
+ISRASPBERRY = true;
+TIME_SCALE = 1;
 let mcp;
 try {
     const MCP23017 = require('node-mcp23017');
@@ -10,7 +10,7 @@ try {
         debug: true
     });
 } catch (error) {
-    global.ISRASPBERRY = false;
+    ISRASPBERRY = false;
     TIME_SCALE = .001;
     mcp = {
         digitalWrite: (pin, value) => {

@@ -1,7 +1,12 @@
-const io = require('socket.io')();
-global.io = io;
-const mcp_api = require('./mcp_api');
-global.mcp_api = mcp_api
+global.io = null
+global.mcp_api=null;
+global.ISRASPBERRY=null;
+global.TIME_SCALE=null;
+global.later=null;
+global.TIMEOUTS=null;
+global.WASHING_AUTO_SCHED=null;
+io = require('socket.io')();
+mcp_api = require('./mcp_api');
 
 const {listener} = require('./listener');
 const {log, parseData, Write, timeout} = require('./utils');
