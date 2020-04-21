@@ -11,8 +11,8 @@ import './css/index.css'
 //ordi région
 //const adress = "192.168.1.10"
 //raspberry
-const adress = "192.168.29.252"
-const io = openSocket(`http://${adress}:8000`);
+const adress = "raspberrypi"
+const io = openSocket(`http://${adress}:7999`);
 ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
 export {io};

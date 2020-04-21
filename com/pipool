@@ -1,13 +1,19 @@
 #!/bin/bash
-cd /home/pi
-killall node
-killall chromium-browser
-echo "Lancement interface du build"
-serve ./build > interface.log 2>&1 &
-echo "Lancement du server"
-node server > server.log 2>&1 &
+cd /home/pi/pool-control
+# Kill backend and front end
+killall -e node
+# Kill all navigation windows
+killall -e chromium-browser
+#
+echo "Lancement du pool-control backend / server"
+node server > backend.log 2>&1 &
+#
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
+echo "Lancement du pool-control frontend / index.html..."
+serve -l 5000 ./build > frontend.log 2>&1 &
+#
 echo "lancement browser"
-#chromium-browser --app --start-fullscreen 127.0.0.1:5000 &
-chromium-browser --app 127.0.0.1:5000 &
-tail -f server.log
+chromium-browser --app --start-fullscreen raspberry:5000 &
+#chromium-browser --app 127.0.0.1:5000 &
+tail -f backend.log
 
