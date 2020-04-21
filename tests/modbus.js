@@ -5,8 +5,9 @@ var client = new ModbusRTU()
 client.setID(1)
 
 // 50ms is too much, 100ms is also too much at 2400bps but 100ms is OK at 4800bps
-// 200ms is safe 8*8
-client.setTimeout(400)
+// 10ms is OK at 115200BPS one read every 20ms is fine
+// some noise on the short cable around 30cm, need 2x 220 Ohms resistors, one at each ends, total impedance around 120 Ohms
+client.setTimeout(10)
 
 
 //client.connectRTUBuffered("/dev/ttyUSB0", {baudRate: 9600})
@@ -19,9 +20,9 @@ client.setTimeout(400)
 client.connectRTUBuffered(
     "/dev/ttyUSB0",
     {
-        baudRate: 2400, 
+        baudRate: 115200, 
         dataBits:8,
-        parity:"even",
+        parity:"none",
         stopBits:1
     }, 
 
@@ -43,8 +44,8 @@ client.connectRTUBuffered(
         // client.write(0xB002, 0);
         setInterval(()=> {
             // client.readHoldingRegisters(0xD021, 1).then(console.log);
-            client.readHoldingRegisters(0xD000+33, 1).then(console.log).catch((e)=>console.log(e));
-        }, 2000);
+            client.readHoldingRegisters(0xD000+2, 1).then(console.log).catch((e)=>console.log(e));
+        }, 20);
         
     }
     )
