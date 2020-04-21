@@ -13,7 +13,7 @@ echo "Lancement du pool-control frontend / index.html..."
 serve -l 5000 ./build > frontend.log 2>&1 &
 #
 echo "lancement browser"
-chromium-browser --app --start-fullscreen raspberry:5000 &
+chromium-browser --app --start-fullscreen 127.0.0.1 &
 #chromium-browser --app 127.0.0.1:5000 &
 tail -f backend.log
 
