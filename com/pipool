@@ -8,12 +8,25 @@ killall -e chromium-browser
 echo "Lancement du pool-control backend / server"
 node server > backend.log 2>&1 &
 #
-sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
+#sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
+# Make Iptables Persistent
+# sudo apt-get install iptables-persistent -y
+
+# How-to: Save & Reload Rules
+#sudo netfilter-persistent save
+#sudo netfilter-persistent reload
+
+# How-to: Manually Save Rules
+#sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+#sudo sh -c "ip6tables-save > /etc/iptables/rules.v6"
+
+# Run this if issues to reconfigure iptables-persistent
+# sudo dpkg-reconfigure iptables-persistent
 echo "Lancement du pool-control frontend / index.html..."
 serve -l 5000 ./build > frontend.log 2>&1 &
 #
 echo "lancement browser"
-chromium-browser --app --start-fullscreen 127.0.0.1 &
+chromium-browser --app --start-fullscreen 127.0.0.1:5000 &
 #chromium-browser --app 127.0.0.1:5000 &
 tail -f backend.log
 
