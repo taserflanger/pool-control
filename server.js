@@ -16,10 +16,8 @@ const client = new ModbusRTU()
 
 //slave ID - can be changed in the inverter settings
 client.setID(1)
-
-// 50ms is too much, 100ms is also too much at 2400bps but 100ms is OK at 4800bps
-// 200ms is safe 8*8
-client.setTimeout(400)
+//depends on the baud rate setting: 20ms is OK with 115200, 200ms with 9600BPS
+client.setTimeout(20)
 
 parseData();
 if (ISRASPBERRY) {
@@ -49,10 +47,10 @@ async function broadcastValues() {
     await client.connectRTUBuffered(
         "/dev/ttyUSB0",
         {
-            baudRate: 2410, 
+            baudRate: 115200, // FB.02: 5 115200BPS 
             dataBits:8,
-            parity:"even",
-            stopBits:1
+            parity:"none", // FB.02: 0 default
+            stopBits:1 // FB.02: 0
         });
     while (true) {
         await timeout(500);
