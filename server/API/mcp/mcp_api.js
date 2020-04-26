@@ -1,4 +1,4 @@
-const {log, timeout} = require('./utils');
+const {log, timeout} = require('../../utils');
 
 ISRASPBERRY = true;
 TIME_SCALE = 1;

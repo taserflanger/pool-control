@@ -22,10 +22,10 @@ function log (str) {
 }
 
 function parseData() {
-    data = fs.readFileSync("server/serverState.json", 'utf8');
-    logsdata = fs.readFileSync("server/log.json", 'utf8');
+    let data = fs.readFileSync("./data/serverState.json", 'utf8');
+    let logsdata = fs.readFileSync("data/log.json", 'utf8');
 
-    global.POOL = JSON.parse(data.toString());
+    POOL = JSON.parse(data.toString());
 }
 
 function Write() {

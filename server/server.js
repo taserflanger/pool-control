@@ -5,10 +5,15 @@ global.TIME_SCALE=null;
 global.later=null;
 global.TIMEOUTS=null;
 global.WASHING_AUTO_SCHED=null;
+global.MODBUS_QUEUE=null;
+global.MODBUS_CLIENT=null;
+global.modbus_api=null
 io = require('socket.io')();
-mcp_api = require('./mcp_api');
+mcp_api = require('./API/mcp/mcp_api');
+modbus_api = require('./API/modbus/modbus_api');
+modbus_api.startLoopQueue();
 
-const {listener} = require('./listener');
+const {listener} = require('./events/listener');
 const {log, parseData, Write, timeout} = require('./utils');
 
 const ModbusRTU = require('modbus-serial')
@@ -46,14 +51,7 @@ io.on('connection', (client) => {
 //broadcast values
 // motor_freq: 2
 async function broadcastValues() {
-    await client.connectRTUBuffered(
-        "/dev/ttyUSB0",
-        {
-            baudRate: 2410, 
-            dataBits:8,
-            parity:"even",
-            stopBits:1
-        });
+
     while (true) {
         await timeout(500);
         try {
@@ -61,9 +59,9 @@ async function broadcastValues() {
             console.log(x)
             io.emit("update_motor_freq", x.data[0]/100);
         } catch (err) {
-            
+
         }
-            
+
     }
 }
 

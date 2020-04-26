@@ -1,5 +1,5 @@
-const {doWashingCycle, RepeatWashingCycle, goToFiltration, goToRecirculation} = require('./washing_auto');
-const {nextOccurrences, clearTimeouts} = require('./utils');
+const {doWashingCycle, RepeatWashingCycle, goToFiltration, goToRecirculation} = require('../washing_auto');
+const {nextOccurrences, clearTimeouts} = require('../utils');
 
 WASHING_AUTO_SCHED = {clear: ()=>{}};
 
