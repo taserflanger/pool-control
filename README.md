@@ -2,12 +2,12 @@
 
 A simple interface for monitoring and controlling a pool from a Web-App.
 
-Designed for Raspberry-Pi combined with the module [MCP23017](https://www.microchip.com/wwwproducts/en/MCP23017)
+Designed for Raspberry-Pi combined with the module [MCP23017](https://www.microchip.com/wwwproducts/en/MCP23017) and any MODBUS RTU RS485 module.
 
 ## Features
 
-1. Monitoring: any data stream setup to the Raspberry. Status: in developpement
-2. Controlling: status: can write to any output of the MCP23017 module (e.g. spots). Washing Cycle scheduling: done. Massage: in developpement
+1. Monitoring: any data stream setup to the Raspberry. Status: in developpement MCP: not done; Modbus: almost
+2. Controlling: status: can write to any output of the MCP23017 module (e.g. spots). Washing Cycle scheduling: done. Massage: in developpement; Modbus: in developpement.
 
 ## install
 
