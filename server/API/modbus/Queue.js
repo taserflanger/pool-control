@@ -16,7 +16,9 @@ class Queue extends Array {
         console.warn("Instruction added to the top of the queue, it will be prioritized over any other event in the queue. Consider using add instead of push ");
         super.push(...items)
     }
-
+    clear() {
+        this = [];
+    }
 }
 
 module.exports = {

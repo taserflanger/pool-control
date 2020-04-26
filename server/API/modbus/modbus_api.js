@@ -70,6 +70,12 @@ async function LoopQueue() {
     }
 }
 
+function empty() {
+    MODBUS_QUEUE.clear()
+}
+
+addToQueue()
+
 const stopLoopQueue = ()=>{stopped = true};
 const startLoopQueue = ()=>{
     if (stopped) {
@@ -80,5 +86,6 @@ const startLoopQueue = ()=>{
 
 module.exports = {
     stopLoopQueue: stopLoopQueue,
-    startLoopQueue: startLoopQueue
+    startLoopQueue: startLoopQueue,
+    empty: empty
 }
