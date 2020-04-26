@@ -35,7 +35,6 @@ if (ISRASPBERRY) {
 
 io.on('connection', (client) => {
     log('client connected')
-    broadcastValues();
     InitializeClient(client);
     for (let [l, f] of Object.entries(listener)) {
         client.on(l, (variable, ...args) => {
